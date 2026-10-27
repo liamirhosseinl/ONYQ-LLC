@@ -1,0 +1,18 @@
+# Automatic HTTPS (Let's Encrypt), HTTP/3, TLS 1.2+ only.
+onyq.am, www.onyq.am {
+	@www host www.onyq.am
+	redir @www https://onyq.am{uri} permanent
+
+	encode zstd gzip
+	request_body {
+		max_size 1MB
+	}
+	reverse_proxy web:3000 {
+		# Overwrite client-IP headers so visitors cannot spoof them (rate limits rely on this).
+		header_up X-Forwarded-For {remote_host}
+		header_up X-Real-IP {remote_host}
+		# Belt and braces: the app trusts this header only with ONYQ_TRUST_CLOUDFLARE=1.
+		header_up -CF-Connecting-IP
+	}
+	header -Server
+}

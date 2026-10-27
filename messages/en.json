@@ -1,0 +1,585 @@
+{
+  "meta": {
+    "siteName": "ONYQ",
+    "defaultTitle": "ONYQ — websites, apps and AI for business",
+    "defaultDescription": "ONYQ is a software company registered in Armenia. We design and build websites, apps, AI tools and marketing systems for business."
+  },
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "home": "ONYQ — home",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "closeBrief": "Close the brief",
+    "mainNav": "Main",
+    "footerNav": "Footer",
+    "breadcrumb": "Breadcrumb",
+    "opensInNewTab": "opens in a new tab"
+  },
+  "nav": {
+    "work": "Work",
+    "services": "Services",
+    "pricing": "Pricing",
+    "studio": "Studio",
+    "letsTalk": "Start a project",
+    "letsTalkShort": "Start",
+    "exploreSection": "Explore section",
+    "menu": "Menu",
+    "menuTagline": "Let’s make something that works.",
+    "servicesIntro": "Nine directions, one team. Pick an area or go straight to a price.",
+    "studioIntro": "Who ONYQ is, how projects run and where to start.",
+    "items": {
+      "design": "Design",
+      "development": "Development",
+      "ai": "AI",
+      "mobile-apps": "Mobile apps",
+      "marketing": "Marketing",
+      "content": "Content & video",
+      "gamification": "Gamification",
+      "business-analytics": "Business analytics",
+      "financial-consulting": "Financial consulting",
+      "about": "About ONYQ",
+      "howWeWork": "How we work",
+      "portfolio": "Work",
+      "faq": "FAQ",
+      "contacts": "Contact"
+    }
+  },
+  "common": {
+    "from": "from",
+    "perMonthSuffix": "/mo",
+    "discuss": "Get a quote",
+    "discussProject": "Tell us about your project",
+    "allPrices": "All prices",
+    "allServices": "All services",
+    "moreAboutService": "How this area works",
+    "explore": "Explore",
+    "open": "Open",
+    "back": "Back",
+    "next": "Next",
+    "close": "Close",
+    "timeline": "Timeline",
+    "monthly": "monthly",
+    "fromDays": "from {count, plural, one {# day} other {# days}}",
+    "fromWeeks": "from {count, plural, one {# week} other {# weeks}}",
+    "fromMonths": "from {count, plural, one {# month} other {# months}}",
+    "needsApproval": "Needs ONYQ approval",
+    "needsApprovalHint": "Drafted for review. Hidden when the site runs in production mode.",
+    "concept": "Illustrative concept — not a client project",
+    "conceptShort": "Concept",
+    "scrollHint": "Keep scrolling",
+    "stage": "Step {current} of {total}",
+    "previewLong": "Preview build · not for publication",
+    "previewShort": "Preview"
+  },
+  "price": {
+    "currency": "Currency",
+    "usd": "$ USD",
+    "amd": "֏ AMD",
+    "fromHint": "“From” is the lower bound of a typical scope",
+    "amdNote": "AMD amounts are converted from USD at {rate} ֏ per $1 and rounded to the nearest 1,000 ֏. Provisional rate.",
+    "amdNoteApproved": "AMD amounts are converted from USD at {rate} ֏ per $1 and rounded to the nearest 1,000 ֏.",
+    "regularPrice": "Regular price",
+    "promoPrice": "Offer price",
+    "promoBadge": "−{percent}%",
+    "firstMonth": "first month",
+    "thenRenews": "then {price}/mo from the second month",
+    "promoOneTime": "{percent}% off the starting price for projects confirmed before {end}.",
+    "promoMonthly": "The first paid month is {percent}% off. From the second month, the regular monthly price applies.",
+    "promoBannerTitle": "{percent}% off starting prices",
+    "promoBannerBody": "Applies to projects confirmed between {start} and {end} (Asia/Yerevan). Monthly services: first paid month only.",
+    "promoEndsIn": "Ends in {time}",
+    "promoPreviewTitle": "Promotion preview",
+    "promoPreviewBody": "This is how the {percent}% offer will look. It is not live: campaign dates and terms have not been configured.",
+    "adSpendSeparate": "Advertising budget is paid separately to the ad platform.",
+    "promoScheduled": "{percent}% offer starts {start} (Asia/Yerevan).",
+    "promoOneTimeOpen": "{percent}% off the starting price for projects confirmed during the campaign.",
+    "promoRulesTitle": "How the {percent}% offer works",
+    "promoRuleOneTime": "One-time projects: the offer price applies to projects confirmed during the campaign window. After it closes, regular starting prices apply.",
+    "promoRuleMonthly": "Monthly services: the first paid month is {percent}% off. From the second month, the regular monthly price applies.",
+    "promoRuleAds": "Advertising budgets for paid media are paid separately to the platforms and are not discounted.",
+    "promoRuleFrom": "Offer prices are starting prices too: the final price depends on the scope agreed for your project.",
+    "validFrom": "Prices valid from {date}",
+    "estimate": "Estimate · {label}",
+    "includedInPrice": "Included in the price"
+  },
+  "brief": {
+    "dialogLabel": "Project brief",
+    "title": "Your brief",
+    "empty": "Your answers will appear here.",
+    "steps": {
+      "challenge": "Challenge",
+      "stage": "Starting point",
+      "areas": "Areas",
+      "budget": "Budget & timing",
+      "contact": "Contact",
+      "review": "Review"
+    },
+    "q": {
+      "challenge": "What do you want to create or improve?",
+      "challengeHint": "Pick the closest fit, then describe it in a sentence or two.",
+      "challengeLabel": "Describe the challenge",
+      "challengePlaceholder": "For example: we sell ceramics on Instagram and want a proper online store with delivery across Armenia.",
+      "stage": "Where are you starting from?",
+      "areas": "Which areas do you need?",
+      "areasHint": "Choose any that apply, or skip if you are not sure.",
+      "budget": "Budget and timing",
+      "budgetHint": "Optional. It helps to suggest a realistic first step.",
+      "budgetLabel": "Budget",
+      "timingLabel": "Timing",
+      "contact": "How can ONYQ reach you?",
+      "review": "Check your brief before sending"
+    },
+    "challengeTypes": {
+      "website": "A website",
+      "store": "An online store",
+      "app": "An app or bot",
+      "ai": "AI or automation",
+      "marketing": "Marketing & growth",
+      "brand": "Brand & design",
+      "other": "Something else"
+    },
+    "stages": {
+      "new-idea": "A new idea",
+      "new-ideaHint": "Nothing is built yet.",
+      "existing-product": "An existing product or site",
+      "existing-productHint": "It works, but needs to do more.",
+      "process": "A process to automate",
+      "processHint": "Routine work that takes too much time."
+    },
+    "budgets": {
+      "under-1k": "Under $1,000",
+      "1k-5k": "$1,000–5,000",
+      "5k-15k": "$5,000–15,000",
+      "15k-plus": "$15,000+",
+      "not-sure": "Not sure yet"
+    },
+    "timings": {
+      "asap": "As soon as possible",
+      "1-3-months": "In 1–3 months",
+      "flexible": "Flexible"
+    },
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "company": "Company",
+      "phone": "Phone or messenger",
+      "optional": "optional"
+    },
+    "interest": "Interested in",
+    "skip": "Skip",
+    "continue": "Continue",
+    "back": "Back",
+    "edit": "Edit",
+    "send": "Send brief",
+    "sending": "Sending…",
+    "startOver": "Start over",
+    "privacy": "When you send this brief, ONYQ receives the details above so it can reply to your enquiry.",
+    "privacyLink": "Privacy policy",
+    "successTitle": "Brief sent",
+    "successBody": "ONYQ has received your brief and will reply to {email}.",
+    "successAgain": "Send another brief",
+    "errorTitle": "The brief was not sent",
+    "errorNotConfigured": "Online briefs are not connected on this site yet, so nothing was sent. Copy your brief to keep it.",
+    "errorDelivery": "The brief could not be delivered. Nothing was lost — try again in a moment.",
+    "errorInvalid": "Some answers need attention. Check the highlighted fields.",
+    "errorRateLimited": "Too many attempts from this connection. Wait a minute, then try again.",
+    "errorNetwork": "The connection dropped before the brief was sent. Check your connection and try again.",
+    "retry": "Try again",
+    "copy": "Copy brief",
+    "copied": "Copied",
+    "emailInstead": "Email it instead",
+    "errors": {
+      "challenge_short": "Describe the challenge in at least 10 characters.",
+      "challenge_long": "Keep the description under 2,000 characters.",
+      "challengeType": "Choose the closest fit.",
+      "stage": "Choose where you are starting from.",
+      "name_required": "Enter your name.",
+      "name_long": "Name is too long.",
+      "email_invalid": "Enter a valid email address, like name@company.com."
+    }
+  },
+  "letter": {
+    "eyebrow": "Start writing",
+    "title1": "Your project",
+    "title2": "starts with a letter.",
+    "lead": "Every good project begins with a few honest lines. Pick three answers below — the letter writes itself, and ONYQ replies with a plan.",
+    "linesLabel": "Three lines to begin",
+    "line1": "Your challenge",
+    "line1Hint": "What should change?",
+    "line2": "What you need",
+    "line2Hint": "Which skills will it take?",
+    "line3": "The first step",
+    "line3Hint": "When should it start?",
+    "to": "To: ONYQ",
+    "subject": "Subject: our next step",
+    "greeting": "Hello, ONYQ.",
+    "placeholder1": "We have an idea and want it to become something people use.",
+    "placeholder2": "We need design, development and marketing working as one.",
+    "placeholder3": "Let’s talk about the scope, the budget and where to begin.",
+    "sentence1": "We want to build {thing}.",
+    "sentence2": "We need help with {areas}.",
+    "sentence3timing": "We’d like to start {timing}.",
+    "timingPhrases": {
+      "asap": "as soon as possible",
+      "1-3-months": "within one to three months",
+      "flexible": "when the plan is right — our timing is flexible"
+    },
+    "things": {
+      "website": "a new website",
+      "store": "an online store",
+      "app": "an app or a bot",
+      "ai": "AI and automation for our team",
+      "marketing": "a steadier flow of customers",
+      "brand": "a brand people recognise",
+      "other": "something new"
+    },
+    "continue": "Continue this letter",
+    "replay": "Clear the letter",
+    "signoff": "your next chapter."
+  },
+  "footer": {
+    "headline1": "Here when",
+    "headline2": "you need us.",
+    "lead": "Send a short brief — the reply comes with a scope, a timeline and a price.",
+    "registered": "Software company registered in Armenia",
+    "studio": "ONYQ",
+    "services": "Services",
+    "popular": "Popular",
+    "contact": "Contact",
+    "legal": "Legal",
+    "startBrief": "Start a brief",
+    "rights": "© {year} ONYQ",
+    "tagline": "intelligence, naturally.",
+    "backToTop": "Back to top"
+  },
+  "notFound": {
+    "eyebrow": "Error 404",
+    "title": "This page doesn’t exist.",
+    "body": "The address may be mistyped, or the page has moved. These are good places to continue:",
+    "home": "Back to home",
+    "services": "Services",
+    "pricing": "Pricing"
+  },
+  "language": {
+    "label": "Language"
+  },
+  "theme": {
+    "toLight": "Switch to day theme",
+    "toDark": "Switch to night theme"
+  },
+  "work": {
+    "view": "View case",
+    "nda": "Client under NDA",
+    "projectsCount": "{count, plural, one {# project} other {# projects}}",
+    "client": "Client",
+    "industry": "Industry",
+    "year": "Year",
+    "services": "Services",
+    "website": "Website",
+    "overview": "Project overview",
+    "challenge": "The challenge",
+    "approach": "What we did",
+    "scope": "Scope",
+    "result": "The result",
+    "resultNote": "Results as reported by the client.",
+    "gallery": "Project gallery",
+    "palette": "The client’s palette",
+    "paletteRoles": {
+      "primary": "Primary",
+      "accent": "Call to action",
+      "secondary": "Secondary"
+    },
+    "servicesUsed": "Services in this project",
+    "next": "Next project"
+  },
+  "pages": {
+    "home": "Home",
+    "pricing": "Pricing",
+    "mostRequested": "Popular starting points",
+    "priceCategories": "Price categories",
+    "pricingQuestions": "Questions about pricing",
+    "startingPrices": "{label} · starting prices",
+    "exploreDiscipline": "Inside the craft",
+    "explore": "Explore",
+    "approachCaption": "Approach diagram — not a product interface",
+    "whatWeDo": "What we do",
+    "whatsInside": "What we cover",
+    "directionsCount": "{count, plural, one {# direction} other {# directions}}",
+    "servicesInArea": "Priced services",
+    "whereToStart": "Good places to begin",
+    "whereNext": "Related areas",
+    "nextStep": "Ready when you are",
+    "whatHappensNext": "After you write",
+    "nextSteps": [
+      {
+        "title": "Send a short brief",
+        "body": "What you are building, what already exists and how to reach you."
+      },
+      {
+        "title": "ONYQ replies",
+        "body": "With clarifying questions or a first view of scope and timing."
+      },
+      {
+        "title": "Scope and price in writing",
+        "body": "Agreed before any work starts."
+      }
+    ],
+    "servicesMetaTitle": "Services: design, development, AI, apps and marketing",
+    "servicesMetaDescription": "Nine ONYQ service directions — design, development, mobile apps, AI, marketing, content & video, gamification, business analytics and financial models — with starting prices.",
+    "servicesLabel": "9 directions",
+    "servicesTitle1": "What ONYQ",
+    "servicesTitle2": "does.",
+    "servicesLead": "Nine directions, one team. Choose an area to see how it works, or go straight to a specific service with its scope, timeline and starting price.",
+    "directions": "Directions",
+    "specificTitle": "Every service, priced",
+    "specificLead": "Each one comes with a clear scope, a realistic timeline and a starting price.",
+    "servicesNextTitle": "Not sure what you need?",
+    "servicesNextBody": "Answer a few questions and ONYQ will come back with a scope and a price.",
+    "whatYouGet": "What changes for you",
+    "included": "In the package",
+    "howItGoes": "Step by step",
+    "indicative": "indicative durations",
+    "rightService": "Is it the right fit?",
+    "goodFit": "Right for you if",
+    "betterElse": "Consider something else if",
+    "questions": "Good to know",
+    "seeAlso": "Related services",
+    "serviceNextTitle": "Ready to start?",
+    "serviceNextBody": "Answer a few questions and get a scope, a timeline and a price.",
+    "conceptShows": "What the concept shows",
+    "servicesInvolved": "Services involved",
+    "portfolioNextTitle": "Planning something like this?",
+    "portfolioNextBody": "Describe it in a short brief and get a scope, a timeline and a price.",
+    "caseNextTitle": "Have something similar in mind?",
+    "caseNextBody": "Tell ONYQ what you are building — the reply comes with a first view of scope, timing and price.",
+    "faqCrumb": "FAQ",
+    "questionsCount": "{count, plural, one {# question} other {# questions}}",
+    "faqTopics": "FAQ topics",
+    "topics": "Topics",
+    "faqPricingTitle": "Pricing and payment",
+    "faqNextTitle": "Still have a question?",
+    "faqNextBody": "Ask it in a short brief — the answer comes with a first view of scope and price.",
+    "contactCrumb": "Contact",
+    "email": "Email",
+    "phone": "Phone",
+    "lastUpdated": "Last updated {date}",
+    "selectedEdits": "Selected edits",
+    "servicesCount": "{count, plural, one {# service} other {# services}}"
+  },
+  "mocks": {
+    "platesCaption": "ONYQ / idea → system → product",
+    "shop": {
+      "shop": "Shop",
+      "workshop": "Workshop",
+      "delivery": "Delivery",
+      "cart": "Cart · {n}",
+      "hero1": "Made by hand.",
+      "hero2": "Shipped with care.",
+      "chip": "Delivery zones · card & wallet payments"
+    },
+    "phone": {
+      "title": "Clinic bookings",
+      "sub": "mini app",
+      "choose": "Choose a time",
+      "days": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu"
+      ],
+      "confirm": "Confirm booking",
+      "toast": "Reminder set · {day} {time}"
+    },
+    "dash": {
+      "bar": "retail / overview · sample data",
+      "orders": "Orders",
+      "revenue": "Revenue",
+      "stock": "Stock alerts",
+      "search": "Search",
+      "direct": "Direct"
+    },
+    "canvas": {
+      "site": "Site",
+      "payments": "Payments",
+      "analytics": "Analytics",
+      "q1": "Do you deliver on Sundays?",
+      "a1": "Yes — within the city, for orders placed before 14:00.",
+      "src": "source: delivery terms",
+      "q2": "Can I pay by bank transfer?",
+      "a2": "That isn’t in my sources yet. I’ll pass you to a manager.",
+      "joined": "Manager joined"
+    },
+    "board": {
+      "brief": "Project brief",
+      "rows": [
+        "The goal",
+        "What exists today",
+        "Areas needed",
+        "How to reach you"
+      ],
+      "scope": "Scope",
+      "timeline": "Timeline",
+      "price": "Price",
+      "cols": [
+        "Design",
+        "Build",
+        "Review"
+      ],
+      "cards": [
+        [
+          "Home",
+          "Catalogue"
+        ],
+        [
+          "Checkout",
+          "Payments"
+        ],
+        [
+          "Forms",
+          "Analytics"
+        ]
+      ],
+      "live": "Live",
+      "connected": "analytics connected",
+      "uptime": "uptime",
+      "backups": "backups",
+      "updates": "updates"
+    },
+    "store": {
+      "oldTitle": "CLAY & KILN — Handmade Ceramics",
+      "oldNav": [
+        "Home",
+        "Products",
+        "Prices",
+        "Contacts"
+      ],
+      "oldBody": "Bowls, cups, vases. For prices and availability please call us or write in direct messages.",
+      "oldCall": "CALL US TO ORDER!",
+      "kicker": "collection 04",
+      "button": "Shop the collection",
+      "sources": [
+        "Search",
+        "Instagram",
+        "Telegram",
+        "Ads",
+        "Email",
+        "Direct"
+      ],
+      "order": "New order · paid",
+      "funnel": "visits → enquiries → orders"
+    },
+    "journey": {
+      "idea": {
+        "file": "notes / kick-off",
+        "note": "what if customers could book in two taps?",
+        "stickies": [
+          "faster",
+          "phone first",
+          "trust"
+        ]
+      },
+      "research": {
+        "title": "What customers told us",
+        "quotes": [
+          "“I gave up at the payment step.”",
+          "“I only use my phone.”",
+          "“Show me the price first.”"
+        ],
+        "needs": "What matters most",
+        "bars": [
+          "Phone",
+          "Clear prices",
+          "Speed"
+        ],
+        "tag": "sample study"
+      },
+      "design": {
+        "file": "app / home",
+        "layers": [
+          "Header",
+          "Hero",
+          "Card",
+          "Button"
+        ],
+        "hero": "Fresh today",
+        "sub": "Tables from 18:00",
+        "cta": "Book a table",
+        "cursor": "Design",
+        "inspector": "Fill",
+        "type": "Type"
+      },
+      "develop": {
+        "build": "build passed",
+        "tests": "tests passed",
+        "deploy": "deployed",
+        "score": "performance"
+      },
+      "system": {
+        "hub": "Your product",
+        "nodes": [
+          "Website",
+          "Telegram bot",
+          "Payments",
+          "CRM",
+          "Analytics",
+          "AI assistant"
+        ]
+      },
+      "product": {
+        "today": "Today",
+        "order": "New order · paid",
+        "review": "New 5★ review",
+        "booked": "Table booked · 19:00",
+        "live": "Live",
+        "visits": "visits",
+        "orders": "orders"
+      }
+    },
+    "showcase": {
+      "design": {
+        "label": "Vihan School · identity",
+        "palette": "Palette",
+        "type": "Typeface",
+        "kit": "Stationery"
+      },
+      "engineering": {
+        "label": "English Institute · platform",
+        "scope": [
+          "Website & online store",
+          "Management dashboard",
+          "Online classes"
+        ],
+        "metric": "of tasks simplified, per the institute’s report",
+        "app": "Eagle VPN · iOS & Android",
+        "installs": "installs in the first two weeks"
+      },
+      "intelligence": {
+        "label": "AI assistant · concept",
+        "sources": "Sources",
+        "files": [
+          "delivery-terms.pdf",
+          "price-list.xlsx",
+          "faq.docx"
+        ],
+        "flow": [
+          "Message received",
+          "Intent understood",
+          "Answered from sources",
+          "Handed to a manager"
+        ],
+        "typing": "Assistant is typing"
+      },
+      "content": {
+        "label": "Amir Khaldari · short-form",
+        "tracks": [
+          "Video",
+          "Captions",
+          "Sound"
+        ],
+        "hook": "hook · 0:03",
+        "retention": "+25% average retention",
+        "views": "50M+ combined views"
+      }
+    }
+  }
+}

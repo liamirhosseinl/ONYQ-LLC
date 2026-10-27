@@ -1,0 +1,210 @@
+/*
+ * ONYQ design tokens — from the ONYQ Brand Book (edition 02, 2026).
+ * Palette: forest #14332F · field #516559 · cloud #EEEEE9 · gray #424242 · volt #D4FF3A
+ * (alt ember #FF5B2E). Volt is the spark: calls to action, live states, moments of insight —
+ * about 5 % of any surface.
+ *
+ * Two themes share one set of role names, so components never reference raw colours:
+ *   night (data-theme="dark")  — the forest ground of the brand book
+ *   day   (data-theme="light") — g4 "morning mist": cloud ground, white cards
+ * The theme is chosen before first paint (components/motion/MotionBootstrap.tsx).
+ */
+:root {
+  /* Brand scales (brand book §03) */
+  --forest-50: #eef2ef;
+  --forest-100: #d6e0da;
+  --forest-200: #adc1b6;
+  --forest-300: #849e91;
+  --forest-400: #677f72;
+  --forest-500: #516559;
+  --forest-600: #3b4f45;
+  --forest-700: #29403a;
+  --forest-800: #14332f;
+  --forest-900: #0b1f1c;
+  --forest-850: #0f2825;
+  --volt-100: #f2ffc2;
+  --volt-200: #e7ff8f;
+  --volt-300: #dcff5e;
+  --volt-400: #d4ff3a;
+  --volt-500: #b8e61f;
+  --volt-600: #93ba12;
+  --volt-700: #6e8c0d;
+  --volt-800: #4a5e09;
+  --cloud-0: #ffffff;
+  --cloud-50: #f6f6f2;
+  --cloud-100: #eeeee9;
+  --cloud-200: #dcdcd5;
+  --cloud-300: #bdbdb6;
+  --cloud-400: #8f8f8a;
+  --cloud-500: #6b6b68;
+  --cloud-700: #424242;
+  --ember: #ff5b2e;
+  --sky: #7cc4ff;
+
+  /* Spark geometry (brand book §02) — shared by CSS masks */
+  --spark-path: "M50 24 C51.6 41 59 48.4 76 50 C59 51.6 51.6 59 50 76 C48.4 59 41 51.6 24 50 C41 48.4 48.4 41 50 24 Z";
+
+  /* Type (brand book §04: base 16 · lowercase headlines · tight tracking) */
+  --font-sans: "Inter Tight", "Noto Sans Armenian", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, monospace;
+
+  --fs-giant: clamp(3.4rem, 0.6rem + 9.4vw, 11rem);
+  --fs-display: clamp(2.9rem, 0.9rem + 6.2vw, 7.4rem);
+  --fs-h1: clamp(2.6rem, 1.1rem + 4.6vw, 6rem);
+  --fs-h2: clamp(2.15rem, 1.15rem + 3.1vw, 4.4rem);
+  --fs-h3: clamp(1.55rem, 1rem + 1.6vw, 2.6rem);
+  --fs-h4: clamp(1.2rem, 1rem + 0.6vw, 1.55rem);
+  --fs-lead: clamp(1.06rem, 0.98rem + 0.32vw, 1.3rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-xs: 0.8rem;
+  --fs-label: 0.8125rem;
+  --fs-mono: 0.75rem;
+
+  --tracking-display: -0.065em;
+  --tracking-heading: -0.05em;
+  --tracking-tight: -0.03em;
+  --tracking-label: 0;
+
+  --w-regular: 400;
+  --w-heading: 660;
+  --w-strong: 600;
+
+  /* Layout (brand book §07: 4 pt spacing · radius 8/14/20/28/pill) */
+  --max: 1600px;
+  --gutter: clamp(18px, 3.6vw, 56px);
+  --header-h: 84px;
+  --section-y: clamp(96px, 11vw, 176px);
+  --radius-s: 8px;
+  --radius-m: 14px;
+  --radius-l: 20px;
+  --radius-xl: 28px;
+  --radius-2xl: 36px;
+  --radius-pill: 999px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 180ms;
+  --dur: 340ms;
+  --dur-slow: 720ms;
+}
+
+/* ───────── Night — forest ground (default when the system prefers dark) ───────── */
+:root,
+:root[data-theme="dark"],
+.theme-dark {
+  /* Night: near-black forest. Forest-800 stays a brand accent surface, not the page. */
+  --night-0: #040908;
+  --night-1: #060d0c;
+  --night-2: #0a1513;
+  --night-3: #0f1d1a;
+  --night-4: #152622;
+  --c-page: var(--night-1);
+  --c-page-deep: var(--night-0);
+  --c-page-deepest: var(--night-0);
+  --c-surface: var(--night-2);
+  --c-surface-2: var(--night-3);
+  --c-surface-3: var(--night-4);
+  --c-line: rgb(238 238 233 / 0.09);
+  --c-line-soft: rgb(238 238 233 / 0.06);
+  --c-line-strong: rgb(238 238 233 / 0.2);
+  --c-ink: var(--cloud-100);
+  --c-ink-strong: #ffffff;
+  --c-muted: #a3b0aa;
+  --c-muted-2: #7b8a83;
+  --c-accent: var(--volt-400);
+  --c-accent-text: var(--volt-400);
+  --c-accent-hover: var(--volt-300);
+  --c-accent-ink: var(--night-1);
+  --c-accent-soft: rgb(212 255 58 / 0.1);
+  --c-glow: rgb(212 255 58 / 0.28);
+  --c-paper: var(--cloud-100);
+  --c-paper-2: var(--cloud-50);
+  --c-paper-ink: var(--forest-800);
+  --c-paper-muted: var(--forest-500);
+  --c-paper-line: var(--cloud-200);
+  --c-invert: var(--cloud-100);
+  --c-invert-ink: var(--night-1);
+  --c-hover: rgb(238 238 233 / 0.05);
+  --c-hover-strong: rgb(238 238 233 / 0.09);
+  --c-header: rgb(6 13 12 / 0.72);
+  --c-scrim: rgb(2 6 5 / 0.7);
+  --c-stone: #10211e;
+  --c-stone-edge: #2c4239;
+  --c-success: #34c38f;
+  --c-danger: #ff8a7a;
+  --c-warning: #f5b841;
+  --c-proposed: #f5b841;
+  --shadow-1: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 10px 30px -14px rgb(0 0 0 / 0.7);
+  --shadow-2: 0 1px 0 rgb(255 255 255 / 0.05) inset, 0 30px 70px -28px rgb(0 0 0 / 0.85);
+  --grad-hero: radial-gradient(60% 70% at 78% 38%, rgb(212 255 58 / 0.12) 0%, rgb(20 51 47 / 0.35) 34%, transparent 70%),
+    linear-gradient(180deg, var(--night-1) 0%, var(--night-0) 100%);
+  --grad-canopy: linear-gradient(160deg, var(--forest-800) 0%, var(--night-1) 75%);
+  --grad-deep: linear-gradient(180deg, var(--night-1) 0%, var(--night-0) 100%);
+  --grad-aurora: radial-gradient(at 18% 22%, rgb(212 255 58 / 0.22) 0%, transparent 42%),
+    radial-gradient(at 85% 30%, rgb(20 51 47 / 0.9) 0%, transparent 52%),
+    radial-gradient(at 55% 95%, rgb(124 196 255 / 0.1) 0%, transparent 50%), var(--night-1);
+  --dot: rgb(169 189 178 / 0.14);
+  color-scheme: dark;
+}
+
+/* ───────── Day — morning mist ───────── */
+.theme-light,
+:root[data-theme="light"] {
+  --c-page: var(--cloud-100);
+  --c-page-deep: #e6e7e0;
+  --c-page-deepest: var(--forest-800);
+  --c-surface: var(--cloud-0);
+  --c-surface-2: var(--cloud-50);
+  --c-surface-3: #ebece5;
+  --c-line: #d9dad2;
+  --c-line-soft: #e3e4dc;
+  --c-line-strong: var(--cloud-300);
+  --c-ink: var(--forest-800);
+  --c-ink-strong: var(--forest-900);
+  --c-muted: #46554d;
+  --c-muted-2: #5f6b64;
+  --c-accent: var(--volt-400);
+  --c-accent-text: #4e6607;
+  --c-accent-hover: var(--volt-500);
+  --c-accent-ink: var(--forest-800);
+  --c-accent-soft: rgb(147 186 18 / 0.14);
+  --c-glow: rgb(184 230 31 / 0.45);
+  --c-paper: var(--cloud-0);
+  --c-paper-2: var(--cloud-50);
+  --c-paper-ink: var(--forest-800);
+  --c-paper-muted: var(--forest-500);
+  --c-paper-line: var(--cloud-200);
+  --c-invert: var(--forest-800);
+  --c-invert-ink: var(--cloud-100);
+  --c-hover: rgb(20 51 47 / 0.05);
+  --c-hover-strong: rgb(20 51 47 / 0.09);
+  --c-header: rgb(238 238 233 / 0.78);
+  --c-scrim: rgb(11 31 28 / 0.42);
+  --c-stone: var(--forest-800);
+  --c-stone-edge: var(--forest-300);
+  --c-success: #17845a;
+  --c-danger: #b42318;
+  --c-warning: #9a6400;
+  --c-proposed: #9a6400;
+  --shadow-1: 0 1px 2px rgb(20 51 47 / 0.06), 0 8px 24px -12px rgb(20 51 47 / 0.18);
+  --shadow-2: 0 2px 4px rgb(20 51 47 / 0.05), 0 30px 60px -24px rgb(20 51 47 / 0.32);
+  --grad-hero: radial-gradient(55% 65% at 78% 40%, rgb(212 255 58 / 0.42) 0%, rgb(214 224 218 / 0.6) 36%, rgb(238 238 233 / 0) 70%),
+    linear-gradient(180deg, #ffffff 0%, var(--cloud-100) 55%, #e2e8e2 100%);
+  --grad-canopy: linear-gradient(160deg, #ffffff 0%, var(--forest-100) 100%);
+  --grad-deep: linear-gradient(180deg, var(--cloud-100) 0%, #e2e8e2 100%);
+  --grad-aurora: radial-gradient(at 18% 22%, rgb(212 255 58 / 0.55) 0%, transparent 42%),
+    radial-gradient(at 85% 30%, rgb(173 193 182 / 0.9) 0%, transparent 52%),
+    radial-gradient(at 55% 95%, rgb(124 196 255 / 0.25) 0%, transparent 50%), #ffffff;
+  --dot: rgb(81 101 89 / 0.28);
+  color-scheme: light;
+}
+
+@media (max-width: 850px) {
+  :root {
+    --header-h: 70px;
+  }
+}

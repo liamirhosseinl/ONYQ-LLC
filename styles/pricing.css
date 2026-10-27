@@ -1,0 +1,335 @@
+/* ───────── Receipt (pricing hero) ───────── */
+.receipt {
+  display: grid;
+  gap: 16px;
+  padding: clamp(20px, 2.4vw, 30px);
+  border-radius: var(--radius-xl);
+  background: var(--c-paper);
+  color: var(--c-paper-ink);
+  transform: rotate(-1.4deg);
+  box-shadow: var(--shadow-2), 0 50px 100px -40px rgb(0 0 0 / 0.45);
+}
+
+.receipt__head {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--c-paper-line);
+  color: var(--c-paper-muted);
+}
+
+.receipt ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.receipt li {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 0.95rem;
+}
+
+.receipt__dots {
+  border-bottom: 1px dotted var(--c-paper-line);
+  transform: translateY(-4px);
+}
+
+.receipt .price__from,
+.receipt .price__regular,
+.receipt .price__unit,
+.receipt .currency-note {
+  color: var(--c-paper-muted);
+}
+
+.receipt .price__amount {
+  color: var(--c-paper-ink);
+}
+
+.receipt__foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--c-paper-line);
+}
+
+.receipt__hint {
+  font-size: var(--fs-xs);
+  color: var(--c-paper-muted);
+}
+
+/* ───────── Category nav (sticky) ───────── */
+.cat-nav {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 20;
+  transition: top var(--dur) var(--ease-out);
+  background: color-mix(in srgb, var(--c-page) 90%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-block: 1px solid var(--c-line);
+}
+
+html[data-header-away="true"] .cat-nav {
+  top: 0;
+}
+
+.cat-nav__inner > .segmented {
+  flex-shrink: 0;
+}
+
+.cat-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 64px;
+}
+
+.cat-nav nav {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.cat-nav ol {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cat-nav a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  min-height: 40px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 0.84rem;
+  color: var(--c-muted);
+  white-space: nowrap;
+}
+
+.cat-nav a:hover {
+  color: var(--c-ink);
+}
+
+.cat-nav a[aria-current="true"] {
+  color: var(--c-ink);
+  background: var(--c-surface);
+}
+
+/* ───────── Category sections ───────── */
+.price-cat {
+  padding-block: clamp(56px, 7vw, 96px);
+  border-bottom: 1px solid var(--c-line-soft);
+  scroll-margin-top: 72px;
+}
+
+.price-cat__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.6fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: start;
+}
+
+.price-cat__intro {
+  position: sticky;
+  top: 96px;
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+}
+
+.price-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--c-line);
+}
+
+.price-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 120px minmax(150px, auto) auto;
+  gap: 20px;
+  align-items: center;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--c-line);
+}
+
+.price-row__name {
+  display: grid;
+  gap: 6px;
+}
+
+.price-row__title {
+  font-size: clamp(1.1rem, 1rem + 0.45vw, 1.4rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+.price-row__title a:hover {
+  color: var(--c-accent);
+}
+
+.price-row__note {
+  font-size: var(--fs-xs);
+  color: var(--c-muted-2);
+}
+
+.price-row__time {
+  color: var(--c-muted);
+}
+
+.price-row__price {
+  justify-self: end;
+}
+
+/* ───────── In every price / depends on ───────── */
+.every-price__grid,
+.depends__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+}
+
+.every-price__grid li,
+.depends__grid li {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 24px 22px 8px 0;
+  border-top: 1px solid var(--c-line);
+}
+
+.every-price__grid li + li,
+.depends__grid li + li {
+  padding-left: 22px;
+  border-left: 1px solid var(--c-line);
+}
+
+/* ───────── Promotion ───────── */
+.promo-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+  margin-bottom: 28px;
+  padding: 16px 20px;
+  border-radius: var(--radius-m);
+  border: 1px solid color-mix(in srgb, var(--c-accent-text) 50%, transparent);
+  background: var(--c-accent-soft);
+}
+
+.promo-notice strong {
+  color: var(--c-accent);
+}
+
+.promo-notice--preview {
+  border-color: color-mix(in srgb, var(--c-warning) 50%, transparent);
+  background: color-mix(in srgb, var(--c-warning) 8%, transparent);
+}
+
+.promo-notice--preview strong {
+  color: var(--c-proposed);
+}
+
+.promo-rules {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.promo-rules ul {
+  display: grid;
+  gap: 8px;
+  padding-left: 18px;
+  color: var(--c-muted);
+  max-width: 80ch;
+}
+
+@media (max-width: 1024px) {
+  .price-cat__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .price-cat__intro {
+    position: static;
+  }
+
+  .every-price__grid,
+  .depends__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .every-price__grid li:nth-child(3),
+  .depends__grid li:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .price-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px 16px;
+  }
+
+  .price-row__name {
+    grid-column: 1 / -1;
+  }
+
+  .price-row__time {
+    grid-column: 1;
+  }
+
+  .price-row__price {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .price-row__cta {
+    grid-column: 1 / -1;
+  }
+
+  .price-row__cta .btn {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .cat-nav .segmented {
+    display: none;
+  }
+
+  .every-price__grid,
+  .depends__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .every-price__grid li + li,
+  .depends__grid li + li {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .receipt li {
+    grid-template-columns: 1fr auto;
+  }
+
+  .receipt__dots {
+    display: none;
+  }
+}

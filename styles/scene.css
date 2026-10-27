@@ -1,0 +1,321 @@
+/* ───────── Photographic scenes (components/art/Scene.tsx) ───────── */
+.scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  container-type: size;
+  pointer-events: none;
+}
+
+.scene__stage {
+  --w: max(100cqw, calc(100cqh * var(--cover)));
+  position: absolute;
+  width: var(--w);
+  aspect-ratio: var(--ratio);
+  left: calc((100cqw - var(--w)) * var(--fx));
+  top: calc((100cqh - var(--w) / var(--ratio)) * var(--fy));
+  mask-image: linear-gradient(180deg, #000 0%, #000 var(--feather, 78%), transparent 100%);
+}
+
+@container (max-aspect-ratio: 1/1) {
+  .scene__stage {
+    left: calc((100cqw - var(--w)) * var(--fx-m));
+    top: calc((100cqh - var(--w) / var(--ratio)) * var(--fy-m));
+  }
+}
+
+.scene__pan {
+  position: absolute;
+  inset: 0;
+  transform-origin: 70% 40%;
+}
+
+html[data-motion="full"] .scene__pan {
+  animation: scene-drift 28s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes scene-drift {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.06) translate3d(-0.8%, 0.6%, 0);
+  }
+}
+
+.scene__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 1.2s var(--ease-in-out);
+}
+
+/* Theme variants. Default (no data-theme yet) = night. */
+.scene__img--day,
+.scene__only-day {
+  opacity: 0;
+}
+
+:root[data-theme="light"] .scene:not(.theme-dark *) .scene__img--day,
+:root[data-theme="light"] .scene:not(.theme-dark *) .scene__only-day {
+  opacity: 1;
+}
+
+:root[data-theme="light"] .scene:not(.theme-dark *) .scene__img--night,
+:root[data-theme="light"] .scene:not(.theme-dark *) .scene__only-night,
+:root[data-theme="light"] .scene:not(.theme-dark *) .scene__stars,
+:root[data-theme="light"] .scene:not(.theme-dark *) .scene__lights {
+  opacity: 0;
+}
+
+.scene__stars,
+.scene__lights,
+.scene__only-night {
+  transition: opacity 1.2s var(--ease-in-out);
+}
+
+/* Light sweep across the stone */
+.scene__sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 38%, rgb(255 236 200 / 0.16) 46%, rgb(255 255 255 / 0.05) 50%, transparent 58%);
+  background-size: 300% 100%;
+  background-position: 160% 0;
+  mix-blend-mode: screen;
+}
+
+html[data-motion="full"] .scene__sheen {
+  animation: scene-sheen 11s var(--ease-in-out) infinite;
+}
+
+@keyframes scene-sheen {
+  0%,
+  35% {
+    background-position: 160% 0;
+  }
+  75%,
+  100% {
+    background-position: -60% 0;
+  }
+}
+
+/* Stars */
+.scene__stars i,
+.scene__lights i,
+.scene__motes i {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+}
+
+.scene__stars i {
+  width: var(--s);
+  height: var(--s);
+  background: #fff;
+  box-shadow: 0 0 6px rgb(255 255 255 / 0.9);
+  opacity: 0.7;
+}
+
+html[data-motion="full"] .scene__stars i {
+  animation: scene-twinkle var(--d) ease-in-out var(--delay) infinite;
+}
+
+@keyframes scene-twinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(0.6);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+/* City lights */
+.scene__lights i {
+  width: 3px;
+  height: 3px;
+  background: #ffd27a;
+  box-shadow: 0 0 8px 2px rgb(255 190 90 / 0.7);
+  opacity: 0;
+}
+
+html[data-motion="full"] .scene__lights i {
+  animation: scene-blink var(--d) ease-in-out var(--delay) infinite;
+}
+
+@keyframes scene-blink {
+  0%,
+  70%,
+  100% {
+    opacity: 0;
+  }
+  80%,
+  90% {
+    opacity: 0.95;
+  }
+}
+
+/* Motes / fireflies */
+.scene__motes i {
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, #f6ffd1 0%, rgb(212 255 58 / 0.9) 40%, transparent 70%);
+  box-shadow: 0 0 10px 3px rgb(212 255 58 / 0.35);
+  opacity: 0;
+}
+
+:root[data-theme="light"] .scene:not(.theme-dark *) .scene__motes i {
+  background: radial-gradient(circle, #fff6dc 0%, rgb(255 200 110 / 0.95) 40%, transparent 70%);
+  box-shadow: 0 0 10px 3px rgb(255 190 90 / 0.4);
+}
+
+html[data-motion="full"] .scene__motes i {
+  animation: scene-mote var(--d) linear var(--delay) infinite;
+}
+
+@keyframes scene-mote {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.6);
+  }
+  15% {
+    opacity: 0.9;
+  }
+  80% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--dx), -180px, 0) scale(1);
+  }
+}
+
+/* Moon / sun glows */
+.scene__glow {
+  position: absolute;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+}
+
+.scene__glow--moon {
+  background: radial-gradient(circle, rgb(255 236 190 / 0.55) 0%, rgb(255 220 160 / 0.18) 28%, transparent 62%);
+}
+
+.scene__glow--sun {
+  background: radial-gradient(circle, rgb(255 244 210 / 0.85) 0%, rgb(255 190 110 / 0.35) 22%, rgb(255 150 80 / 0.12) 42%, transparent 66%);
+}
+
+.scene__glow--warm {
+  background: radial-gradient(circle, rgb(255 190 100 / 0.4) 0%, transparent 65%);
+}
+
+html[data-motion="full"] .scene__glow {
+  animation: scene-breathe 7s var(--ease-in-out) infinite;
+}
+
+@keyframes scene-breathe {
+  0%,
+  100% {
+    opacity: 0.75;
+    scale: 1;
+  }
+  50% {
+    opacity: 1;
+    scale: 1.12;
+  }
+}
+
+/* The spark inside the glass sphere */
+.scene__spark {
+  position: absolute;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+}
+
+.scene__spark-svg {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 10px rgb(212 255 58 / 0.95)) drop-shadow(0 0 34px rgb(212 255 58 / 0.55));
+}
+
+.scene__spark-core {
+  fill: var(--volt-400);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.scene__spark-flare {
+  fill: #f6ffd1;
+  opacity: 0.85;
+}
+
+.scene__spark-halo {
+  position: absolute;
+  inset: -60%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(212 255 58 / 0.55) 0%, rgb(212 255 58 / 0.16) 30%, transparent 62%);
+  mix-blend-mode: screen;
+}
+
+.scene__spark-rays {
+  position: absolute;
+  inset: -120%;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, rgb(212 255 58 / 0.16) 0deg 2deg, transparent 2deg 18deg);
+  mask-image: radial-gradient(circle, #000 0%, transparent 60%);
+  mix-blend-mode: screen;
+}
+
+html[data-motion="full"] .scene__spark-svg {
+  animation: scene-spark-spin 14s linear infinite;
+}
+
+html[data-motion="full"] .scene__spark-core {
+  animation: scene-spark-pulse 3.2s var(--ease-in-out) infinite;
+}
+
+html[data-motion="full"] .scene__spark-rays {
+  animation: scene-spark-spin 40s linear infinite reverse;
+}
+
+html[data-motion="full"] .scene__spark-halo {
+  animation: scene-breathe 3.2s var(--ease-in-out) infinite;
+}
+
+@keyframes scene-spark-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes scene-spark-pulse {
+  0%,
+  100% {
+    scale: 0.92;
+  }
+  50% {
+    scale: 1.08;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene__pan,
+  .scene__sheen,
+  .scene__stars i,
+  .scene__lights i,
+  .scene__motes i,
+  .scene__glow,
+  .scene__spark * {
+    animation: none !important;
+  }
+}

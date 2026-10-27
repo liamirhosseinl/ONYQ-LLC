@@ -1,0 +1,31 @@
+# nginx alternative to Caddy. Certificates via certbot. Replace onyq.am.
+server {
+    listen 80;
+    server_name onyq.am www.onyq.am;
+    return 301 https://onyq.am$request_uri;
+}
+server {
+    listen 443 ssl;
+    http2 on;
+    server_name onyq.am;
+    ssl_certificate     /etc/letsencrypt/live/onyq.am/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/onyq.am/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers off;
+    ssl_session_tickets off;
+    server_tokens off;
+    client_max_body_size 1m;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Proto https;
+        # Overwrite (never append) client-IP headers — rate limits rely on this.
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Real-IP $remote_addr;
+        # Belt and braces: the app trusts this header only with ONYQ_TRUST_CLOUDFLARE=1.
+        proxy_set_header CF-Connecting-IP "";
+    }
+}

@@ -1,0 +1,337 @@
+/* ───────── Hero ─────────
+   Tall section with a sticky scene; --hp (0→1) is scrubbed by scroll, --px/--py by the
+   pointer. The scene is the brand's "bg-01 web hero": forest glow, contour rings and the
+   spark-in-stone mark. */
+.hero {
+  --hp: 0;
+  position: relative;
+  height: 100svh;
+  min-height: 680px;
+  background: var(--c-page);
+}
+
+html[data-motion="full"] .hero {
+  height: 170svh;
+}
+
+.hero__sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 680px;
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero__scene {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--c-page);
+}
+
+.hero__layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+/* Scroll recede: the panorama pushes in and dims while the copy lifts away. */
+.hero__layer--scene {
+  inset: -3%;
+  transform-origin: 72% 30%;
+  scale: calc(1 + var(--hp) * 0.14);
+}
+
+.hero__shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(0deg, var(--c-page) 0%, color-mix(in srgb, var(--c-page) 86%, transparent) 22%, color-mix(in srgb, var(--c-page) 35%, transparent) 46%, transparent 64%),
+    linear-gradient(90deg, color-mix(in srgb, var(--c-page) 55%, transparent) 0%, transparent 46%),
+    linear-gradient(180deg, color-mix(in srgb, var(--c-page) 55%, transparent) 0%, transparent 18%);
+}
+
+.hero__shade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--c-page);
+  opacity: calc(var(--hp) * 0.92);
+}
+
+:root[data-theme="light"] .hero__shade {
+  background:
+    linear-gradient(0deg, var(--c-page) 0%, color-mix(in srgb, var(--c-page) 90%, transparent) 24%, color-mix(in srgb, var(--c-page) 45%, transparent) 46%, transparent 64%),
+    linear-gradient(90deg, color-mix(in srgb, var(--c-page) 60%, transparent) 0%, transparent 46%),
+    linear-gradient(180deg, color-mix(in srgb, var(--c-page) 50%, transparent) 0%, transparent 18%);
+}
+
+.hero__frame {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: calc(var(--header-h) + clamp(16px, 3vh, 40px));
+  padding-bottom: 24px;
+  transform: translate3d(0, calc(var(--hp) * -16vh), 0);
+  opacity: calc(1 - var(--hp) * 1.6);
+}
+
+.hero__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.hero__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 36px;
+  padding: 0 16px 0 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--c-line-strong);
+  background: color-mix(in srgb, var(--c-page) 50%, transparent);
+  backdrop-filter: blur(8px);
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.hero__live {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-accent);
+  box-shadow: 0 0 0 0 var(--c-glow);
+  animation: live-dot 2.2s ease-out infinite;
+}
+
+:root[data-theme="light"] .hero__live {
+  background: var(--volt-600);
+}
+
+@keyframes live-dot {
+  0% {
+    box-shadow: 0 0 0 0 rgb(212 255 58 / 0.6);
+  }
+  100% {
+    box-shadow: 0 0 0 12px rgb(212 255 58 / 0);
+  }
+}
+
+.hero__main {
+  margin-top: auto;
+  display: grid;
+  gap: clamp(24px, 4vh, 44px);
+}
+
+.hero__title {
+  font-size: clamp(3.2rem, 0.4rem + 8.6vw, 10rem);
+  line-height: 0.86;
+  letter-spacing: var(--tracking-display);
+  font-weight: 700;
+  max-width: 11ch;
+}
+
+.hero__title-accent {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+}
+
+/* Day theme: forest text on a volt highlighter stroke (brand book "one bright spark"). */
+:root[data-theme="light"] .hero__title-accent {
+  color: var(--forest-800);
+}
+
+:root[data-theme="light"] .hero__title-accent::before {
+  content: "";
+  position: absolute;
+  left: -0.05em;
+  right: -0.08em;
+  bottom: 0.1em;
+  height: 0.42em;
+  z-index: -1;
+  border-radius: 0.08em;
+  background: var(--volt-400);
+  transform-origin: left;
+  transition: transform 1.2s var(--ease-expo) calc(var(--split-delay, 0ms) + 500ms);
+}
+
+html[data-motion="full"]:root[data-theme="light"] .hero__title-accent:not(:has(.split[data-inview]))::before {
+  transform: scaleX(0);
+}
+
+.hero__title-spark {
+  position: absolute;
+  right: -0.42em;
+  top: 0.02em;
+  width: 0.34em;
+  height: 0.34em;
+  color: var(--c-accent);
+  filter: drop-shadow(0 0 18px var(--c-glow));
+  animation: title-spark 5s var(--ease-in-out) infinite;
+}
+
+:root[data-theme="light"] .hero__title-spark {
+  color: var(--volt-600);
+}
+
+@keyframes title-spark {
+  0%,
+  60%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  75% {
+    transform: rotate(90deg) scale(1.25);
+  }
+}
+
+.hero__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.hero__lead {
+  max-width: 34rem;
+  font-size: var(--fs-lead);
+  line-height: 1.45;
+  color: var(--c-muted);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hero__foot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 18px var(--gutter) 22px;
+  border-top: 1px solid color-mix(in srgb, var(--c-line) 80%, transparent);
+  opacity: calc(1 - var(--hp) * 2);
+}
+
+.hero__marquee {
+  flex: 1;
+  min-width: 0;
+  --marquee-dur: 46s;
+}
+
+.hero__marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(28px, 4vw, 64px);
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  text-transform: lowercase;
+  color: var(--c-muted);
+}
+
+.hero__marquee-spark {
+  width: 14px;
+  height: 14px;
+  color: var(--c-accent);
+}
+
+:root[data-theme="light"] .hero__marquee-spark {
+  color: var(--volt-600);
+}
+
+.hero__scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  min-height: 44px;
+  font-size: 0.8rem;
+  font-weight: 650;
+  color: var(--c-muted);
+  text-transform: lowercase;
+}
+
+.hero__scroll-line {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--c-line-strong);
+  overflow: hidden;
+}
+
+.hero__scroll-line svg {
+  animation: scroll-arrow 2s var(--ease-in-out) infinite;
+}
+
+@keyframes scroll-arrow {
+  0% {
+    transform: translateY(-140%);
+  }
+  45%,
+  55% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(140%);
+  }
+}
+
+/* Pre-hydration state for the intro (only when motion is on). */
+html[data-motion="full"] .hero[data-intro="pending"] :is(.hero__reveal, .hero__foot, .hero__picture, .scene__spark) {
+  opacity: 0;
+}
+
+@media (max-width: 900px) {
+  .hero__title {
+    max-width: none;
+  }
+
+  .hero__registered {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero__actions {
+    width: 100%;
+  }
+
+  .hero__actions .btn {
+    flex: 1 1 auto;
+  }
+
+  .hero__scroll span:first-child {
+    display: none;
+  }
+
+  .hero__title-spark {
+    right: -0.36em;
+  }
+}
+
+/* Russian headline words are long — keep the longest word inside the viewport. */
+:lang(ru) .hero__title {
+  font-size: min(clamp(3.4rem, 0.4rem + 10.6vw, 12.5rem), 11.4vw);
+  max-width: none;
+}
+
+.hero__title {
+  overflow-wrap: break-word;
+}

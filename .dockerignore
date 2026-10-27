@@ -1,0 +1,8 @@
+node_modules
+.next
+storage
+.e2e-storage
+test-results
+review-screenshots
+.env*
+!.env.example

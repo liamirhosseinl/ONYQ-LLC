@@ -1,0 +1,394 @@
+/* ───────── Motion layer (see components/motion/MotionDirector.tsx) ─────────
+   Every hidden-until-revealed state is scoped to html[data-motion="full"], which is set before
+   paint only when motion is allowed and removed by the watchdog if JS never starts. */
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis.lenis-smooth,
+.lenis.lenis-smooth * {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* ───────── Masked word rise ───────── */
+.split__w {
+  display: inline-block;
+  vertical-align: top;
+  overflow: hidden;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+  padding-inline: 0.02em;
+  margin-inline: -0.02em;
+}
+
+.split__i {
+  display: inline-block;
+  will-change: transform;
+}
+
+html[data-motion="full"] .split .split__i {
+  transform: translate3d(0, 112%, 0) rotate(5deg);
+  transform-origin: 0 100%;
+  transition: transform 1.15s var(--ease-expo);
+  transition-delay: calc(var(--wi, 0) * 42ms + var(--split-delay, 0ms));
+}
+
+html[data-motion="full"] .split[data-inview="true"] .split__i,
+html[data-motion="full"] .story__panel[data-active="true"] .split .split__i,
+html[data-motion="full"] .story:not([data-enhanced]) .split .split__i,
+html[data-reveal-all] .split .split__i {
+  transform: none;
+}
+
+html[data-motion="full"] .story__panel[data-active="false"] .split .split__i {
+  transform: translate3d(0, -112%, 0) rotate(-3deg);
+  transition-duration: 0.6s;
+  transition-delay: calc(var(--wi, 0) * 20ms);
+}
+
+/* ───────── Generic reveals ───────── */
+html[data-motion="full"] [data-reveal] {
+  transition:
+    opacity 1s var(--ease-out),
+    transform 1.2s var(--ease-expo),
+    clip-path 1.3s var(--ease-expo),
+    filter 1s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+html[data-motion="full"] [data-reveal="up"]:not([data-inview]) {
+  opacity: 0;
+  transform: translate3d(0, 48px, 0);
+}
+
+html[data-motion="full"] [data-reveal="fade"]:not([data-inview]) {
+  opacity: 0;
+}
+
+html[data-motion="full"] [data-reveal="scale"]:not([data-inview]) {
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+html[data-motion="full"] [data-reveal="left"]:not([data-inview]) {
+  opacity: 0;
+  transform: translate3d(-56px, 0, 0);
+}
+
+html[data-motion="full"] [data-reveal="right"]:not([data-inview]) {
+  opacity: 0;
+  transform: translate3d(56px, 0, 0);
+}
+
+html[data-motion="full"] [data-reveal="blur"]:not([data-inview]) {
+  opacity: 0;
+  filter: blur(14px);
+  transform: scale(1.04);
+}
+
+/* Clip reveal: the observed element keeps its box (IntersectionObserver needs it); its
+   content is wiped in from the bottom and settles from a slight zoom. */
+html[data-motion="full"] [data-reveal="clip"] {
+  background: transparent !important;
+}
+
+html[data-motion="full"] [data-reveal="clip"] > * {
+  transition:
+    clip-path 1.3s var(--ease-expo) var(--reveal-delay, 0ms),
+    transform 1.8s var(--ease-expo) var(--reveal-delay, 0ms);
+}
+
+html[data-motion="full"] [data-reveal="clip"]:not([data-inview]) > * {
+  clip-path: inset(100% 0 0 0);
+  transform: scale(1.18);
+}
+
+html[data-motion="full"] [data-reveal="clip"][data-inview] > * {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Staggered children */
+html[data-motion="full"] [data-reveal-stagger] > * {
+  transition:
+    opacity 0.9s var(--ease-out),
+    transform 1.1s var(--ease-expo);
+  transition-delay: calc(var(--ri, 0) * 70ms + var(--reveal-delay, 0ms));
+}
+
+html[data-motion="full"] [data-reveal-stagger]:not([data-inview]) > * {
+  opacity: 0;
+  transform: translate3d(0, 36px, 0);
+}
+
+/* ───────── Route curtain / intro ───────── */
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  place-items: center;
+  background: #060d0c;
+  color: var(--cloud-100);
+  pointer-events: none;
+  clip-path: inset(0 0 0 0);
+}
+
+html[data-motion="full"][data-intro="play"] .curtain,
+html[data-motion="full"] .curtain[data-active="true"] {
+  display: grid;
+}
+
+.curtain__glow {
+  position: absolute;
+  width: min(90vw, 900px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(212 255 58 / 0.3) 0%, rgb(81 101 89 / 0.35) 30%, rgb(20 51 47 / 0) 62%);
+}
+
+.curtain__mark {
+  position: relative;
+  width: clamp(88px, 12vw, 140px);
+  height: auto;
+  overflow: visible;
+}
+
+.curtain__stone,
+.curtain__tail {
+  fill: var(--cloud-100);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.curtain__spark {
+  fill: var(--volt-400);
+  transform-box: fill-box;
+  transform-origin: center;
+  filter: drop-shadow(0 0 12px rgb(212 255 58 / 0.8));
+}
+
+.curtain__meta {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: clamp(24px, 4vw, 48px);
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: 650;
+  color: #a9bdb2;
+  font-variant-numeric: tabular-nums;
+}
+
+.page-enter {
+  display: contents;
+}
+
+/* ───────── Cursor ───────── */
+.cursor {
+  display: none;
+}
+
+html[data-cursor="on"] .cursor {
+  display: block;
+}
+
+.cursor__spark {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 300;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+html[data-cursor-visible] .cursor__spark {
+  opacity: 1;
+}
+
+.cursor__spark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: var(--volt-400);
+  stroke: #060d0c;
+  stroke-width: 2.6;
+  paint-order: stroke;
+  filter: drop-shadow(0 0 6px rgb(212 255 58 / 0.75));
+  transition:
+    scale 0.4s var(--ease-spring),
+    rotate 0.5s var(--ease-expo),
+    filter 0.3s;
+}
+
+:root[data-theme="light"] .cursor__spark svg {
+  fill: var(--volt-500);
+  stroke: var(--forest-800);
+  stroke-width: 2.4;
+  paint-order: stroke;
+  filter: drop-shadow(0 0 4px rgb(147 186 18 / 0.6));
+}
+
+.cursor__spark[data-state="link"] svg {
+  scale: 1.45;
+  rotate: 45deg;
+  filter: drop-shadow(0 0 10px rgb(212 255 58 / 0.95));
+}
+
+.cursor__spark.is-down svg {
+  scale: 0.7;
+}
+
+/* ───────── Tilt + spotlight ───────── */
+[data-tilt] {
+  --rx: 0deg;
+  --ry: 0deg;
+  transform: perspective(1100px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 0.6s var(--ease-out);
+  transform-style: preserve-3d;
+}
+
+[data-tilt][data-hover="true"] {
+  transition: transform 0.12s linear;
+}
+
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgb(212 255 58 / 0.14), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.spotlight[data-hover="true"]::after {
+  opacity: 1;
+}
+
+/* ───────── Marquee ───────── */
+.marquee {
+  --gap: clamp(28px, 4vw, 64px);
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--gap);
+  padding-right: var(--gap);
+  min-width: 100%;
+  animation: marquee var(--marquee-dur, 38s) linear infinite;
+}
+
+.marquee[data-direction="reverse"] .marquee__track {
+  animation-direction: reverse;
+}
+
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+.marquee__skew {
+  display: flex;
+  transform: skewX(calc(var(--velocity, 0) * -0.6deg));
+  transition: transform 0.2s linear;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* ───────── Ambient keyframes ───────── */
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(0.6) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(45deg);
+  }
+}
+
+@keyframes ring-pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: 200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none;
+  }
+
+  .curtain,
+  .cursor {
+    display: none !important;
+  }
+
+  [data-tilt] {
+    transform: none !important;
+  }
+}
