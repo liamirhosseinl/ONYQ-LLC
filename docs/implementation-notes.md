@@ -131,3 +131,14 @@ See `docs/deployment.md` (Docker + Caddy, or Node + nginx). A persistent disk is
 - The schema now lives in `lib/server/migrations.mjs`, shared with `scripts/admin.mjs`.
 - New env `ONYQ_TRUST_PROXY`.
 - Tests: 38 unit + 83 e2e.
+
+## v4.2 notes (30 Oct 2026)
+
+- **RU/HY animations frozen.** The language switcher swapped the root layout on the client, which dropped `data-theme`/`data-motion` from `<html>`. Switching language is now a full page load (`components/layout/LanguageSwitcher.tsx`). Covered by an e2e test. Per-language font sizes are unchanged.
+- **Mobile overlaps.** In pinned stories on phones, the visual now takes only the height the text leaves and is clipped (`styles/story.css`, `styles/showcase.css`), so a picture can't cover a heading.
+- The Amir Khaldari case is first in the portfolio and links to www.amirkhaldari.me.
+- New contacts:
+  - phones +374 94 809506 and +374 94 406207;
+  - email onyq.llc@gmail.com;
+  - TIN 01384049, in the footer and on the contacts page.
+- The admin phone field accepts several comma-separated numbers.

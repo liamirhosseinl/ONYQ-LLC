@@ -11,7 +11,8 @@ export const contactSchema = z.object({
   salesEmail: z.union([z.email().max(200), z.literal("")]).nullable(),
   telegram: z.union([z.string().regex(/^[A-Za-z0-9_]{4,40}$/), z.literal("")]).nullable(),
   whatsapp: z.union([z.string().regex(/^\+?[0-9 ]{7,20}$/), z.literal("")]).nullable(),
-  phone: z.union([z.string().regex(/^\+?[0-9 ()-]{7,24}$/), z.literal("")]).nullable(),
+  // Up to three numbers, comma-separated.
+  phone: z.union([z.string().regex(/^\+?[0-9 ()-]{7,24}(\s*,\s*\+?[0-9 ()-]{7,24}){0,2}$/), z.literal("")]).nullable(),
   securityEmail: z.union([z.email().max(200), z.literal("")]).nullable(),
   social: z
     .array(z.object({ label: z.string().min(1).max(40), url: z.url().max(300).refine((u) => u.startsWith("https://"), "https only") }))

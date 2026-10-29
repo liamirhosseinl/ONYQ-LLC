@@ -250,7 +250,8 @@
     "startBrief": "Заполнить бриф",
     "rights": "© {year} ONYQ",
     "tagline": "интеллект, естественно.",
-    "backToTop": "Наверх"
+    "backToTop": "Наверх",
+    "tin": "ИНН"
   },
   "notFound": {
     "eyebrow": "Ошибка 404",

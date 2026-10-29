@@ -5,6 +5,8 @@ import { getSiteContact } from "@/lib/server/site-settings.ts";
 import { pageMetadata } from "@/lib/metadata.ts";
 import { PageHero } from "@/components/page/PageBlocks.tsx";
 import { BriefFlow } from "@/components/brief/BriefFlow.tsx";
+import { siteConfig } from "@/data/site-config.ts";
+import { phoneList, telHref } from "@/lib/contact.ts";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -19,6 +21,7 @@ export default async function ContactsPage({ params }: Props) {
   setRequestLocale(locale);
   const { contactsPage } = getContent(locale);
   const tp = await getTranslations("pages");
+  const tf = await getTranslations("footer");
   const tb = await getTranslations("brief");
   const c = getSiteContact();
 
@@ -57,10 +60,16 @@ export default async function ContactsPage({ params }: Props) {
                     </a>
                   </li>
                 ) : null}
-                {c.phone ? (
-                  <li>
+                {phoneList(c.phone).map((ph) => (
+                  <li key={ph}>
                     <span className="mono">{tp("phone")}</span>
-                    <a href={`tel:${c.phone.replace(/\s/g, "")}`}>{c.phone}</a>
+                    <a href={telHref(ph)}>{ph}</a>
+                  </li>
+                ))}
+                {siteConfig.taxId ? (
+                  <li>
+                    <span className="mono">{tf("tin")}</span>
+                    <span>{siteConfig.taxId}</span>
                   </li>
                 ) : null}
               </ul>

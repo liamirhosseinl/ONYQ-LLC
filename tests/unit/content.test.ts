@@ -65,10 +65,12 @@ test("service pages state the approved starting price in their FAQ and metadata"
   }
 });
 
-test("no unconfirmed business facts are configured by default", () => {
-  assert.equal(siteConfig.contact.salesEmail, null);
+test("only business facts supplied by ONYQ are configured", () => {
+  // Supplied by ONYQ on 29 Oct 2026.
+  assert.equal(siteConfig.contact.salesEmail, "onyq.llc@gmail.com");
+  assert.equal(siteConfig.contact.phone, "+374 94 809506, +374 94 406207");
   assert.equal(siteConfig.legalName, null);
-  assert.equal(siteConfig.taxId, null);
+  assert.equal(siteConfig.taxId, "01384049");
   assert.deepEqual(siteConfig.team, []);
   assert.deepEqual(siteConfig.products, []);
   assert.deepEqual(siteConfig.caseStudies, []);

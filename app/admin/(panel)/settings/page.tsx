@@ -155,8 +155,8 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
                 <input name="whatsapp" defaultValue={contact.whatsapp ?? ""} maxLength={20} placeholder="+374…" />
               </label>
               <label className="a-field">
-                <span>Phone</span>
-                <input name="phone" defaultValue={contact.phone ?? ""} maxLength={24} />
+                <span>Phone numbers (separate with commas)</span>
+                <input name="phone" defaultValue={contact.phone ?? ""} maxLength={80} placeholder="+374 94 000000, +374 94 000001" />
               </label>
               <label className="a-field">
                 <span>Security contact (security.txt)</span>

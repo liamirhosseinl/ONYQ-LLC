@@ -2,6 +2,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation.ts";
 import { DIRECTION_SLUGS, footerPopular } from "@/data/navigation.ts";
 import { siteConfig } from "@/data/site-config.ts";
+import { phoneList, telHref } from "@/lib/contact.ts";
 import { getSiteContact } from "@/lib/server/site-settings.ts";
 import { getCatalogueCopy } from "@/content/catalogue.ts";
 import { OpenBriefButton } from "@/components/brief/OpenBriefButton.tsx";
@@ -110,7 +111,9 @@ export async function SiteFooter() {
             <p className="t-small">{siteConfig.legalName}</p>
           ) : null}
           {siteConfig.taxId ? (
-            <p className="t-small">{siteConfig.taxId}</p>
+            <p className="t-small">
+              {t("tin")}: {siteConfig.taxId}
+            </p>
           ) : null}
         </div>
 
@@ -197,11 +200,11 @@ export async function SiteFooter() {
                   </a>
                 </li>
               ) : null}
-              {c.phone ? (
-                <li>
-                  <a href={`tel:${c.phone.replace(/\s/g, "")}`}>{c.phone}</a>
+              {phoneList(c.phone).map((ph) => (
+                <li key={ph}>
+                  <a href={telHref(ph)}>{ph}</a>
                 </li>
-              ) : null}
+              ))}
               {contact.social.map((s) => (
                 <li key={s.url}>
                   <a href={s.url} target="_blank" rel="noopener noreferrer">

@@ -250,7 +250,8 @@
     "startBrief": "Start a brief",
     "rights": "© {year} ONYQ",
     "tagline": "intelligence, naturally.",
-    "backToTop": "Back to top"
+    "backToTop": "Back to top",
+    "tin": "TIN"
   },
   "notFound": {
     "eyebrow": "Error 404",

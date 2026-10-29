@@ -256,3 +256,20 @@ test.describe("theme & language", () => {
     await expect(page.locator("html")).toHaveAttribute("lang", "hy");
   });
 });
+
+test.describe("language switch", () => {
+  test("switching to RU and HY keeps theme and scroll animations alive", async ({ page }) => {
+    for (const lang of ["ru", "hy"]) {
+      await page.goto("/price");
+      await page.waitForFunction(() => document.documentElement.dataset.motion === "full");
+      await page.locator(`.lang--header .lang__btn[lang="${lang}"]`).click();
+      await page.waitForURL(new RegExp(`/${lang}/price`));
+      await page.waitForFunction(() => (window as unknown as { __onyqMotionReady?: boolean }).__onyqMotionReady === true);
+      const html = page.locator("html");
+      await expect(html).toHaveAttribute("lang", lang);
+      await expect(html).toHaveAttribute("data-motion", "full");
+      await expect(html).toHaveAttribute("data-theme", /light|dark/);
+      await expect(html).not.toHaveAttribute("data-reveal-all", "true");
+    }
+  });
+});

@@ -18,8 +18,8 @@ export const siteConfig = {
   registration: { country: "Armenia", approved: true },
   /** [ONYQ INPUT REQUIRED] exact legal name (EN / HY) — publish only if approved. */
   legalName: null as string | null,
-  /** [ONYQ INPUT REQUIRED] registration / tax number — publish only if approved. */
-  taxId: null as string | null,
+  /** Tax identification number (TIN / ՀՎՀՀ), supplied by ONYQ 29 Oct 2026. */
+  taxId: "01384049" as string | null,
   /** [ONYQ INPUT REQUIRED] business address — publish only if approved. */
   address: null as string | null,
 
@@ -34,10 +34,11 @@ export const siteConfig = {
    * Never copy reference-site contacts here.
    */
   contact: {
-    salesEmail: null as string | null,
+    salesEmail: "onyq.llc@gmail.com" as string | null,
     telegram: null as string | null, // e.g. "onyq" (without @)
     whatsapp: null as string | null, // E.164 number
-    phone: null as string | null,
+    /** Several numbers are comma-separated (see lib/contact.ts). */
+    phone: "+374 94 809506, +374 94 406207" as string | null,
   },
 
   /** [ONYQ INPUT REQUIRED] official social profiles: { label, url } */

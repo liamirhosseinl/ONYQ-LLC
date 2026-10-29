@@ -805,8 +805,12 @@
 
 @media (max-width: 900px) {
   .showcase {
-    min-height: 300px;
+    min-height: 0;
     font-size: 12px;
+  }
+
+  html:not([data-motion="full"]) .showcase {
+    min-height: 300px;
   }
 
   .sc-bento {

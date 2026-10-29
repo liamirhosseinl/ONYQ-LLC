@@ -322,6 +322,16 @@ html:not([data-motion="full"]) .story__hint {
 
   html[data-motion="full"] .story__visual {
     order: -1;
+    /* The visual gets whatever height the text leaves and never spills onto it
+       (longer RU/HY copy used to push the text under the picture). */
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  html[data-motion="full"] .story__visual > * {
+    min-height: 0;
+    height: 100%;
   }
 
   html[data-motion="full"] .story-text {
