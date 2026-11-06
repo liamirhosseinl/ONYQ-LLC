@@ -25,7 +25,7 @@ export function CaseCard({
   index: number;
   total: number;
   locale: string;
-  labels: { view: string; nda: string };
+  labels: { view: string; nda: string; preview?: string };
   priority?: boolean;
 }) {
   const fmt = { format: (n: number) => formatNumber(n, locale) };
@@ -74,6 +74,11 @@ export function CaseCard({
                 {study.metric.suffix}
               </strong>
               <span>{copy.metricLabel}</span>
+            </p>
+          ) : study.status === "preview" && labels.preview ? (
+            <p className="case-card__metric">
+              <Spark className="case-card__spark" />
+              <span className="case-status">{labels.preview}</span>
             </p>
           ) : null}
           <span className="case-card__cta">

@@ -45,6 +45,11 @@ export interface CaseStudy {
   /** The client's brand palette, when the work included identity. */
   palette?: { hex: string; key: "primary" | "accent" | "secondary" }[];
   metric?: { value: number; prefix?: string; suffix?: string };
+  /**
+   * "preview": designed and built, shown on a preview address while the client signs off —
+   * not yet live on the client's own domain. The case says so plainly and shows no results.
+   */
+  status?: "live" | "preview";
   cover: CaseImage;
   /** Optional wide image for the homepage work row (defaults to the cover). */
   feature?: CaseImage;
@@ -58,6 +63,10 @@ const img = (slug: string, n: string, width: number, height: number, alt: string
   alt,
   ...extra,
 });
+
+/** A desktop screen of a site (2000 × 1250) or a phone screen (780 × 1688). */
+const screen = (slug: string, n: string, alt: string, extra: Partial<CaseImage> = {}) => img(slug, n, 2000, 1250, alt, extra);
+const phone = (slug: string, n: string, alt: string) => img(slug, n, 780, 1688, alt, { span: "reel" });
 
 function reel(name: string, alt: string): CaseImage {
   return { ...img("amir-khaldari", name, 540, 960, alt, { span: "reel" }), video: `/work/amir-khaldari/${name}.mp4` };
@@ -75,19 +84,130 @@ export const caseStudies: CaseStudy[] = [
     accent: "#E9B949",
     accentInk: "#15130C",
     metric: { value: 963, suffix: "+" },
-    cover: img("amir-khaldari", "site-hero", 2000, 1250, "siteHero", { tone: "dark" }),
+    cover: screen("amir-khaldari", "site26-hero", "siteHero", { tone: "dark" }),
     gallery: [
-      img("amir-khaldari", "site-hook", 2000, 1250, "siteHook", { span: "full" }),
+      screen("amir-khaldari", "site26-hook", "siteHook", { span: "full" }),
+      phone("amir-khaldari", "site26-mobile-1", "siteMobile1"),
       reel("hormozi", "reelHormozi"),
       reel("critical-skill", "reelCritical"),
+      phone("amir-khaldari", "site26-mobile-2", "siteMobile2"),
+      screen("amir-khaldari", "site26-hold", "siteHold", { span: "half", tone: "light" }),
+      screen("amir-khaldari", "site26-orbit", "siteOrbit", { span: "half", tone: "dark" }),
+      screen("amir-khaldari", "site26-retention", "siteRetention", { span: "full", tone: "light" }),
       reel("discord-community", "reelDiscord"),
+      phone("amir-khaldari", "site26-mobile-3", "siteMobile3"),
       reel("do-it", "reelDoIt"),
-      img("amir-khaldari", "site-retention", 2000, 1250, "siteRetention", { span: "half" }),
-      img("amir-khaldari", "site-results", 2000, 1250, "siteResults", { span: "half" }),
-      img("amir-khaldari", "site-mobile-1", 780, 1688, "siteMobile1", { span: "reel" }),
-      img("amir-khaldari", "site-mobile-2", 780, 1688, "siteMobile2", { span: "reel" }),
+      phone("amir-khaldari", "site26-mobile-4", "siteMobile4"),
+      screen("amir-khaldari", "site26-results", "siteResults", { span: "half", tone: "dark" }),
+      screen("amir-khaldari", "site26-closing", "siteClosing", { span: "half", tone: "dark" }),
       reel("its-up-to-you", "reelUpToYou"),
       reel("most-impactful-thing", "reelImpact"),
+      screen("amir-khaldari", "site26-contact", "siteContact", { span: "full", tone: "dark" }),
+    ],
+  },
+  {
+    slug: "familish",
+    year: 2026,
+    client: "Familish",
+    showLogo: true,
+    url: "https://familisham.netlify.app",
+    status: "preview",
+    services: ["business-website", "ui-ux-design", "crm-internal-systems"],
+    directions: ["design", "development"],
+    accent: "#2C6B57",
+    accentInk: "#FFF6EA",
+    cover: screen("familish", "hero", "hero", { tone: "light" }),
+    gallery: [
+      screen("familish", "promises", "promises", { span: "full", tone: "dark" }),
+      phone("familish", "mobile-1", "mobile1"),
+      phone("familish", "mobile-2", "mobile2"),
+      phone("familish", "mobile-3", "mobile3"),
+      phone("familish", "mobile-4", "mobile4"),
+      screen("familish", "craving", "craving", { span: "half", tone: "light" }),
+      screen("familish", "kitchen-tv", "kitchenTv", { span: "half", tone: "dark" }),
+      screen("familish", "box", "box", { span: "full", tone: "light" }),
+      screen("familish", "cake", "cake", { span: "half", tone: "light" }),
+      screen("familish", "visit", "visit", { span: "half", tone: "light" }),
+      screen("familish", "footer", "footer", { span: "full", tone: "dark" }),
+    ],
+  },
+  {
+    slug: "persona",
+    year: 2026,
+    client: "Persona Restaurant & Bar",
+    showLogo: true,
+    url: "https://personaam.netlify.app",
+    status: "preview",
+    services: ["corporate-website", "ui-ux-design", "crm-internal-systems"],
+    directions: ["design", "development"],
+    accent: "#B8473F",
+    accentInk: "#FBEFE4",
+    cover: screen("persona", "hero", "hero", { tone: "dark" }),
+    gallery: [
+      screen("persona", "walk-in", "walkIn", { span: "full", tone: "dark" }),
+      screen("persona", "door", "door", { span: "half", tone: "dark" }),
+      screen("persona", "voice", "voice", { span: "half", tone: "dark" }),
+      phone("persona", "mobile-1", "mobile1"),
+      phone("persona", "mobile-2", "mobile2"),
+      phone("persona", "mobile-3", "mobile3"),
+      phone("persona", "mobile-4", "mobile4"),
+      screen("persona", "signatures", "signatures", { span: "full", tone: "dark" }),
+      screen("persona", "rules", "rules", { span: "half", tone: "dark" }),
+      screen("persona", "menu", "menu", { span: "half", tone: "dark" }),
+      screen("persona", "rooms", "rooms", { span: "full", tone: "dark" }),
+      screen("persona", "carpet", "carpet", { span: "half", tone: "dark" }),
+      screen("persona", "footer", "footer", { span: "half", tone: "dark" }),
+    ],
+  },
+  {
+    slug: "dr-sona",
+    year: 2026,
+    client: "Zakaryan Dental · Dr. Sona Zakaryan",
+    showLogo: true,
+    url: "https://drsona.netlify.app",
+    status: "preview",
+    services: ["corporate-website", "ui-ux-design", "crm-internal-systems"],
+    directions: ["design", "development"],
+    accent: "#F2683C",
+    accentInk: "#FFFFFF",
+    cover: screen("dr-sona", "hero", "hero", { tone: "light" }),
+    gallery: [
+      screen("dr-sona", "about", "about", { span: "full", tone: "light" }),
+      phone("dr-sona", "mobile-1", "mobile1"),
+      phone("dr-sona", "mobile-2", "mobile2"),
+      phone("dr-sona", "mobile-3", "mobile3"),
+      phone("dr-sona", "mobile-4", "mobile4"),
+      screen("dr-sona", "treatments", "treatments", { span: "half", tone: "light" }),
+      screen("dr-sona", "results", "results", { span: "half", tone: "light" }),
+      screen("dr-sona", "films", "films", { span: "full", tone: "light" }),
+      screen("dr-sona", "steps", "steps", { span: "half", tone: "light" }),
+      screen("dr-sona", "trained", "trained", { span: "half", tone: "light" }),
+      screen("dr-sona", "stage", "stage", { span: "full", tone: "light" }),
+    ],
+  },
+  {
+    slug: "food-master",
+    year: 2026,
+    client: "Food Master Yerevan",
+    showLogo: true,
+    url: "https://foodmasteram.netlify.app",
+    status: "preview",
+    services: ["business-website", "ui-ux-design", "crm-internal-systems"],
+    directions: ["design", "development"],
+    accent: "#F4B533",
+    accentInk: "#1E1A16",
+    cover: screen("food-master", "hero", "hero", { tone: "dark" }),
+    gallery: [
+      screen("food-master", "davtashen", "davtashen", { span: "full", tone: "dark" }),
+      phone("food-master", "mobile-1", "mobile1"),
+      phone("food-master", "mobile-2", "mobile2"),
+      phone("food-master", "mobile-3", "mobile3"),
+      phone("food-master", "mobile-4", "mobile4"),
+      screen("food-master", "shawarma", "shawarma", { span: "half", tone: "light" }),
+      screen("food-master", "categories", "categories", { span: "half", tone: "dark" }),
+      screen("food-master", "masters", "masters", { span: "full", tone: "light" }),
+      screen("food-master", "club", "club", { span: "half", tone: "dark" }),
+      screen("food-master", "footer", "footer", { span: "half", tone: "dark" }),
     ],
   },
   {

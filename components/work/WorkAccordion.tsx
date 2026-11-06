@@ -20,6 +20,8 @@ export interface WorkItem {
   year: number;
   metric: string | null;
   metricLabel: string;
+  /** Short status shown instead of a metric, e.g. "Preview" for a site awaiting launch. */
+  status?: string;
   accent: string;
   cover: { src: string; width: number; height: number; alt: string; cutout?: boolean };
 }
@@ -128,6 +130,11 @@ export function WorkAccordion({ items, view }: { items: WorkItem[]; view: string
                           <Spark className="work-acc__spark" />
                           <strong>{it.metric}</strong>
                           <span>{it.metricLabel}</span>
+                        </p>
+                      ) : it.status ? (
+                        <p className="work-acc__metric">
+                          <Spark className="work-acc__spark" />
+                          <span className="case-status">{it.status}</span>
                         </p>
                       ) : null}
                       <Link href={`/portfolio/${it.slug}`} className="work-acc__cta">

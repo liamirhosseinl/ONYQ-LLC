@@ -41,7 +41,7 @@ export const contactsPage: ContactsPageContent = {
 export const portfolioPage: PortfolioPageContent = {
   meta: {
     title: "Работы — кейсы ONYQ",
-    description: "Бренды, платформы и приложения, созданные ONYQ: Vihan School, Eagle VPN, платформа для школы английского языка — а также концепт-исследования.",
+    description: "Сайты, бренды, платформы и приложения, созданные ONYQ: Amir Khaldari, Familish, Persona, Zakaryan Dental, Food Master, Vihan School, Eagle VPN и платформа для школы английского языка.",
   },
   title: ["Избранные", "работы."],
   lead: "Бренды, платформы и мобильные приложения, которые спроектировала и создала ONYQ. В каждом кейсе — задача, что мы сделали и что изменилось; результаты указаны только так, как их сообщил клиент.",

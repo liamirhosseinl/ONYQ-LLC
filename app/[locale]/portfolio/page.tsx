@@ -50,7 +50,7 @@ export default async function PortfolioPage({ params }: Props) {
                 index={i}
                 total={caseStudies.length}
                 locale={locale}
-                labels={{ view: tw("view"), nda: tw("nda") }}
+                labels={{ view: tw("view"), nda: tw("nda"), preview: tw("statusPreview") }}
                 priority={i === 0}
               />
             </div>

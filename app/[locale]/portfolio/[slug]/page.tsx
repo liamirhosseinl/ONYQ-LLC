@@ -109,6 +109,14 @@ export default async function CasePage({ params }: Props) {
                 <dt>{t("services")}</dt>
                 <dd>{copy.tags.join(" · ")}</dd>
               </div>
+              {study.status === "preview" ? (
+                <div>
+                  <dt>{t("status")}</dt>
+                  <dd>
+                    <span className="case-status">{t("statusPreview")}</span>
+                  </dd>
+                </div>
+              ) : null}
               {study.url ? (
                 <div>
                   <dt>{t("website")}</dt>
@@ -190,7 +198,7 @@ export default async function CasePage({ params }: Props) {
               <Split text={copy.result} />
             </h2>
             <p className="case-result__note" data-reveal="fade">
-              {t("resultNote")}
+              {study.status === "preview" ? t("resultNotePreview") : t("resultNote")}
             </p>
           </div>
           {study.metric ? (
@@ -213,7 +221,7 @@ export default async function CasePage({ params }: Props) {
           {study.gallery.map((img, i) => (
             <figure
               key={img.src}
-              className={`case-shot case-shot--${img.span ?? "half"}${img.cutout ? " case-shot--cutout" : ""}`}
+              className={`case-shot case-shot--${img.span ?? "half"}${img.cutout ? " case-shot--cutout" : ""}${!img.video && img.width / img.height === 1.6 ? " case-shot--screen" : ""}${!img.video && img.width / img.height < 0.5 ? " case-shot--phone" : ""}`}
               data-reveal="clip"
               style={{ ["--reveal-delay" as string]: `${(i % 2) * 120}ms` }}
             >

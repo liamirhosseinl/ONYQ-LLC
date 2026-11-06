@@ -291,7 +291,11 @@
       "secondary": "Secondary"
     },
     "servicesUsed": "Services in this project",
-    "next": "Next project"
+    "next": "Next project",
+    "status": "Status",
+    "statusPreview": "Preview · awaiting client approval",
+    "statusShort": "Preview",
+    "resultNotePreview": "Not live yet: the launch on the client’s own domain follows their final approval."
   },
   "pages": {
     "home": "Home",

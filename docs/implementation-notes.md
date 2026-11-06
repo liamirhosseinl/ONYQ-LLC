@@ -142,3 +142,17 @@ See `docs/deployment.md` (Docker + Caddy, or Node + nginx). A persistent disk is
   - email onyq.llc@gmail.com;
   - TIN 01384049, in the footer and on the contacts page.
 - The admin phone field accepts several comma-separated numbers.
+
+## v4.3 notes (7 Nov 2026)
+
+- **Portfolio.** Order: Amir Khaldari, Familish, Persona, Dr. Sona Zakaryan (Zakaryan Dental), Food Master, then Vihan School, Eagle VPN and English Institute.
+- **Screenshots.** Desktop shots are 2000×1250 and phone shots 780×1688. They were taken from the sites' own build folders, so they show exactly what is deployed.
+- **Amir Khaldari case.** Its screenshots are new and use new file names (`site26-*`). `/work/*` is served as immutable, so the old URLs could never refresh.
+- **Pending cases.** Familish, Persona, Dr. Sona and Food Master have `status: "preview"`:
+  - the case shows "Preview · awaiting client approval" and links to the Netlify preview;
+  - it has no metric, and the result note says it is not live yet.
+- **Going live.** When a client signs:
+  1. set `url` to the real domain;
+  2. remove `status` (or set it to `"live"`);
+  3. add a metric if the client reports one.
+- **Gallery framing.** Website screens keep their 16:10 frame and phone screens their full height (`.case-shot--screen`, `.case-shot--phone`).

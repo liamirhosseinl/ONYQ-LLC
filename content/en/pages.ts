@@ -52,7 +52,7 @@ export interface Concept {
 export const portfolioPage = {
   meta: {
     title: "Work — ONYQ case studies",
-    description: "Brands, platforms and apps designed and built by ONYQ: Vihan School, Eagle VPN, an English-language institute platform — plus concept studies.",
+    description: "Websites, brands, platforms and apps designed and built by ONYQ: Amir Khaldari, Familish, Persona, Zakaryan Dental, Food Master, Vihan School, Eagle VPN and an English-language institute platform.",
   },
   title: ["Selected", "work."] as [string, string],
   lead: "Brands, platforms and mobile apps ONYQ has designed and built. Each case shows the challenge, what we did and what changed — with results only as the client reported them.",

@@ -109,6 +109,7 @@ export default async function HomePage({ params }: Props) {
               year: c.year,
               metric: c.metric ? `${c.metric.prefix ?? ""}${formatNumber(c.metric.value, locale)}${c.metric.suffix ?? ""}` : null,
               metricLabel: cc.metricLabel,
+              status: c.status === "preview" ? tw("statusShort") : undefined,
               accent: c.accent,
               cover: { src: (c.feature ?? c.cover).src, width: (c.feature ?? c.cover).width, height: (c.feature ?? c.cover).height, alt: cc.alts[(c.feature ?? c.cover).alt] ?? cc.name, cutout: (c.feature ?? c.cover).cutout },
             };

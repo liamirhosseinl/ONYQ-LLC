@@ -365,6 +365,21 @@
   border-radius: var(--radius-l);
 }
 
+/* Website screens keep their real 16:10 frame and phone screens their full height:
+   nothing of the design is cropped away. */
+.case-shot--screen {
+  aspect-ratio: 16 / 10;
+}
+
+.case-shot--phone {
+  aspect-ratio: 780 / 1688;
+}
+
+.case-shot--screen img,
+.case-shot--phone img {
+  object-position: top center;
+}
+
 .case-shot video {
   width: 100%;
   height: 100%;
@@ -622,3 +637,26 @@
 }
 
 
+
+/* "Preview · awaiting client approval" — a quiet pill, not a result. */
+.case-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px 4px 10px;
+  border: 1px solid var(--c-line);
+  border-radius: 999px;
+  font-size: var(--fs-xs, 0.8rem);
+  line-height: 1.4;
+  color: var(--c-ink);
+  background: color-mix(in srgb, var(--case-accent, var(--volt-400)) 10%, transparent);
+}
+
+.case-status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--case-accent, var(--volt-400));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--case-accent, var(--volt-400)) 25%, transparent);
+}
