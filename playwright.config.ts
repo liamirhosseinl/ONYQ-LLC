@@ -21,7 +21,9 @@ export default defineConfig({
     launchOptions: { ...(executablePath ? { executablePath } : {}), args: ["--no-proxy-server", "--disable-background-networking", "--disable-component-update", "--no-first-run"] },
   },
   projects: [
-    { name: "desktop", use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } } },
+    { name: "desktop", testIgnore: /cms\.spec\.ts/, use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } } },
+    // CMS tests change live content (prices, texts), so they run after everything else.
+    { name: "cms", testMatch: /cms\.spec\.ts/, dependencies: ["desktop"], use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } } },
   ],
   webServer: process.env.E2E_BASE_URL
     ? undefined

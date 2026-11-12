@@ -50,5 +50,7 @@ test("vip: request needs services, a description, a name and a real phone; email
   assert.ok(vipRequestSchema.safeParse({ ...base, email: "" }).success);
   assert.equal(vipRequestSchema.safeParse({ ...base, services: [] }).success, false);
   assert.equal(vipRequestSchema.safeParse({ ...base, phone: "" }).success, false);
-  assert.equal(vipRequestSchema.safeParse({ ...base, services: ["gamification-loyalty"] }).success, false);
+  assert.equal(vipRequestSchema.safeParse({ ...base, services: ["Bad ID"] }).success, false);
+  // Retired or unknown services never reach a quote.
+  assert.equal(vipQuote(["gamification-loyalty", "landing-page"]).lines.length, 1);
 });

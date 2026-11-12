@@ -195,3 +195,34 @@ See `docs/deployment.md` (Docker + Caddy, or Node + nginx). A persistent disk is
   - The client describes the need, picks services (all 60% off, computed on the server) and leaves a name and phone.
   - The request appears in Admin → Inbox with a "VIP · business" chip and a quote card, and goes to the webhook or email if one is configured.
   - DB migration 3 adds `leads.vip_business` and `leads.vip_quote`.
+
+## v6 notes — content management (12 Nov 2026)
+
+- **Model.** The code keeps the default copy (`content/<locale>`, `messages/<locale>.json`, `data/services.ts`, `data/cases.ts`). The CMS stores only *overrides*, which are sparse trees.
+  - Table `content_docs` has a published and a draft override per document and language.
+  - Table `content_versions` keeps the last 40 published versions.
+  - Table `media` holds uploads, stored in `<data>/media`.
+  - All three are added by DB migration 4.
+  - Merge rules (`lib/cms/merge.ts`): objects merge key by key; lists and values are replaced; a value whose type no longer matches the code is ignored. So fields added to the code later appear on their own.
+- **Documents** (`lib/cms/registry.ts`):
+  - `home`, `pricing`, `faq`, `contacts`, `portfolio`;
+  - `service:<slug>`, `topic:<slug>`, `case:<slug>`;
+  - `catalogue` (service names and categories);
+  - `messages:<namespace>` (interface strings);
+  - and the language-neutral `services` (prices and structure) and `cases` (projects).
+- **Reading.** The site reads everything through `lib/server/content.ts`: `getContent`, `getCatalogue`, `getCases` and `getMessages`, the last one used by `i18n/request.ts`. Each returns published values, or drafts when a signed-in manager has the `onyq_preview` cookie (set by `/admin/preview`). Client components get the live catalogue from `CatalogueProvider` (`useCatalogue`, `useServiceLookup`).
+- **Validation** (`lib/server/cms.ts`):
+  - types must match the code;
+  - technical keys are read-only;
+  - links are site paths or https/mailto/tel;
+  - interface strings keep their ICU placeholders and tags and must parse;
+  - control characters are stripped;
+  - size caps apply;
+  - services and cases have their own strict validators (IDs, prices, colours, and only `/work` or `/media` assets).
+- **Uploads.** `/admin/media-upload` is for managers only; proxy.ts refuses cross-site requests.
+  - Images are decoded and re-encoded to WebP with sharp, and SVG is refused.
+  - Videos are checked by magic bytes.
+  - `/media/<file>` serves only registered names, with `nosniff`, a sandbox CSP, byte ranges and immutable caching.
+- **Translations.** Each translated field records a hash of the English it was written against, so the editor can flag fields whose English changed since.
+- **Routes.** `/portfolio/[slug]` is no longer limited to code projects: a project added in the CMS gets its page at once. Service-page routes stay fixed in code; their copy is editable.
+- **Tests.** 49 unit tests and 94 e2e tests. `tests/e2e/cms.spec.ts` covers draft privacy, preview, publish, history, placeholder and link checks, prices, hiding a service, uploads (WebP, SVG and fake files refused, anonymous and cross-site refused), and preview access. It runs after the other specs because it changes live content.

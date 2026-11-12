@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation.ts";
-import { getContent, getCatalogueCopy } from "@/content/index.ts";
-import { caseStudies } from "@/data/cases.ts";
-import { getService } from "@/data/services.ts";
+import { getCases, getCatalogue, getContent } from "@/lib/server/content.ts";
 import { pageMetadata } from "@/lib/metadata.ts";
 import { NextStep, PageHero } from "@/components/page/PageBlocks.tsx";
 import { CommerceMock, InsightMock, MessagingMock } from "@/components/home/StoryVisuals.tsx";
@@ -17,15 +15,18 @@ type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const { portfolioPage } = getContent(locale);
+  const { portfolioPage } = await getContent(locale);
   return pageMetadata({ title: portfolioPage.meta.title, description: portfolioPage.meta.description, path: "/portfolio", locale });
 }
 
 export default async function PortfolioPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const { portfolioPage, cases } = getContent(locale);
-  const copy = getCatalogueCopy(locale).serviceCopy;
+  const { portfolioPage, cases } = await getContent(locale);
+  const caseStudies = await getCases();
+  const live = await getCatalogue(locale);
+  const copy = live.copy.serviceCopy as Record<string, { name: string }>;
+  const getService = (id: string) => live.services.find((s) => s.id === id);
   const t = await getTranslations("common");
   const tp = await getTranslations("pages");
   const tw = await getTranslations("work");
@@ -96,9 +97,9 @@ export default async function PortfolioPage({ params }: Props) {
                   </ul>
                   <p className="eyebrow eyebrow--muted">{tp("servicesInvolved")}</p>
                   <ul role="list" className="concept__list">
-                    {c.services.map((id) => (
+                    {c.services.filter((id) => getService(id)).map((id) => (
                       <li key={id}>
-                        <Link href={getService(id).detailPage} className="fit__alt">
+                        <Link href={getService(id)!.detailPage} className="fit__alt">
                           <span>{copy[id].name}</span>
                           <PriceTag serviceId={id} size="s" showRenewal={false} />
                           <ArrowUpRight />

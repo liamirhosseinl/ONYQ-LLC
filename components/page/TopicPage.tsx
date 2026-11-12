@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation.ts";
-import { getContent } from "@/content/index.ts";
+import { getContent } from "@/lib/server/content.ts";
 import type { TopicSlug } from "@/content/types.ts";
 import { pageMetadata } from "@/lib/metadata.ts";
 import { isVisible } from "@/lib/site-mode.ts";
@@ -26,14 +26,14 @@ const SHAPE: Record<TopicSlug, "stone" | "ring" | "half" | "arc" | "spark" | "co
   "how-we-work": "tail",
 };
 
-export function topicMetadata(slug: TopicSlug, locale: string): Metadata {
-  const topic = getContent(locale).topics[slug];
+export async function topicMetadata(slug: TopicSlug, locale: string): Promise<Metadata> {
+  const topic = (await getContent(locale)).topics[slug];
   return pageMetadata({ title: topic.meta.title, description: topic.meta.description, path: `/${slug}`, locale });
 }
 
 export async function TopicPage({ slug }: { slug: TopicSlug }) {
   const locale = await getLocale();
-  const { topics } = getContent(locale);
+  const { topics } = await getContent(locale);
   const topic = topics[slug];
   const tNav = await getTranslations("nav");
   const tp = await getTranslations("pages");

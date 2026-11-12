@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation.ts";
-import { getContent } from "@/content/index.ts";
-import { caseStudies } from "@/data/cases.ts";
+import { getCases, getContent } from "@/lib/server/content.ts";
 import { pageMetadata } from "@/lib/metadata.ts";
 import { ScrollStory } from "@/components/motion/ScrollStory.tsx";
 import { Hero } from "@/components/home/Hero.tsx";
@@ -22,7 +21,7 @@ type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const { home } = getContent(locale);
+  const { home } = await getContent(locale);
   return { ...pageMetadata({ title: home.meta.title, description: home.meta.description, path: "/", locale }), title: { absolute: home.meta.title } };
 }
 
@@ -37,7 +36,8 @@ function TwoLine({ lines, as: Tag = "h2", className = "t-display" }: { lines: st
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const { home, cases } = getContent(locale);
+  const { home, cases } = await getContent(locale);
+  const caseStudies = await getCases();
   const t = await getTranslations("common");
   const tw = await getTranslations("work");
 

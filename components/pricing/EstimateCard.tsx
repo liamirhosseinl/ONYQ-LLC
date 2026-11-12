@@ -3,7 +3,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import { promotion } from "@/data/promotion.ts";
 import type { ServiceId } from "@/data/services.ts";
-import { getService } from "@/data/services.ts";
+import { useServiceLookup } from "@/components/site/CatalogueProvider.tsx";
 import { PriceTag, TimelineLabel } from "./PriceTag.tsx";
 import { CurrencyToggle, CurrencyNote } from "./CurrencyToggle.tsx";
 import { usePricing } from "./PricingProvider.tsx";
@@ -14,7 +14,8 @@ export function EstimateCard({ serviceId, label, included }: { serviceId: Servic
   const tp = useTranslations("price");
   const locale = useLocale();
   const { status } = usePricing();
-  const service = getService(serviceId);
+  const service = useServiceLookup()(serviceId);
+  if (!service) return null;
   return (
     <aside className="estimate" aria-label={tp("estimate", { label })} data-tilt="3">
       <div className="estimate__head mono">

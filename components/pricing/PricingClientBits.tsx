@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { services, type ServiceId } from "@/data/services.ts";
-import { getCatalogueCopy } from "@/content/catalogue.ts";
+import type { ServiceId } from "@/data/services.ts";
+import { useCatalogue } from "@/components/site/CatalogueProvider.tsx";
 import { PriceTag } from "./PriceTag.tsx";
 import { CurrencyNote, CurrencyToggle } from "./CurrencyToggle.tsx";
 import { getLenis } from "@/components/motion/MotionDirector.tsx";
@@ -13,8 +13,9 @@ import { usePricing } from "./PricingProvider.tsx";
 export function Receipt({ ids, title }: { ids?: ServiceId[]; title: string }) {
   const t = useTranslations("price");
   const locale = useLocale();
-  const copy = getCatalogueCopy(locale).serviceCopy;
-  const featured = ids ? ids.map((id) => services.find((s) => s.id === id)!) : services.filter((s) => s.featured);
+  const cat = useCatalogue(locale);
+  const copy = cat.copy.serviceCopy as Record<string, { name: string }>;
+  const featured = ids ? ids.map((id) => cat.services.find((s) => s.id === id)).filter((s) => s !== undefined) : cat.services.filter((s) => s.featured);
   return (
     <div className="receipt" aria-label={title} data-tilt="4">
       <div className="receipt__head mono">

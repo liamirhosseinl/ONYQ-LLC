@@ -4,10 +4,8 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation.ts";
-import { caseStudies, getCase } from "@/data/cases.ts";
-import { getService } from "@/data/services.ts";
 import { siteConfig } from "@/data/site-config.ts";
-import { getContent, getCatalogueCopy } from "@/content/index.ts";
+import { getCaseBySlug, getCases, getCatalogue, getContent } from "@/lib/server/content.ts";
 import { pageMetadata, absoluteUrl } from "@/lib/metadata.ts";
 import { Breadcrumbs, NextStep } from "@/components/page/PageBlocks.tsx";
 import { PriceTag } from "@/components/pricing/PriceTag.tsx";
@@ -18,17 +16,13 @@ import { formatNumber } from "@/lib/format.ts";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return caseStudies.map((c) => ({ slug: c.slug }));
-}
+// Projects can be added in Admin → Portfolio, so the list of case pages is read per request.
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
-  const study = getCase(slug);
+  const study = await getCaseBySlug(slug);
   if (!study) return {};
-  const copy = getContent(locale).cases[slug];
+  const copy = (await getContent(locale)).cases[slug];
   const meta = pageMetadata({ title: `${copy.name} — ${copy.industry}`, description: copy.summary, path: `/portfolio/${slug}`, locale });
   return {
     ...meta,
@@ -39,12 +33,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CasePage({ params }: Props) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
-  const study = getCase(slug);
+  const study = await getCaseBySlug(slug);
   if (!study) notFound();
+  const caseStudies = await getCases();
 
-  const { cases } = getContent(locale);
+  const { cases } = await getContent(locale);
   const copy = cases[slug];
-  const catalogue = getCatalogueCopy(locale).serviceCopy;
+  const live = await getCatalogue(locale);
+  const catalogue = live.copy.serviceCopy as Record<string, { name: string }>;
+  const getService = (id: string) => live.services.find((s) => s.id === id);
   const t = await getTranslations("work");
   const tp = await getTranslations("pages");
   const tNav = await getTranslations("nav");
@@ -265,9 +262,9 @@ export default async function CasePage({ params }: Props) {
             </Link>
           </div>
           <ul role="list" className="case-services__list" data-reveal-stagger>
-            {study.services.map((id) => (
+            {study.services.filter((id) => getService(id)).map((id) => (
               <li key={id}>
-                <Link href={getService(id).detailPage} className="case-services__item">
+                <Link href={getService(id)!.detailPage} className="case-services__item">
                   <span>{catalogue[id].name}</span>
                   <PriceTag serviceId={id} size="s" showRenewal={false} />
                   <ArrowUpRight />

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { getFormatter, getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation.ts";
-import { categories, servicesInCategory, PRICE_LIST_EFFECTIVE_FROM } from "@/data/services.ts";
-import { getContent, getCatalogueCopy } from "@/content/index.ts";
+import { PRICE_LIST_EFFECTIVE_FROM } from "@/data/services.ts";
+import { getCatalogue, getContent } from "@/lib/server/content.ts";
 import { Split } from "@/components/motion/Split.tsx";
 import { pageMetadata } from "@/lib/metadata.ts";
 import { isVisible } from "@/lib/site-mode.ts";
@@ -18,7 +18,7 @@ type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const { pricingPage } = getContent(locale);
+  const { pricingPage } = await getContent(locale);
   return pageMetadata({ title: pricingPage.meta.title, description: pricingPage.meta.description, path: "/price", locale });
 }
 
@@ -28,8 +28,11 @@ export default async function PricePage({ params }: Props) {
   const t = await getTranslations("common");
   const tp = await getTranslations("price");
   const format = await getFormatter();
-  const copy = getCatalogueCopy(locale);
-  const { pricingPage } = getContent(locale);
+  const catalogue = await getCatalogue(locale);
+  const copy = catalogue.copy;
+  const { pricingPage } = await getContent(locale);
+  const categories = catalogue.categories.filter((c) => catalogue.services.some((s) => s.category === c.id));
+  const servicesInCategory = (id: string) => catalogue.services.filter((s) => s.category === id);
   const tPages = await getTranslations("pages");
   const faq = pricingPage.faq.filter(isVisible);
 

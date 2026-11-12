@@ -4,7 +4,7 @@ import { DIRECTION_SLUGS, footerPopular } from "@/data/navigation.ts";
 import { siteConfig } from "@/data/site-config.ts";
 import { phoneList, telHref } from "@/lib/contact.ts";
 import { getSiteContact } from "@/lib/server/site-settings.ts";
-import { getCatalogueCopy } from "@/content/catalogue.ts";
+import { getCatalogue } from "@/lib/server/content.ts";
 import { OpenBriefButton } from "@/components/brief/OpenBriefButton.tsx";
 import { ArrowUpRight } from "@/components/ui/icons.tsx";
 import { Spark, Wordmark } from "@/components/ui/Wordmark.tsx";
@@ -33,7 +33,7 @@ export async function SiteFooter() {
   const tNav = await getTranslations("nav");
   const tA = await getTranslations("a11y");
   const locale = await getLocale();
-  const copy = getCatalogueCopy(locale);
+  const copy = (await getCatalogue(locale)).copy;
   const contact = getSiteContact();
   const c = contact;
   const hasContact = Boolean(

@@ -1,7 +1,8 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { getService, type ServiceId } from "@/data/services.ts";
+import type { ServiceId } from "@/data/services.ts";
+import { useServiceLookup } from "@/components/site/CatalogueProvider.tsx";
 import { formatMoney, quoteService } from "@/lib/pricing.ts";
 import { usePricing } from "./PricingProvider.tsx";
 
@@ -22,7 +23,8 @@ export function PriceTag({
   const tp = useTranslations("price");
   const locale = useLocale();
   const { currency, status, amd } = usePricing();
-  const service = getService(serviceId);
+  const service = useServiceLookup()(serviceId);
+  if (!service) return null;
   const quote = quoteService(service, status, currency, amd);
   const suffix = service.billingType === "monthly" ? t("perMonthSuffix") : "";
   const regular = `${formatMoney(quote.regular, locale)}${suffix}`;
@@ -63,7 +65,9 @@ export function PriceTag({
 /** Plain-language timeline label: "from 7 days", "from 3 weeks", "monthly". */
 export function TimelineLabel({ serviceId }: { serviceId: ServiceId }) {
   const t = useTranslations("common");
-  const tl = getService(serviceId).timeline;
+  const service = useServiceLookup()(serviceId);
+  if (!service) return null;
+  const tl = service.timeline;
   if (tl.kind === "monthly") return <>{t("monthly")}</>;
   if (tl.kind === "days") return <>{t("fromDays", { count: tl.from })}</>;
   if (tl.kind === "weeks") return <>{t("fromWeeks", { count: tl.from })}</>;

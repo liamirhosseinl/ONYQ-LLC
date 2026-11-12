@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import { getTranslations, getLocale } from "next-intl/server";
-import { getContent } from "@/content/index.ts";
+import { getContent } from "@/lib/server/content.ts";
 import { Spark } from "@/components/ui/Wordmark.tsx";
 import { formatNumber } from "@/lib/format.ts";
 
@@ -15,7 +15,7 @@ export async function Showcase() {
   const t = await getTranslations("mocks.showcase");
   const tc = await getTranslations("mocks.canvas");
   const locale = await getLocale();
-  const { cases } = getContent(locale);
+  const { cases } = await getContent(locale);
   const files = t.raw("intelligence.files") as string[];
   const flow = t.raw("intelligence.flow") as string[];
   const scope = t.raw("engineering.scope") as string[];

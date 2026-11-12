@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { services } from "@/data/services.ts";
 import { deliverEnquiry, deliveryChannel } from "@/lib/enquiry-delivery.ts";
 import type { Enquiry } from "@/lib/enquiry-schema.ts";
 import { vipCheckSchema, vipQuote, vipRequestSchema } from "@/lib/vip.ts";
@@ -8,6 +7,7 @@ import { clientIp, rateLimited, readJson, sameOrigin } from "@/lib/server/securi
 import { storeVipLead } from "@/lib/server/leads.ts";
 import { visitorId } from "@/lib/server/analytics.ts";
 import { audit } from "@/lib/server/audit.ts";
+import { getCatalogue } from "@/lib/server/content.ts";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -57,8 +57,10 @@ export async function POST(request: Request) {
     if (!vip) return deny(403, "unknown_code");
     if (r.website) return NextResponse.json({ ok: true });
 
-    const quote = vipQuote(r.services);
-    const areas = [...new Set(r.services.map((id) => services.find((s) => s.id === id)!.category))];
+    const { services } = await getCatalogue("en");
+    const quote = vipQuote(r.services, services);
+    if (!quote.lines.length) return deny(400, "invalid", { fields: ["services"] });
+    const areas = [...new Set(quote.lines.map((l) => services.find((s) => s.id === l.id)!.category))];
     const ua = request.headers.get("user-agent") || "";
 
     let leadId = 0;

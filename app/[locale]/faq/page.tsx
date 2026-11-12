@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation.ts";
-import { getContent } from "@/content/index.ts";
+import { getContent } from "@/lib/server/content.ts";
 import type { FaqItem } from "@/content/types.ts";
 import { pageMetadata } from "@/lib/metadata.ts";
 import { isVisible } from "@/lib/site-mode.ts";
@@ -14,14 +14,14 @@ type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const { faqPage } = getContent(locale);
+  const { faqPage } = await getContent(locale);
   return pageMetadata({ title: faqPage.meta.title, description: faqPage.meta.description, path: "/faq", locale });
 }
 
 export default async function FaqPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const { faqPage, pricingPage } = getContent(locale);
+  const { faqPage, pricingPage } = await getContent(locale);
   const tp = await getTranslations("pages");
   const t = await getTranslations("common");
 

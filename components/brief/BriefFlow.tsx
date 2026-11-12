@@ -12,10 +12,9 @@ import {
   TIMINGS,
   enquirySchema,
 } from "@/lib/enquiry-schema.ts";
-import { getService } from "@/data/services.ts";
 import { siteConfig } from "@/data/site-config.ts";
 import { useContact } from "@/components/site/ContactProvider.tsx";
-import { getCatalogueCopy } from "@/content/catalogue.ts";
+import { useCatalogue, useServiceLookup, type CatalogueValue } from "@/components/site/CatalogueProvider.tsx";
 import { formatMoney } from "@/lib/pricing.ts";
 import { Link } from "@/i18n/navigation.ts";
 import { ArrowLeft, ArrowRight, Check, Copy } from "@/components/ui/icons.tsx";
@@ -54,7 +53,9 @@ export function BriefFlow({ variant = "page" }: { variant?: "page" | "dialog" })
   const locale = useLocale();
   const { draft, update, reset, initialStep } = useBrief();
   const contact = useContact();
-  const copy = getCatalogueCopy(locale);
+  const catalogue = useCatalogue(locale);
+  const copy = catalogue.copy as CatalogueValue["copy"] & { serviceCopy: Record<string, { name: string; short: string }> };
+  const lookup = useServiceLookup();
   const formId = useId();
 
   const [step, setStep] = useState<StepId>(variant === "dialog" ? initialStep : "challenge");
@@ -76,7 +77,7 @@ export function BriefFlow({ variant = "page" }: { variant?: "page" | "dialog" })
     headingRef.current?.focus();
   }, [step, variant]);
 
-  const interest = draft.serviceId ? getService(draft.serviceId) : null;
+  const interest = draft.serviceId ? (lookup(draft.serviceId) ?? null) : null;
 
   function validate(fields: readonly string[]): FieldErrors {
     const result = enquirySchema.safeParse(toPayload(draft, locale));
@@ -139,7 +140,7 @@ export function BriefFlow({ variant = "page" }: { variant?: "page" | "dialog" })
     }
   }
 
-  const summaryText = useMemo(() => buildSummary(draft, t, copy.serviceCopy, locale), [draft, t, copy, locale]);
+  const summaryText = useMemo(() => buildSummary(draft, t, copy.serviceCopy, copy), [draft, t, copy]);
 
   async function copySummary() {
     try {
@@ -224,7 +225,7 @@ export function BriefFlow({ variant = "page" }: { variant?: "page" | "dialog" })
             <p className="brief__interest">
               <span className="mono">{t("interest")}</span>
               <span>
-                {copy.serviceCopy[interest.id].name} · {tPrice("from")}{" "}
+                {copy.serviceCopy[interest.id]?.name ?? interest.id} · {tPrice("from")}{" "}
                 {formatMoney({ amount: interest.regularPriceUsd, currency: "USD" }, locale)}
                 {interest.billingType === "monthly" ? tPrice("perMonthSuffix") : ""}
               </span>
@@ -411,7 +412,7 @@ export function BriefFlow({ variant = "page" }: { variant?: "page" | "dialog" })
                 <ReviewRow label={t("steps.challenge")} onEdit={() => goTo("challenge")} editLabel={t("edit")}>
                   {draft.challengeType ? <strong>{t(`challengeTypes.${draft.challengeType}`)}</strong> : null}
                   <span className="review__text">{draft.challenge}</span>
-                  {interest ? <span className="t-small">{t("interest")}: {copy.serviceCopy[interest.id].name}</span> : null}
+                  {interest ? <span className="t-small">{t("interest")}: {copy.serviceCopy[interest.id]?.name ?? interest.id}</span> : null}
                 </ReviewRow>
                 <ReviewRow label={t("steps.stage")} onEdit={() => goTo("stage")} editLabel={t("edit")}>
                   {draft.stage ? t(`stages.${draft.stage}`) : "—"}
@@ -529,7 +530,7 @@ function ReviewRow({ label, children, onEdit, editLabel }: { label: string; chil
 function SummaryList({ draft }: { draft: BriefDraft }) {
   const t = useTranslations("brief");
   const locale = useLocale();
-  const copy = getCatalogueCopy(locale);
+  const copy = useCatalogue(locale).copy;
   const rows: [string, string | null][] = [
     [t("steps.challenge"), draft.challengeType ? `${t(`challengeTypes.${draft.challengeType}`)}${draft.challenge ? ` — ${draft.challenge}` : ""}` : draft.challenge || null],
     [t("steps.stage"), draft.stage ? t(`stages.${draft.stage}`) : null],
@@ -554,14 +555,13 @@ function SummaryList({ draft }: { draft: BriefDraft }) {
 function buildSummary(
   d: BriefDraft,
   t: ReturnType<typeof useTranslations<"brief">>,
-  serviceCopy: ReturnType<typeof getCatalogueCopy>["serviceCopy"],
-  locale: string,
+  serviceCopy: Record<string, { name: string }>,
+  copy: CatalogueValue["copy"],
 ): string {
-  const copy = getCatalogueCopy(locale);
   const lines = [
     `${t("steps.challenge")}: ${d.challengeType ? t(`challengeTypes.${d.challengeType}`) : "—"}`,
     d.challenge,
-    d.serviceId ? `${t("interest")}: ${serviceCopy[d.serviceId].name}` : "",
+    d.serviceId ? `${t("interest")}: ${serviceCopy[d.serviceId]?.name ?? d.serviceId}` : "",
     `${t("steps.stage")}: ${d.stage ? t(`stages.${d.stage}`) : "—"}`,
     `${t("steps.areas")}: ${d.areas.map((a) => copy.categoryCopy[a].title).join(", ") || "—"}`,
     `${t("q.budgetLabel")}: ${d.budget ? t(`budgets.${d.budget}`) : "—"}`,

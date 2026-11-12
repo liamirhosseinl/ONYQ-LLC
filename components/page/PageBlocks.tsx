@@ -2,9 +2,8 @@ import type { ReactNode } from "react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation.ts";
 import type { ServiceId } from "@/data/services.ts";
-import { getService } from "@/data/services.ts";
 import { getSiteContact } from "@/lib/server/site-settings.ts";
-import { getCatalogueCopy } from "@/content/catalogue.ts";
+import { getCatalogue } from "@/lib/server/content.ts";
 import { isVisible } from "@/lib/site-mode.ts";
 import { OpenBriefButton } from "@/components/brief/OpenBriefButton.tsx";
 import { PriceTag, TimelineLabel } from "@/components/pricing/PriceTag.tsx";
@@ -101,8 +100,11 @@ export async function PriceRow({ id, headingLevel = "h3" }: { id: ServiceId; hea
   const locale = await getLocale();
   const t = await getTranslations("common");
   const tp = await getTranslations("price");
-  const copy = getCatalogueCopy(locale).serviceCopy[id];
-  const service = getService(id);
+  const cat = await getCatalogue(locale);
+  const service = cat.services.find((s) => s.id === id);
+  // Hidden in Admin → Services: the row disappears everywhere at once.
+  if (!service) return null;
+  const copy = (cat.copy.serviceCopy as Record<string, { name: string; short: string }>)[id];
   const H = headingLevel;
   return (
     <li className="price-row" id={`service-${id}`}>
@@ -130,10 +132,12 @@ export async function PriceRow({ id, headingLevel = "h3" }: { id: ServiceId; hea
 }
 
 export async function ServiceCards({ ids, title }: { ids: ServiceId[]; title: string }) {
-  if (ids.length === 0) return null;
   const locale = await getLocale();
+  const cat = await getCatalogue(locale);
+  const visible = ids.filter((id) => cat.services.some((s) => s.id === id));
+  if (visible.length === 0) return null;
   const tp = await getTranslations("pages");
-  const copy = getCatalogueCopy(locale).serviceCopy;
+  const copy = cat.copy.serviceCopy as Record<string, { name: string; short: string }>;
   return (
     <section className="section service-cards" aria-labelledby="service-cards-title">
       <div className="wrap">
@@ -146,8 +150,8 @@ export async function ServiceCards({ ids, title }: { ids: ServiceId[]; title: st
           </Link>
         </div>
         <ul role="list" className="service-cards__grid" data-reveal-stagger>
-          {ids.map((id) => {
-            const s = getService(id);
+          {visible.map((id) => {
+            const s = cat.services.find((x) => x.id === id)!;
             return (
               <li key={id} className="service-card spotlight" data-tilt="4">
                 <Link href={s.detailPage} className="service-card__link">

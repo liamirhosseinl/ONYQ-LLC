@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { getContent } from "@/content/index.ts";
+import { getContent } from "@/lib/server/content.ts";
 import { getSiteContact } from "@/lib/server/site-settings.ts";
 import { pageMetadata } from "@/lib/metadata.ts";
 import { PageHero } from "@/components/page/PageBlocks.tsx";
@@ -12,14 +12,14 @@ type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const { contactsPage } = getContent(locale);
+  const { contactsPage } = await getContent(locale);
   return pageMetadata({ title: contactsPage.meta.title, description: contactsPage.meta.description, path: "/contacts", locale });
 }
 
 export default async function ContactsPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const { contactsPage } = getContent(locale);
+  const { contactsPage } = await getContent(locale);
   const tp = await getTranslations("pages");
   const tf = await getTranslations("footer");
   const tb = await getTranslations("brief");

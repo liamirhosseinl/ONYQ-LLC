@@ -4,7 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import { track } from "@/components/analytics/Tracker.tsx";
 import type { ServiceId, CategoryId } from "@/data/services.ts";
 import type { CountryCode } from "@/lib/phone.ts";
-import { getService } from "@/data/services.ts";
+import { useServiceLookup } from "@/components/site/CatalogueProvider.tsx";
 import { SERVICE_AREAS, type BUDGETS, type CHALLENGE_TYPES, type STAGES, type TIMINGS } from "@/lib/enquiry-schema.ts";
 import { BriefDialog } from "./BriefDialog.tsx";
 
@@ -111,11 +111,12 @@ export function BriefProvider({ children }: { children: ReactNode }) {
   const update = useCallback((patch: Partial<BriefDraft>) => setDraft((d) => ({ ...d, ...patch })), []);
   const reset = useCallback(() => setDraft(EMPTY_DRAFT), []);
 
+  const lookup = useServiceLookup();
   const open = useCallback((options: OpenOptions = {}) => {
     returnFocus.current = (document.activeElement as HTMLElement) ?? null;
     track("brief_open", options.serviceId ? { service: options.serviceId } : undefined);
-    if (options.serviceId) {
-      const service = getService(options.serviceId);
+    const service = options.serviceId ? lookup(options.serviceId) : undefined;
+    if (options.serviceId && service) {
       setDraft((d) => ({
         ...d,
         serviceId: options.serviceId,
@@ -125,7 +126,7 @@ export function BriefProvider({ children }: { children: ReactNode }) {
     }
     setInitialStep(options.step ?? "challenge");
     setOpen(true);
-  }, []);
+  }, [lookup]);
 
   const close = useCallback(() => {
     setOpen(false);

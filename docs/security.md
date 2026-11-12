@@ -147,3 +147,14 @@ A white-box code review and a black-box attack run (125 checks) against a produc
 - There are no open redirects, and the Host header can't poison redirects.
 - Sign-in locks after 5 wrong passwords per account, with no oracle during the lockout.
 - Oversized bodies are refused, and the server stays up under parallel sign-ins.
+
+## 9. Content management (v6)
+
+| Area | Control |
+|---|---|
+| Who can edit | Server actions check the role on every call. Managers can save drafts; admins and owners can publish, restore and delete media. Everything is audited. |
+| Drafts | Shown only to a signed-in manager+ with the preview cookie (HttpOnly, SameSite=Lax, Secure). The preview redirect accepts site paths only, so it can't be used as an open redirect. |
+| Stored content | Rendered through React (escaped). JSON-LD escapes `<`. Interface strings must keep their placeholders and parse as ICU. Links are limited to site paths, https, mailto and tel. Control and bidi-override characters are stripped. Technical keys can't be changed. |
+| Uploads | Same-site POST only (proxy). Size caps: 25 MB images, 80 MB videos. 60 uploads per hour per user. Images are re-encoded to WebP, which removes metadata and anything hidden in the file; SVG is refused. Videos must be real MP4 or WebM by their first bytes. Files are stored in the private data volume under random names. |
+| Serving media | Only names registered in the database, matching a strict pattern (no paths). The stored Content-Type, `nosniff`, `Content-Security-Policy: default-src 'none'; sandbox`, CORP same-origin. |
+| Images on pages | The Next.js image optimiser is limited to `/work/**` and `/media/**`, with no remote hosts and no SVG. |

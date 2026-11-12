@@ -9,8 +9,12 @@ const nextConfig: NextConfig = {
   // Admin forms are small; refuse anything bigger than 256 KB before parsing it.
   experimental: { serverActions: { bodySizeLimit: "256kb" } },
   images: {
-    // Only our own portfolio images may be optimised: no remote hosts, no SVG, no query strings.
-    localPatterns: [{ pathname: "/work/**", search: "" }],
+    // Only our own images may be optimised: no remote hosts, no SVG, no query strings.
+    // Our own portfolio images and images uploaded in Admin → Content → Media.
+    localPatterns: [
+      { pathname: "/work/**", search: "" },
+      { pathname: "/media/**", search: "" },
+    ],
     remotePatterns: [],
     dangerouslyAllowSVG: false,
     qualities: [75],

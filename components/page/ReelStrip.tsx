@@ -1,7 +1,6 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation.ts";
-import { getCase } from "@/data/cases.ts";
-import { getContent } from "@/content/index.ts";
+import { getCaseBySlug, getContent } from "@/lib/server/content.ts";
 import { Split } from "@/components/motion/Split.tsx";
 import { ArrowUpRight } from "@/components/ui/icons.tsx";
 
@@ -10,9 +9,9 @@ export async function ReelStrip() {
   const locale = await getLocale();
   const tp = await getTranslations("pages");
   const tw = await getTranslations("work");
-  const study = getCase("amir-khaldari");
+  const study = await getCaseBySlug("amir-khaldari");
   if (!study) return null;
-  const copy = getContent(locale).cases[study.slug];
+  const copy = (await getContent(locale)).cases[study.slug];
   const reels = study.gallery.filter((g) => g.video).slice(0, 4);
   return (
     <section className="section reel-strip" aria-labelledby="reel-strip-title">

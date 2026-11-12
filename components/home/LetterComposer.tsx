@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { CHALLENGE_TYPES, SERVICE_AREAS, TIMINGS } from "@/lib/enquiry-schema.ts";
-import { getCatalogueCopy } from "@/content/catalogue.ts";
+import { useCatalogue } from "@/components/site/CatalogueProvider.tsx";
 import { useBrief, type Area } from "@/components/brief/BriefProvider.tsx";
 import { ArrowUpRight, Replay } from "@/components/ui/icons.tsx";
 
@@ -18,7 +18,7 @@ export function LetterComposer() {
   const t = useTranslations("letter");
   const tb = useTranslations("brief");
   const locale = useLocale();
-  const copy = getCatalogueCopy(locale);
+  const copy = useCatalogue(locale).copy;
   const { draft, update, open } = useBrief();
   const [active, setActive] = useState<Line>(0);
   const [typed, setTyped] = useState<Line | null>(null);

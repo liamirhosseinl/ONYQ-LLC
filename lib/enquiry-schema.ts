@@ -1,8 +1,7 @@
 import { z } from "zod";
-import { services, type ServiceId } from "../data/services.ts";
+import type { ServiceId } from "../data/services.ts";
 import { formatPhone } from "./phone.ts";
 
-const SERVICE_IDS = services.map((s) => s.id) as [ServiceId, ...ServiceId[]];
 
 export const CHALLENGE_TYPES = [
   "website",
@@ -51,7 +50,12 @@ export const enquirySchema = z.object({
     .refine((v) => !v || formatPhone(v) !== null, "phone_invalid")
     .transform((v) => (v ? (formatPhone(v) ?? v) : v)),
   /** Set when the brief was opened from a specific price entry. */
-  serviceId: z.enum(SERVICE_IDS).optional(),
+  // Checked against the live catalogue on the server (services can be added in the CMS).
+  serviceId: z
+    .string()
+    .regex(/^[a-z0-9][a-z0-9-]{1,48}$/)
+    .transform((v) => v as ServiceId)
+    .optional(),
   locale: z.enum(["en", "ru", "hy"]).default("en").catch("en"),
   /** Page the brief was sent from (for the admin inbox). */
   page: z

@@ -234,3 +234,46 @@
     gap: 32px 20px;
   }
 }
+
+/* CMS preview bar (admins only, components/site/CmsPreviewBar.tsx) */
+.cms-preview-bar {
+  position: fixed;
+  z-index: 90;
+  left: 50%;
+  bottom: 16px;
+  translate: -50% 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  width: max-content;
+  max-width: calc(100vw - 24px);
+  padding: 10px 16px;
+  border-radius: 16px;
+  background: #15130c;
+  color: #fbf3df;
+  font-size: 0.85rem;
+  box-shadow: 0 18px 50px -12px rgb(0 0 0 / 0.55), 0 0 0 1px rgb(211 173 99 / 0.45);
+}
+
+.cms-preview-bar a {
+  color: #f1dfb4;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cms-preview-bar__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #d3ad63;
+  box-shadow: 0 0 0 4px rgb(211 173 99 / 0.25);
+  animation: cms-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes cms-pulse {
+  50% {
+    box-shadow: 0 0 0 7px rgb(211 173 99 / 0.08);
+  }
+}

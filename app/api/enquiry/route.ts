@@ -5,6 +5,7 @@ import { clientIp, rateLimited, readJson, sameOrigin } from "@/lib/server/securi
 import { storeLead } from "@/lib/server/leads.ts";
 import { visitorId } from "@/lib/server/analytics.ts";
 import { audit } from "@/lib/server/audit.ts";
+import { getCatalogue } from "@/lib/server/content.ts";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -35,6 +36,8 @@ export async function POST(request: Request) {
 
   // Honeypot filled → pretend success to the bot, keep nothing.
   if (parsed.data.website) return NextResponse.json({ ok: true });
+  // A price entry that no longer exists (or never did) is simply dropped.
+  if (parsed.data.serviceId && !(await getCatalogue("en")).all.some((s) => s.id === parsed.data.serviceId)) parsed.data.serviceId = undefined;
 
   const ua = request.headers.get("user-agent") || "";
   let leadId: number;

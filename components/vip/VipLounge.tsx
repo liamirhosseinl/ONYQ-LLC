@@ -2,10 +2,10 @@
 
 import { useEffect, useId, useMemo, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { categories, services, type ServiceId } from "@/data/services.ts";
-import { getCatalogueCopy } from "@/content/catalogue.ts";
+import type { ServiceId } from "@/data/services.ts";
+import { useCatalogue } from "@/components/site/CatalogueProvider.tsx";
 import { convertUsd, formatMoney } from "@/lib/pricing.ts";
-import { VIP_DISCOUNT_PERCENT, vipQuote, vipRequestSchema } from "@/lib/vip.ts";
+import { VIP_DISCOUNT_PERCENT, vipPriceUsd, vipQuote, vipRequestSchema } from "@/lib/vip.ts";
 import type { CountryCode } from "@/lib/phone.ts";
 import { usePricing } from "@/components/pricing/PricingProvider.tsx";
 import { CurrencyNote, CurrencyToggle } from "@/components/pricing/CurrencyToggle.tsx";
@@ -28,7 +28,9 @@ const STORE = "onyq.vip.v1";
 export function VipLounge() {
   const t = useTranslations("vip");
   const locale = useLocale();
-  const copy = getCatalogueCopy(locale);
+  const catalogue = useCatalogue(locale);
+  const { categories, services } = catalogue;
+  const copy = catalogue.copy as typeof catalogue.copy & { serviceCopy: Record<string, { name: string; short: string }> };
   const { currency, amd } = usePricing();
   const uid = useId();
 
@@ -69,7 +71,7 @@ export function VipLounge() {
   }, [phase]);
 
   const money = (usd: number) => formatMoney({ amount: convertUsd(usd, currency, amd), currency }, locale);
-  const quote = useMemo(() => vipQuote(picked), [picked]);
+  const quote = useMemo(() => vipQuote(picked, services), [picked, services]);
   const saved = quote.oneTime.regularUsd - quote.oneTime.vipUsd + (quote.monthly.regularUsd - quote.monthly.vipUsd);
 
   async function unlock(e: FormEvent) {
@@ -314,7 +316,7 @@ export function VipLounge() {
                           .filter((s) => s.category === cat.id)
                           .map((s) => {
                             const on = picked.includes(s.id);
-                            const vipUsd = quote.lines.find((l) => l.id === s.id)?.vipUsd ?? vipQuote([s.id]).lines[0].vipUsd;
+                            const vipUsd = vipPriceUsd(s.regularPriceUsd);
                             const per = s.billingType === "monthly" ? t("perMonth") : "";
                             return (
                               <label key={s.id} className="vip-card" data-on={on ? "true" : undefined}>

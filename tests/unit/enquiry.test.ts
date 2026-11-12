@@ -33,8 +33,9 @@ test("validation errors carry message keys used by the form", () => {
   assert.equal(byField.name, "name_required");
 });
 
-test("unknown service ids and categories are rejected", () => {
-  assert.equal(enquirySchema.safeParse({ ...valid, serviceId: "rocket" }).success, false);
+test("malformed service ids and unknown categories are rejected (existence is checked by the API)", () => {
+  assert.equal(enquirySchema.safeParse({ ...valid, serviceId: "Rocket!" }).success, false);
+  assert.equal(enquirySchema.safeParse({ ...valid, serviceId: "<script>" }).success, false);
   assert.equal(enquirySchema.safeParse({ ...valid, areas: ["websites", "space"] }).success, false);
 });
 

@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation.ts";
 import { DIRECTION_SLUGS } from "@/data/navigation.ts";
-import { categories, servicesInCategory } from "@/data/services.ts";
-import { getContent, getCatalogueCopy } from "@/content/index.ts";
+import { getCatalogue, getContent } from "@/lib/server/content.ts";
 import { Split } from "@/components/motion/Split.tsx";
 import { pageMetadata } from "@/lib/metadata.ts";
 import { NextStep, PageHero } from "@/components/page/PageBlocks.tsx";
@@ -24,8 +23,11 @@ export default async function ServicesPage({ params }: Props) {
   const t = await getTranslations("common");
   const tp = await getTranslations("pages");
   const tNav = await getTranslations("nav");
-  const copy = getCatalogueCopy(locale);
-  const { topics } = getContent(locale);
+  const catalogue = await getCatalogue(locale);
+  const copy = catalogue.copy as typeof catalogue.copy & { serviceCopy: Record<string, { name: string; short: string }> };
+  const { topics } = await getContent(locale);
+  const categories = catalogue.categories.filter((c) => catalogue.services.some((s) => s.category === c.id));
+  const servicesInCategory = (id: string) => catalogue.services.filter((s) => s.category === id);
 
   return (
     <>

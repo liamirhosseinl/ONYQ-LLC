@@ -2,12 +2,16 @@ import type { MetadataRoute } from "next";
 import { ENABLED_LOCALES, DEFAULT_LOCALE } from "@/data/locales.ts";
 import { siteConfig } from "@/data/site-config.ts";
 import { servicePages } from "@/content/en/service-pages.ts";
-import { caseStudies } from "@/data/cases.ts";
+import { effective, type CaseEntry } from "@/lib/server/cms.ts";
+import { GLOBAL } from "@/lib/cms/registry.ts";
 import { DIRECTION_SLUGS } from "@/data/navigation.ts";
 import { absoluteUrl } from "@/lib/metadata.ts";
 
 /** Only routes that exist and only locales that are enabled. Legal pages appear once published. */
+export const dynamic = "force-dynamic";
+
 export default function sitemap(): MetadataRoute.Sitemap {
+  const caseStudies = effective<CaseEntry[]>("cases", GLOBAL, "published").filter((c) => !c.hidden);
   const paths = [
     "/",
     "/services",

@@ -18,6 +18,9 @@ import { Cursor } from "@/components/motion/Cursor.tsx";
 import { Tracker } from "@/components/analytics/Tracker.tsx";
 import { ContactProvider } from "@/components/site/ContactProvider.tsx";
 import { getSiteContact } from "@/lib/server/site-settings.ts";
+import { CatalogueProvider } from "@/components/site/CatalogueProvider.tsx";
+import { getCatalogue, isPreview } from "@/lib/server/content.ts";
+import { CmsPreviewBar } from "@/components/site/CmsPreviewBar.tsx";
 import "../globals.css";
 
 export function generateStaticParams() {
@@ -56,6 +59,8 @@ export default async function LocaleLayout({
   // Per-request CSP nonce set by proxy.ts (pages are rendered per request for this reason).
   const nonce = (await headers()).get("x-nonce") ?? undefined;
   const { securityEmail: _s, ...publicContact } = getSiteContact();
+  const catalogue = await getCatalogue(locale);
+  const preview = await isPreview();
 
   return (
     <html lang={LOCALE_LABELS[locale as AppLocale].htmlLang} suppressHydrationWarning>
@@ -75,6 +80,7 @@ export default async function LocaleLayout({
         <Cursor />
         <ContactProvider value={publicContact}>
         <NextIntlClientProvider>
+          <CatalogueProvider value={catalogue}>
           <PricingProvider>
             <BriefProvider>
               <SiteHeader />
@@ -83,8 +89,10 @@ export default async function LocaleLayout({
               </main>
               <SiteFooter />
               <PreviewRibbon />
+              {preview ? <CmsPreviewBar /> : null}
             </BriefProvider>
           </PricingProvider>
+          </CatalogueProvider>
         </NextIntlClientProvider>
         </ContactProvider>
       </body>

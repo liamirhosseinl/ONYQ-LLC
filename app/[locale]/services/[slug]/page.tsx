@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation.ts";
-import { getContent, getCatalogueCopy } from "@/content/index.ts";
+import { getCatalogue, getContent } from "@/lib/server/content.ts";
 import { servicePages as enServicePages } from "@/content/en/service-pages.ts";
 import { Split } from "@/components/motion/Split.tsx";
-import { getService } from "@/data/services.ts";
 import { siteConfig } from "@/data/site-config.ts";
 import { pageMetadata, absoluteUrl } from "@/lib/metadata.ts";
 import { isVisible } from "@/lib/site-mode.ts";
@@ -26,7 +25,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
-  const page = getContent(locale).servicePages.find((p) => p.slug === slug);
+  const page = (await getContent(locale)).servicePages.find((p) => p.slug === slug);
   if (!page) return {};
   return pageMetadata({ title: page.meta.title, description: page.meta.description, path: `/services/${slug}`, locale });
 }
@@ -34,16 +33,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ServiceDetailPage({ params }: Props) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
-  const { servicePages, topics } = getContent(locale);
+  const { servicePages, topics } = await getContent(locale);
   const page = servicePages.find((p) => p.slug === slug);
   if (!page) notFound();
 
   const t = await getTranslations("common");
   const tp = await getTranslations("pages");
   const tNav = await getTranslations("nav");
-  const copy = getCatalogueCopy(locale);
+  const catalogue = await getCatalogue(locale);
+  const copy = catalogue.copy as typeof catalogue.copy & { serviceCopy: Record<string, { name: string; short: string }> };
+  const shown = (id: string) => catalogue.services.find((s) => s.id === id);
   const direction = topics[page.direction];
-  const primary = getService(page.primary);
+  const primary = catalogue.all.find((s) => s.id === page.primary);
+  if (!primary) notFound();
   const faq = page.faq.filter(isVisible);
 
   const jsonLd = [
@@ -162,7 +164,8 @@ export default async function ServiceDetailPage({ params }: Props) {
             <h2 className="t-h3">{tp("betterElse")}</h2>
             <ul role="list">
               {page.notFit.map((n) => {
-                const alt = getService(n.alt);
+                const alt = shown(n.alt);
+                if (!alt) return null;
                 return (
                   <li key={n.text}>
                     <p>{n.text}</p>
@@ -228,9 +231,9 @@ export default async function ServiceDetailPage({ params }: Props) {
             </Link>
           </div>
           <ul role="list" className="see-also__grid" data-reveal-stagger>
-            {page.seeAlso.map((id) => (
+            {page.seeAlso.filter((id) => shown(id)).map((id) => (
               <li key={id}>
-                <Link href={getService(id).detailPage} className="see-also__card spotlight" data-tilt="4">
+                <Link href={shown(id)!.detailPage} className="see-also__card spotlight" data-tilt="4">
                   <span className="t-h4">{copy.serviceCopy[id].name}</span>
                   <PriceTag serviceId={id} size="s" showRenewal={false} />
                 </Link>

@@ -34,3 +34,53 @@ The search box at the top finds clients, briefs, invoices and deals.
 - **VIP requests:** requests from the VIP lounge (`/vip`) land in the Inbox with a gold "VIP · business name" chip. The request page shows the chosen services with public and VIP (−60%) prices. Invitation codes have the form `business/963`: give the client the business name followed by `/963`. To change the secret part, set `ONYQ_VIP_SUFFIX` on the server; codes with the old suffix stop working immediately.
 
 Admin pages, bots, automated browsers and visitors who send a Global Privacy Control ("do not track") signal are not counted.
+
+## Website content (CMS)
+
+Everything visitors read on onyq.am can be changed in the panel without touching code. That covers every text in all three languages, prices, services, portfolio projects, images and the interface words (menus, buttons, form labels).
+
+**Where to find it** (left menu → *Website*):
+
+- **Content** lists every section of the site: pages, service pages, direction pages, project texts, service names and interface texts. Each language has a dot:
+  - grey: the original text;
+  - green: edited and live;
+  - amber: a draft that isn't published yet.
+- **Services & prices** is the price list: price in USD, one-time or monthly, timeline, category, order, "top" (shown in *Most requested*) and visible/hidden.
+  - **Add a service** needs an ID and a name in all three languages.
+  - Its description and name can later be edited in *Service names, descriptions & categories*.
+- **Portfolio** holds the projects: order, visible/hidden, client name, website, year, status (live or preview), accent colours, headline number, directions, services used, cover and gallery images, and videos.
+  - **Add a project** needs an address, an English name and a cover image.
+  - Its story is written in the project's texts, per language.
+- **Media** is the library. Upload images (JPG, PNG, WebP or AVIF, up to 25 MB; they are converted to WebP, max 2400 px wide) and videos (MP4 or WebM, up to 80 MB).
+  - Files already used on the site are listed too.
+  - An upload can be deleted only when no page uses it.
+
+**How a change goes live:**
+
+1. Edit, then **Save draft** (or press Ctrl/Cmd + S). Visitors still see the old version.
+2. **Preview ↗** opens the site with your drafts. A gold bar at the bottom says you are in preview; **Exit preview** returns to the live view. Only signed-in editors can see drafts.
+3. **Publish** makes the change live at once. *Content → Publish all drafts* publishes everything waiting.
+4. **History** (at the bottom of every editor) lists each published version. **Restore as draft** brings an older one back, including the original text.
+
+**Translations.**
+
+- When you edit Russian or Armenian, the English text is shown under every field.
+- If the English is changed later, the field is marked **"English changed — check"**. Either update the translation, or click **Still correct**.
+- **Only fields whose English changed** shows just those fields.
+
+**Safety rails:**
+
+- Interface texts keep their placeholders. `{count}`, `{name}` and tags like `<b>…</b>` must stay exactly as they are, or the save is refused with an explanation.
+- Links must start with `/` (a page of this site), `https://`, `mailto:` or `tel:`.
+- Technical keys (IDs, page addresses) are shown, not edited.
+- Lists whose length is part of the design are fixed. Examples: two-line titles, and story steps that each have their own picture.
+
+**Who can do what:**
+
+| Role | Content |
+|---|---|
+| viewer | see the editors |
+| manager | edit, save drafts, preview, upload media |
+| admin / owner | publish, restore versions, delete media |
+
+Every save, publish, restore and upload is in the **Audit log**.

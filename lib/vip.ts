@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { services, type ServiceId } from "../data/services.ts";
+import { services as codeServices, type ServiceId, type ServicePrice } from "../data/services.ts";
 import { discountedUsd } from "./pricing.ts";
 import { formatPhone } from "./phone.ts";
 
@@ -16,8 +16,6 @@ export function vipPriceUsd(regularUsd: number): number {
   return discountedUsd(regularUsd, VIP_DISCOUNT_PERCENT);
 }
 
-const SERVICE_IDS = services.map((s) => s.id) as [ServiceId, ...ServiceId[]];
-
 export const vipCheckSchema = z.object({
   code: z.string().trim().min(3).max(120),
 });
@@ -25,7 +23,8 @@ export const vipCheckSchema = z.object({
 export const vipRequestSchema = z.object({
   code: z.string().trim().min(3).max(120),
   needs: z.string().trim().min(10, "needs_short").max(3000, "needs_long"),
-  services: z.array(z.enum(SERVICE_IDS)).min(1, "services_none").max(SERVICE_IDS.length),
+  // IDs are checked against the live catalogue on the server (services can be added in the CMS).
+  services: z.array(z.string().regex(/^[a-z0-9][a-z0-9-]{1,48}$/)).min(1, "services_none").max(80),
   name: z.string().trim().min(2, "name_required").max(120, "name_long"),
   phone: z
     .string()
@@ -48,11 +47,11 @@ export interface VipLine {
   vipUsd: number;
 }
 
-/** Prices are always recomputed from the catalogue — never taken from the browser. */
-export function vipQuote(ids: ServiceId[]) {
-  const lines: VipLine[] = [...new Set(ids)].map((id) => {
-    const s = services.find((x) => x.id === id)!;
-    return { id, billing: s.billingType, regularUsd: s.regularPriceUsd, vipUsd: vipPriceUsd(s.regularPriceUsd) };
+/** Prices are always recomputed from the catalogue — never taken from the browser. Unknown IDs are dropped. */
+export function vipQuote(ids: string[], catalogue: Pick<ServicePrice, "id" | "billingType" | "regularPriceUsd">[] = codeServices) {
+  const lines: VipLine[] = [...new Set(ids)].flatMap((id) => {
+    const s = catalogue.find((x) => x.id === id);
+    return s ? [{ id: s.id as ServiceId, billing: s.billingType, regularUsd: s.regularPriceUsd, vipUsd: vipPriceUsd(s.regularPriceUsd) }] : [];
   });
   const sum = (b: VipLine["billing"], k: "regularUsd" | "vipUsd") =>
     Math.round(lines.filter((l) => l.billing === b).reduce((n, l) => n + l[k], 0) * 100) / 100;
