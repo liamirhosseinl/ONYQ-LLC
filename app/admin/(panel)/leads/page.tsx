@@ -64,7 +64,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
                       </Link>
                     </td>
                     <td className="a-clip">
-                      <span className="a-chip">{l.challenge_type}</span> {l.challenge}
+                      {l.vip_business ? <span className="a-chip a-chip--vip">VIP · {l.vip_business}</span> : <span className="a-chip">{l.challenge_type}</span>} {l.challenge}
                     </td>
                     <td>{l.budget ? BUDGET[l.budget] : "—"}</td>
                     <td>

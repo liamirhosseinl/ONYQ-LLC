@@ -40,7 +40,6 @@ test("navigation, footer and topic links point to real routes", () => {
   for (const slug of footerPopular) assert.ok(servicePageSlugs.has(slug), slug);
   for (const slug of DIRECTION_SLUGS) assert.ok(appRoutes.has(slug), slug);
   for (const t of Object.values(topics)) for (const r of t.related) assert.ok(appRoutes.has(r), `${t.slug} → ${r}`);
-  for (const l of home.promise.links) assert.ok(routeExists(l.href), l.href);
 });
 
 test("every catalogue entry has copy, and service pages reference real services", () => {

@@ -38,14 +38,15 @@ export function getSiteContact(): SiteContact {
     const parsed = contactSchema.partial().safeParse(JSON.parse(row.value));
     if (!parsed.success) return base;
     const v = parsed.data;
-    const clean = (x: string | null | undefined, fallback: string | null) => (x === undefined ? fallback : x || null);
+    // An empty value in Admin → Settings falls back to the approved default in data/site-config.ts.
+    const clean = (x: string | null | undefined, fallback: string | null) => (x ? x : fallback);
     return {
       salesEmail: clean(v.salesEmail, base.salesEmail),
       telegram: clean(v.telegram, base.telegram),
       whatsapp: clean(v.whatsapp, base.whatsapp),
       phone: clean(v.phone, base.phone),
       securityEmail: clean(v.securityEmail, null),
-      social: v.social ?? base.social,
+      social: v.social?.length ? v.social : base.social,
     };
   } catch {
     return base;

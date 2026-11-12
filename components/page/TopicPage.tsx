@@ -13,6 +13,7 @@ import { ExploreDiscipline } from "./ExploreDiscipline.tsx";
 import { Receipt } from "@/components/pricing/PricingClientBits.tsx";
 import { NextStep, PageHero, ServiceCards } from "./PageBlocks.tsx";
 import { ReelStrip } from "./ReelStrip.tsx";
+import { Journey } from "@/components/home/Journey.tsx";
 
 const SHAPE: Record<TopicSlug, "stone" | "ring" | "half" | "arc" | "spark" | "constellation" | "tail"> = {
   design: "spark",
@@ -21,9 +22,6 @@ const SHAPE: Record<TopicSlug, "stone" | "ring" | "half" | "arc" | "spark" | "co
   "mobile-apps": "half",
   marketing: "arc",
   content: "spark",
-  gamification: "spark",
-  "business-analytics": "ring",
-  "financial-consulting": "arc",
   about: "constellation",
   "how-we-work": "tail",
 };
@@ -71,6 +69,7 @@ export async function TopicPage({ slug }: { slug: TopicSlug }) {
             exploreLabel={isDirection ? tp("exploreDiscipline") : tp("explore")}
             caption={tp("approachCaption")}
             panelLabel={tp("whatWeDo")}
+            scenes={slug === "how-we-work" ? <Journey only={["research", "design", "develop", "product"]} className="journey--explore" /> : undefined}
             art={
               <>
                 <SparkStone id={`topic-${slug}`} className="explore__stone" />
@@ -78,26 +77,6 @@ export async function TopicPage({ slug }: { slug: TopicSlug }) {
               </>
             }
           />
-        </div>
-      </section>
-
-      <section className="section inside" aria-labelledby="inside-title">
-        <div className="wrap">
-          <div className="section-head">
-            <h2 id="inside-title" className="t-h3">
-              <Split text={tp("whatsInside")} />
-            </h2>
-            <span className="mono">{tp("directionsCount", { count: topic.areas.length })}</span>
-          </div>
-          <ol role="list" className="inside__list" data-reveal-stagger>
-            {topic.areas.map((a, i) => (
-              <li key={a.title} className="inside__row">
-                <span className="inside__num">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="t-h3">{a.title}</h3>
-                <p className="t-body">{a.body}</p>
-              </li>
-            ))}
-          </ol>
         </div>
       </section>
 

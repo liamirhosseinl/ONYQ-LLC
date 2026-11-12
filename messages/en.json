@@ -19,13 +19,14 @@
     "work": "Work",
     "services": "Services",
     "pricing": "Pricing",
-    "studio": "Studio",
+    "vip": "VIP clients",
+    "studio": "About",
     "letsTalk": "Start a project",
     "letsTalkShort": "Start",
     "exploreSection": "Explore section",
     "menu": "Menu",
     "menuTagline": "Let’s make something that works.",
-    "servicesIntro": "Nine directions, one team. Pick an area or go straight to a price.",
+    "servicesIntro": "Six directions, one team. Pick an area or go straight to a price.",
     "studioIntro": "Who ONYQ is, how projects run and where to start.",
     "items": {
       "design": "Design",
@@ -34,9 +35,6 @@
       "mobile-apps": "Mobile apps",
       "marketing": "Marketing",
       "content": "Content & video",
-      "gamification": "Gamification",
-      "business-analytics": "Business analytics",
-      "financial-consulting": "Financial consulting",
       "about": "About ONYQ",
       "howWeWork": "How we work",
       "portfolio": "Work",
@@ -51,7 +49,7 @@
     "discussProject": "Tell us about your project",
     "allPrices": "All prices",
     "allServices": "All services",
-    "moreAboutService": "How this area works",
+    "moreAboutService": "How we work",
     "explore": "Explore",
     "open": "Open",
     "back": "Back",
@@ -162,7 +160,7 @@
       "name": "Name",
       "email": "Email",
       "company": "Company",
-      "phone": "Phone or messenger",
+      "phone": "Phone",
       "optional": "optional"
     },
     "interest": "Interested in",
@@ -195,7 +193,8 @@
       "stage": "Choose where you are starting from.",
       "name_required": "Enter your name.",
       "name_long": "Name is too long.",
-      "email_invalid": "Enter a valid email address, like name@company.com."
+      "email_invalid": "Enter a valid email address, like name@company.com.",
+      "phone_invalid": "Enter a real phone number for the selected country."
     }
   },
   "letter": {
@@ -330,11 +329,11 @@
       }
     ],
     "servicesMetaTitle": "Services: design, development, AI, apps and marketing",
-    "servicesMetaDescription": "Nine ONYQ service directions — design, development, mobile apps, AI, marketing, content & video, gamification, business analytics and financial models — with starting prices.",
-    "servicesLabel": "9 directions",
+    "servicesMetaDescription": "Six ONYQ service directions — design, development, mobile apps, AI, marketing, and content & video — with starting prices.",
+    "servicesLabel": "6 directions",
     "servicesTitle1": "What ONYQ",
     "servicesTitle2": "does.",
-    "servicesLead": "Nine directions, one team. Choose an area to see how it works, or go straight to a specific service with its scope, timeline and starting price.",
+    "servicesLead": "Six directions, one team. Choose an area to see how it works, or go straight to a specific service with its scope, timeline and starting price.",
     "directions": "Directions",
     "specificTitle": "Every service, priced",
     "specificLead": "Each one comes with a clear scope, a realistic timeline and a starting price.",
@@ -575,16 +574,85 @@
         "typing": "Assistant is typing"
       },
       "content": {
-        "label": "Amir Khaldari · short-form",
+        "label": "Short-form edit",
         "tracks": [
           "Video",
           "Captions",
           "Sound"
         ],
         "hook": "hook · 0:03",
-        "retention": "+25% average retention",
+        "retention": "+60% average retention",
         "views": "50M+ combined views"
       }
+    }
+  },
+  "phone": {
+    "country": "Country code: {country} (+{code})",
+    "search": "Search country or code",
+    "countries": "Countries",
+    "noMatch": "No country matches"
+  },
+  "vip": {
+    "metaTitle": "VIP clients — a private lounge by invitation",
+    "metaDescription": "ONYQ’s private lounge for invited clients: every service at VIP prices, with a personal manager.",
+    "eyebrow": "ONYQ · Private client lounge",
+    "title1": "By invitation",
+    "title2": "only.",
+    "lead": "For the partners ONYQ invites personally: the whole studio, a personal manager and VIP prices on every service. Enter your invitation to open the lounge.",
+    "codeLabel": "Invitation code",
+    "codePlaceholder": "business/code",
+    "codeHint": "Your ONYQ manager gave you this code in person.",
+    "unlock": "Open the lounge",
+    "checking": "Checking…",
+    "codeInvalid": "This invitation isn’t recognised. Check it, or ask your ONYQ manager.",
+    "rateLimited": "Too many attempts. Try again in a few minutes.",
+    "network": "No connection. Check the internet and try again.",
+    "welcomeKicker": "Invitation accepted",
+    "welcome": "Welcome, <b>{business}</b>.",
+    "welcomeLead": "Your lounge is open. Every ONYQ service below is priced for you at {percent}% off the public list.",
+    "badge": "VIP pricing · −{percent}%",
+    "perks": [
+      "A personal manager from the first call",
+      "Your project before the queue",
+      "VIP prices fixed in the contract"
+    ],
+    "step1": "What should we build or improve?",
+    "needsPlaceholder": "A few lines about the business, the goal and what exists today…",
+    "step2": "Choose services",
+    "step2Lead": "Pick everything you are considering — the manager will shape the final scope with you.",
+    "regular": "Public price",
+    "yours": "Your price",
+    "perMonth": "/mo",
+    "selected": "Selected",
+    "step3": "Who should the manager call?",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "optional": "optional",
+    "summary": "Your selection",
+    "summaryEmpty": "Choose services to see your VIP total.",
+    "count": "{count, plural, one {# service} other {# services}}",
+    "oneTime": "One-time",
+    "monthly": "Monthly",
+    "save": "You save",
+    "from": "from",
+    "send": "Send to my manager",
+    "sending": "Sending…",
+    "fine": "VIP prices are starting prices for a typical scope, like the public price list. The final scope and price are agreed and fixed in the contract.",
+    "successKicker": "Request received",
+    "successTitle": "Thank you, {name}.",
+    "successBody": "ONYQ has the request for {business}. Your personal manager will call you shortly to agree the details and sign the contract.",
+    "again": "Back to the lounge",
+    "otherCode": "Use another invitation",
+    "errors": {
+      "needs_short": "Describe what you need in at least 10 characters.",
+      "needs_long": "Keep it under 3,000 characters.",
+      "services_none": "Choose at least one service.",
+      "name_required": "Enter your name.",
+      "name_long": "Name is too long.",
+      "phone_invalid": "Enter a real phone number for the selected country.",
+      "email_invalid": "Enter a valid email address, or leave it empty.",
+      "generic": "Something went wrong and the request wasn’t sent. Try again, or call ONYQ directly."
     }
   }
 }

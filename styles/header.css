@@ -840,3 +840,28 @@
     animation: none !important;
   }
 }
+
+/* VIP clients: a small champagne seal before the label (header and drawer). */
+.nav-link[data-key="vip"]::before,
+.drawer__link[data-key="vip"] .drawer__text::after {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fbf3df, #d3ad63 55%, #8a6a32);
+  box-shadow: 0 0 10px rgb(211 173 99 / 0.7);
+  vertical-align: middle;
+}
+
+.nav-link[data-key="vip"]::before {
+  margin-right: 7px;
+  translate: 0 -1px;
+}
+
+.drawer__link[data-key="vip"] .drawer__text::after {
+  width: 0.28em;
+  height: 0.28em;
+  margin-left: 0.3em;
+  translate: 0 -0.15em;
+}

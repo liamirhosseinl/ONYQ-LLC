@@ -6,6 +6,7 @@ import { services, type ServiceId } from "@/data/services.ts";
 import { getCatalogueCopy } from "@/content/catalogue.ts";
 import { PriceTag } from "./PriceTag.tsx";
 import { CurrencyNote, CurrencyToggle } from "./CurrencyToggle.tsx";
+import { getLenis } from "@/components/motion/MotionDirector.tsx";
 import { usePricing } from "./PricingProvider.tsx";
 
 /** Paper receipt listing starting prices — "Most requested" on /price, per-area on direction pages. */
@@ -62,7 +63,21 @@ export function CategoryNav({ items, label }: { items: { anchor: string; label: 
           <ol role="list">
             {items.map((item, i) => (
               <li key={item.anchor}>
-                <a href={`#${item.anchor}`} aria-current={active === item.anchor ? "true" : undefined}>
+                <a
+                  href={`#${item.anchor}`}
+                  aria-current={active === item.anchor ? "true" : undefined}
+                  onClick={(e) => {
+                    // Scroll within /price without adding "#price-…" to the address:
+                    // the page keeps one URL however the visitor moves around it.
+                    const target = document.getElementById(item.anchor);
+                    if (!target) return;
+                    e.preventDefault();
+                    const lenis = getLenis();
+                    if (lenis) lenis.scrollTo(target, { offset: -96 });
+                    else target.scrollIntoView({ behavior: "smooth", block: "start" });
+                    setActive(item.anchor);
+                  }}
+                >
                   <span className="num">{String(i + 1).padStart(2, "0")}</span> {item.label}
                 </a>
               </li>

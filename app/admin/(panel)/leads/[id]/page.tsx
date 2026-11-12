@@ -30,6 +30,81 @@ const LABELS: Record<string, string> = {
   flexible: "Flexible",
 };
 
+type StoredQuote = {
+  lines: { id: string; billing: "one_time" | "monthly"; regularUsd: number; vipUsd: number }[];
+  oneTime: { regularUsd: number; vipUsd: number };
+  monthly: { regularUsd: number; vipUsd: number };
+};
+
+const usd = (n: number) => `$${n.toLocaleString("en-US", { minimumFractionDigits: Number.isInteger(n) ? 0 : 2, maximumFractionDigits: 2 })}`;
+
+/** Requests from /vip: the business from the invitation code and the services at VIP prices. */
+function VipQuoteCard({ business, quote, names }: { business: string; quote: string | null; names: Record<string, { name: string }> }) {
+  let q: StoredQuote | null = null;
+  try {
+    q = quote ? (JSON.parse(quote) as StoredQuote) : null;
+  } catch {
+    q = null;
+  }
+  return (
+    <Card title={`VIP request · ${business}`}>
+      <p className="a-muted a-small">Sent from the VIP lounge with an invitation code for “{business}”. Prices below are 60% off the public list — agree the scope and sign the contract.</p>
+      {q ? (
+        <div className="a-tablewrap">
+          <table className="a-table">
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th className="a-right">Public</th>
+                <th className="a-right">VIP</th>
+              </tr>
+            </thead>
+            <tbody>
+              {q.lines.map((l) => (
+                <tr key={l.id}>
+                  <td>{names[l.id]?.name ?? l.id}</td>
+                  <td className="a-right a-muted">
+                    {usd(l.regularUsd)}
+                    {l.billing === "monthly" ? "/mo" : ""}
+                  </td>
+                  <td className="a-right">
+                    <b>
+                      {usd(l.vipUsd)}
+                      {l.billing === "monthly" ? "/mo" : ""}
+                    </b>
+                  </td>
+                </tr>
+              ))}
+              {q.oneTime.vipUsd ? (
+                <tr>
+                  <td>
+                    <b>One-time total</b>
+                  </td>
+                  <td className="a-right a-muted">{usd(q.oneTime.regularUsd)}</td>
+                  <td className="a-right">
+                    <b>{usd(q.oneTime.vipUsd)}</b>
+                  </td>
+                </tr>
+              ) : null}
+              {q.monthly.vipUsd ? (
+                <tr>
+                  <td>
+                    <b>Monthly total</b>
+                  </td>
+                  <td className="a-right a-muted">{usd(q.monthly.regularUsd)}/mo</td>
+                  <td className="a-right">
+                    <b>{usd(q.monthly.vipUsd)}/mo</b>
+                  </td>
+                </tr>
+              ) : null}
+            </tbody>
+          </table>
+        </div>
+      ) : null}
+    </Card>
+  );
+}
+
 export default async function LeadPage({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser("viewer");
   const { id } = await params;
@@ -71,6 +146,8 @@ export default async function LeadPage({ params }: { params: Promise<{ id: strin
 
       <div className="a-grid a-grid--2-1">
         <div className="a-stack">
+          {l.vip_business ? <VipQuoteCard business={l.vip_business} quote={l.vip_quote} names={services} /> : null}
+
           <Card title="Request">
             <p className="a-quote">{l.challenge}</p>
             <dl className="a-dl">
@@ -138,18 +215,28 @@ export default async function LeadPage({ params }: { params: Promise<{ id: strin
         <div className="a-stack">
           <Card title="Contact">
             <dl className="a-dl a-dl--single">
-              <div>
-                <dt>Email</dt>
-                <dd>
-                  <a href={`mailto:${l.email}`} className="a-link">
-                    {l.email}
-                  </a>
-                </dd>
-              </div>
+              {l.email ? (
+                <div>
+                  <dt>Email</dt>
+                  <dd>
+                    <a href={`mailto:${l.email}`} className="a-link">
+                      {l.email}
+                    </a>
+                  </dd>
+                </div>
+              ) : null}
               {l.contact ? (
                 <div>
                   <dt>Phone / messenger</dt>
-                  <dd>{l.contact}</dd>
+                  <dd>
+                    {l.contact.startsWith("+") ? (
+                      <a href={`tel:${l.contact.replace(/[^\d+]/g, "")}`} className="a-link">
+                        {l.contact}
+                      </a>
+                    ) : (
+                      l.contact
+                    )}
+                  </dd>
                 </div>
               ) : null}
               {l.company ? (

@@ -158,6 +158,7 @@ export function SiteHeader() {
                   <Link
                     href={item.href}
                     className="nav-link"
+                    data-key={item.key}
                     aria-current={isActive(pathname, item.href) ? "page" : undefined}
                   >
                     {t(item.key)}
@@ -326,6 +327,7 @@ function MobileDrawer({
               <Link
                 href={item.href}
                 className="drawer__link"
+                data-key={item.key}
                 aria-current={isActive(pathname, item.href) ? "page" : undefined}
                 onClick={onClose}
               >

@@ -1,8 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import type { HomeContent } from "@/content/types.ts";
-import { Link } from "@/i18n/navigation.ts";
 import { OpenBriefButton } from "@/components/brief/OpenBriefButton.tsx";
-import { ArrowUpRight } from "@/components/ui/icons.tsx";
 import { ProposedTag } from "@/components/ui/Proposed.tsx";
 import { Constellation, KitShape, Rings } from "@/components/art/BrandArt.tsx";
 import { Split, SplitLines } from "@/components/motion/Split.tsx";
@@ -92,42 +90,6 @@ export async function LetterSection() {
         </div>
         <div data-reveal="up">
           <LetterComposer />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function PromiseSection({ copy }: { copy: HomeContent["promise"] }) {
-  return (
-    <section className="promise" aria-labelledby="promise-title">
-      <div className="wrap">
-        <div className="promise__top" data-reveal="fade">
-          <p className="eyebrow">
-            <Spark className="eyebrow__spark" />
-            {copy.label}
-          </p>
-          <p className="mono">2026 →</p>
-        </div>
-        <h2 id="promise-title" className="t-giant promise__title">
-          <SplitLines lines={copy.title} />
-        </h2>
-        <div className="promise__grid">
-          <div data-reveal="up">
-            <h3 className="t-h3">{copy.subtitle}</h3>
-            <p className="t-lead">{copy.body}</p>
-          </div>
-          <ul role="list" className="promise__links" data-reveal-stagger>
-            {copy.links.map((l, i) => (
-              <li key={l.href}>
-                <Link href={l.href}>
-                  <span className="num">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="promise__link-text">{l.label}</span>
-                  <ArrowUpRight size={18} />
-                </Link>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </section>

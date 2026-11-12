@@ -21,7 +21,7 @@ export const faqPage = {
       },
       {
         q: "In which languages can my site be built?",
-        a: "English, Russian and Armenian — one, two or all three, depending on your audience.",
+        a: "In English and any other language that you might need.",
       },
     ] satisfies FaqItem[],
   },
@@ -106,7 +106,7 @@ export const portfolioPage = {
         "Stock alerts before items run out",
         "Unit economics per product",
       ],
-      services: ["business-analytics", "financial-model", "search-ads"],
+      services: ["crm-internal-systems", "integrations-payments", "search-ads"],
     },
   ] satisfies Concept[],
 };

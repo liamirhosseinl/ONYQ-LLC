@@ -8,8 +8,9 @@ import { pageMetadata } from "@/lib/metadata.ts";
 import { isVisible } from "@/lib/site-mode.ts";
 import { NextStep, PageHero, PriceRow } from "@/components/page/PageBlocks.tsx";
 import { Accordion } from "@/components/page/Accordion.tsx";
-import { CategoryNav, PromoRules, Receipt } from "@/components/pricing/PricingClientBits.tsx";
+import { CategoryNav, PromoRules } from "@/components/pricing/PricingClientBits.tsx";
 import { PromoNotice } from "@/components/pricing/PromoNotice.tsx";
+import { CurrencyNote } from "@/components/pricing/CurrencyToggle.tsx";
 import { ProposedTag } from "@/components/ui/Proposed.tsx";
 import { ArrowUpRight } from "@/components/ui/icons.tsx";
 
@@ -44,7 +45,6 @@ export default async function PricePage({ params }: Props) {
         title={pricingPage.hero.title}
         lead={pricingPage.hero.lead}
         actionLabel={pricingPage.hero.cta}
-        side={<Receipt title={tPages("mostRequested")} />}
       />
 
       <div className="wrap">
@@ -53,6 +53,9 @@ export default async function PricePage({ params }: Props) {
       <PromoRules />
 
       <CategoryNav label={tPages("priceCategories")} items={categories.map((c) => ({ anchor: c.anchor, label: copy.categoryCopy[c.id].title }))} />
+      <div className="wrap price-currency-note">
+        <CurrencyNote />
+      </div>
 
       <div className="price-cats">
         {categories.map((cat, i) => (
@@ -64,7 +67,7 @@ export default async function PricePage({ params }: Props) {
                   <Split text={copy.categoryCopy[cat.id].title} />
                 </h2>
                 <p className="t-body">{copy.categoryCopy[cat.id].lead}</p>
-                <Link href={cat.directionPage} className="link-arrow">
+                <Link href="/how-we-work" className="link-arrow">
                   {t("moreAboutService")} <ArrowUpRight />
                 </Link>
               </div>

@@ -30,7 +30,7 @@ export const home = {
     items: [
       { value: 10000, suffix: "+", label: "installs in the first two weeks after launch", source: "Eagle VPN" },
       { value: 80, suffix: "%", label: "of the institute’s tasks simplified, per its written report", source: "English Institute" },
-      { value: 25, suffix: "", label: "services under one roof — from logo to AI", source: "ONYQ price list" },
+      { value: 50, suffix: "M+", label: "combined views of the short-form edits, as published on the client’s site", source: "Amir Khaldari" },
     ],
   },
   story: {
@@ -135,40 +135,11 @@ export const home = {
       "A comparison of working models, not a promise of savings. The final cost depends on the scope, requirements and terms of your project.",
     compareHint: "Switch models to compare",
   },
-  transformation: {
-    label: "05 / Before and after",
-    title: "How a website starts bringing customers",
-    note: "A study using a fictional store",
-    stages: [
-      {
-        key: "before",
-        tab: "Then",
-        title: ["The business moved on.", "The site stayed behind."],
-        body: "The product is great, but the site is from an earlier chapter: hard to browse on a phone and harder to buy from.",
-        points: ["Hard to find", "Hard to buy"],
-      },
-      {
-        key: "after",
-        tab: "Now",
-        title: ["Same product,", "finally easy to buy."],
-        body: "Structure, design and the mobile experience are rethought, so a visitor understands the offer at first glance and orders in a few taps.",
-        points: ["Clear offer", "Quick checkout"],
-      },
-      {
-        key: "business",
-        tab: "Growth",
-        title: ["Now the site", "brings the customers."],
-        body: "Search, social and ads bring people in; analytics shows which channel brings orders, so the budget goes where it works.",
-        points: ["Traffic → enquiries", "Enquiries → orders"],
-      },
-    ],
-    cta: "Discuss your next chapter",
-  },
   origin: {
     label: "Rooted in Armenia",
     word: "Armenia",
-    title: ["Based in Armenia.", "Working wherever you sell."],
-    body: "ONYQ is a software company registered in Armenia. We build for businesses that sell here and further afield, with sites in English, Russian and Armenian where the audience needs them.",
+    title: ["Based in Armenia.", "Working wherever you need."],
+    body: "ONYQ is a software company registered in Armenia. We build for businesses that sell here and further afield, with sites in multiple languages where the audience needs them.",
   },
   principles: {
     label: "How ONYQ works",
@@ -191,18 +162,5 @@ export const home = {
         body: "Code, accounts and source files stay with you once the work is paid for.",
       },
     ],
-  },
-  promise: {
-    label: "Your digital side, handled",
-    title: ["A better product,", "a budget that makes sense."],
-    subtitle: "Your focus stays on the business; the digital side is on us.",
-    body: "A website, an app, AI, an internal system or an ad campaign — brought together into one product that customers understand and your team can grow.",
-    links: [
-      { label: "Brand & design", href: "/design" },
-      { label: "Web & applications", href: "/development" },
-      { label: "AI & automation", href: "/ai" },
-      { label: "Marketing & growth", href: "/marketing" },
-    ],
-    cta: "Explore your challenge",
   },
 };

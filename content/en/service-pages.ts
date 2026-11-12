@@ -82,17 +82,17 @@ export const servicePages: ServicePage[] = [
       "You need a lead page within two weeks",
     ],
     notFit: [
-      { text: "You offer several services and each needs its own page in search — a corporate website fits better.", alt: "corporate-website" },
+      { text: "You offer several services and each needs its own page in search — a business website fits better.", alt: "business-website" },
       { text: "You need a catalogue, a cart and online payment — that is an online store.", alt: "online-store" },
     ],
     faq: [
       { q: "How much does a landing page cost?", a: "From $790 for a typical scope. The final price depends on the number of blocks, languages, integrations and whether copy and images are ready." },
       { q: "How long does it take?", a: "From 7 days for a typical page, if the content is ready and feedback comes quickly." },
-      { q: "Landing page or business website — which one?", a: "A landing page sells one offer to one audience. If you have several services that people search for separately, a business or corporate website gives each its own page." },
+      { q: "Landing page or business website — which one?", a: "A landing page sells one offer to one audience. If you have several services that people search for separately, a business website gives each its own page." },
       { q: "Can the landing page grow into a full website later?", a: "Yes. The page is built on the same foundations as a multi-page site, so new pages can be added without starting again." },
       OWNERSHIP,
     ],
-    seeAlso: ["corporate-website", "search-ads", "website-audit", "logo"],
+    seeAlso: ["business-website", "search-ads", "website-audit", "logo"],
   },
   {
     slug: "website-redesign",
@@ -134,7 +134,7 @@ export const servicePages: ServicePage[] = [
     ],
     notFit: [
       { text: "You don’t yet know what is wrong — few enquiries, slow pages, falling traffic. Start with an audit.", alt: "website-audit" },
-      { text: "Everything has changed — services, structure, audience. Building a new corporate website is simpler.", alt: "corporate-website" },
+      { text: "Everything has changed — services, structure, audience. Building a new business website is simpler.", alt: "business-website" },
     ],
     faq: [
       { q: "How much does a redesign cost?", a: "From $890 for a typical scope. The number of pages, templates and integrations to migrate decides the final price." },
@@ -143,19 +143,19 @@ export const servicePages: ServicePage[] = [
       { q: "Will the site stay online during the redesign?", a: "Yes. The new version is built on a separate test address; the switch happens only when it is ready." },
       OWNERSHIP,
     ],
-    seeAlso: ["website-audit", "seo", "ui-ux-design", "corporate-website"],
+    seeAlso: ["website-audit", "seo", "ui-ux-design", "business-website"],
   },
   {
-    slug: "corporate-website",
+    slug: "business-website",
     direction: "development",
-    primary: "corporate-website",
-    priceIds: ["corporate-website", "business-website", "ui-ux-design"],
+    primary: "business-website",
+    priceIds: ["business-website", "ui-ux-design", "website-maintenance"],
     meta: {
-      title: "Business and corporate website development — from $1,190",
-      description: "Business websites from $1,190 and corporate websites from $1,990: a page for every service, an admin panel for your team, forms, analytics and up to three languages.",
+      title: "Business website development — from $1,190",
+      description: "A business website from $1,190: a page for every service, an admin panel for your team, forms, analytics and up to three languages.",
     },
-    label: "Corporate website",
-    title: "Business and corporate websites that explain what you do in a minute.",
+    label: "Business website",
+    title: "A business website that explains what you do in a minute.",
     lead: "A visitor understands what you offer, what it costs and how to reach you. Each service gets its own page that people can find in search, and your team updates news, vacancies and prices without calling a developer.",
     included: [
       "Site structure and a page map for your services",
@@ -188,9 +188,8 @@ export const servicePages: ServicePage[] = [
       { text: "You sell products with a cart and online payment — that is an online store.", alt: "online-store" },
     ],
     faq: [
-      { q: "How much does a business or corporate website cost?", a: "A business website of up to five pages starts from $1,190. A corporate website with a service catalogue, news, careers and an admin panel starts from $1,990." },
-      { q: "How long does it take?", a: "From 2 weeks for a business website and from 4 weeks for a corporate one, depending on the number of pages and how ready the content is." },
-      { q: "What is the difference between the two?", a: "A business website covers the essentials on up to five pages. A corporate website adds a page per service, news, careers and an admin panel for your team." },
+      { q: "How much does a business website cost?", a: "A business website starts from $1,190. The final price depends on the number of pages, languages and integrations." },
+      { q: "How long does it take?", a: "From 2 weeks, depending on the number of pages and how ready the content is." },
       { q: "What happens after launch?", a: "You can edit content yourself in the admin panel. Updates, backups and small changes can be handled through the website maintenance service." },
       OWNERSHIP,
     ],
@@ -202,8 +201,8 @@ export const servicePages: ServicePage[] = [
     primary: "online-store",
     priceIds: ["online-store", "integrations-payments", "seo"],
     meta: {
-      title: "Online store development with payments and delivery — from $4,900",
-      description: "Catalogue, cart, card and wallet payments, delivery zones, customer accounts and an admin panel with Telegram alerts. From $4,900, from 6 weeks.",
+      title: "Online store development with payments and delivery — from $2,900",
+      description: "Catalogue, cart, card and wallet payments, delivery zones, customer accounts and an admin panel with Telegram alerts. From $2,900, from 6 weeks.",
     },
     label: "Online store",
     title: "An online store with payments and delivery, built around how you sell.",
@@ -239,13 +238,13 @@ export const servicePages: ServicePage[] = [
       { text: "You only need to add payments to an existing site.", alt: "integrations-payments" },
     ],
     faq: [
-      { q: "How much does an online store cost?", a: "From $4,900 for a typical scope. Catalogue size, integrations (1C, warehouse, CRM) and delivery logic decide the final price." },
+      { q: "How much does an online store cost?", a: "From $2,900 for a typical scope. Catalogue size, integrations (1C, warehouse, CRM) and delivery logic decide the final price." },
       { q: "How long does it take to launch?", a: "From 6 weeks. Bank or payment-provider approval runs in parallel and depends on them." },
       { q: "Which payment methods can be connected?", a: "ArCa, Visa and Mastercard cards through a bank payment page, and wallets such as Idram and Telcell. Apple Pay and Google Pay depend on what your bank supports." },
       { q: "Who signs the agreement with the bank?", a: "Your company does. ONYQ prepares the technical side and the pages banks usually check, such as terms, refunds and contacts." },
       OWNERSHIP,
     ],
-    seeAlso: ["integrations-payments", "corporate-website", "seo", "website-maintenance"],
+    seeAlso: ["integrations-payments", "business-website", "seo", "website-maintenance"],
   },
   {
     slug: "integrations-payments",
@@ -344,7 +343,7 @@ export const servicePages: ServicePage[] = [
       { q: "How fast is a problem handled?", a: "Response times are agreed in the maintenance terms for your plan." },
       { q: "Do you maintain sites built by someone else?", a: "Yes, after an audit that shows what the site runs on and what needs fixing first." },
     ],
-    seeAlso: ["website-audit", "website-redesign", "seo", "corporate-website"],
+    seeAlso: ["website-audit", "website-redesign", "seo", "business-website"],
   },
   {
     slug: "branding",
@@ -353,7 +352,7 @@ export const servicePages: ServicePage[] = [
     priceIds: ["logo", "brand-identity"],
     meta: {
       title: "Logo and brand identity design — from $390",
-      description: "A logo from $390 or a full brand identity with a brand book from $1,490: three concepts, refinement, palette, typography, collateral and source files.",
+      description: "A logo from $390 or a full brand identity with a brand book from $890: three concepts, refinement, palette, typography, collateral and source files.",
     },
     label: "Logo & brand identity",
     title: "A logo and identity that work from business card to shopfront.",
@@ -389,12 +388,12 @@ export const servicePages: ServicePage[] = [
       { text: "Your identity is ready and you need a page that sells — start with a landing page.", alt: "landing-page" },
     ],
     faq: [
-      { q: "How much do a logo and identity cost?", a: "A logo starts from $390. A full identity with a brand book starts from $1,490." },
+      { q: "How much do a logo and identity cost?", a: "A logo starts from $390. A full identity with a brand book starts from $890." },
       { q: "How long does it take?", a: "From 7 days for a logo and from 3 weeks for an identity with a brand book." },
       { q: "What is the difference between a logo and an identity?", a: "The logo is the mark itself. The identity adds colour, type, collateral and the rules that keep everything consistent." },
       { q: "Who owns the logo?", a: "Rights to the mark transfer to you once the work is paid for." },
     ],
-    seeAlso: ["ui-ux-design", "landing-page", "smm", "corporate-website"],
+    seeAlso: ["ui-ux-design", "landing-page", "smm", "business-website"],
   },
   {
     slug: "ux-ui-design",
@@ -444,7 +443,7 @@ export const servicePages: ServicePage[] = [
       { q: "What is the difference between UX and UI?", a: "UX is the structure and logic: what is where and how people get to their goal. UI is how it looks: type, colour, components and states." },
       { q: "What does a UX audit include?", a: "A walk through the main user journeys on phone and desktop, where people get stuck, and a list of fixes ranked by impact." },
     ],
-    seeAlso: ["brand-identity", "landing-page", "website-audit", "corporate-website"],
+    seeAlso: ["brand-identity", "landing-page", "website-audit", "business-website"],
   },
   {
     slug: "telegram-bot",
@@ -544,7 +543,7 @@ export const servicePages: ServicePage[] = [
       { q: "What if the assistant gives a wrong answer?", a: "Answers come only from approved topics, and every launch includes testing on real questions. If something is off, the topic in the base is corrected." },
       { q: "Where are conversations stored?", a: "Depending on the setup, either with the chosen provider or on your own server. This is agreed before launch." },
     ],
-    seeAlso: ["telegram-bot", "business-analytics", "crm-internal-systems", "website-maintenance"],
+    seeAlso: ["telegram-bot", "integrations-payments", "crm-internal-systems", "website-maintenance"],
   },
   {
     slug: "seo",
@@ -594,7 +593,7 @@ export const servicePages: ServicePage[] = [
       { q: "Do you guarantee top-10 positions?", a: "No honest provider can guarantee positions, because search engines decide them. What can be committed to is the work, the plan and transparent reporting." },
       { q: "What is AI search visibility?", a: "Work on your site and mentions so AI assistants can find accurate information about your company and cite it when people ask about your field." },
     ],
-    seeAlso: ["website-audit", "search-ads", "landing-page", "corporate-website"],
+    seeAlso: ["website-audit", "search-ads", "landing-page", "business-website"],
   },
   {
     slug: "search-ads",

@@ -10,9 +10,6 @@ export type DirectionSlug =
   | "ai"
   | "mobile-apps"
   | "marketing"
-  | "gamification"
-  | "business-analytics"
-  | "financial-consulting"
   | "content";
 
 export const DIRECTION_SLUGS: DirectionSlug[] = [
@@ -22,9 +19,6 @@ export const DIRECTION_SLUGS: DirectionSlug[] = [
   "ai",
   "marketing",
   "content",
-  "gamification",
-  "business-analytics",
-  "financial-consulting",
 ];
 
 export interface NavLink {
@@ -50,6 +44,7 @@ export const primaryNav: NavItem[] = [
     links: DIRECTION_SLUGS.map((slug) => ({ key: slug, href: `/${slug}` })),
   },
   { type: "link", key: "pricing", href: "/price" },
+  { type: "link", key: "vip", href: "/vip" },
   {
     type: "menu",
     key: "studio",
@@ -57,7 +52,6 @@ export const primaryNav: NavItem[] = [
     links: [
       { key: "about", href: "/about" },
       { key: "howWeWork", href: "/how-we-work" },
-      { key: "portfolio", href: "/portfolio" },
       { key: "faq", href: "/faq" },
       { key: "contacts", href: "/contacts" },
     ],
@@ -67,7 +61,7 @@ export const primaryNav: NavItem[] = [
 /** Popular services shown in the footer — must exist as /services/[slug] pages. */
 export const footerPopular = [
   "landing-page",
-  "corporate-website",
+  "business-website",
   "online-store",
   "seo",
   "telegram-bot",

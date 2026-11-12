@@ -159,6 +159,10 @@ export type Lead = {
   visitor: string | null;
   client_id: number | null;
   delivered_to: string | null;
+  /** Set for requests sent from the VIP lounge (/vip). */
+  vip_business: string | null;
+  /** JSON of vipQuote() at the time of the request. */
+  vip_quote: string | null;
 };
 
 export type Client = {

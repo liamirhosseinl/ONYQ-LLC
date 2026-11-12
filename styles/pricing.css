@@ -333,3 +333,12 @@ html[data-header-away="true"] .cat-nav {
     display: none;
   }
 }
+
+.price-currency-note:has(.currency-note) {
+  padding-top: 18px;
+}
+
+.vip .currency-note {
+  margin-top: 14px;
+  color: var(--v-muted-2);
+}

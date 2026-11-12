@@ -7,8 +7,7 @@ import type { CategoryId, ServiceId } from "../../data/services.ts";
 export const serviceCopy: Record<ServiceId, { name: string; short: string }> = {
   "landing-page": { name: "Landing page", short: "A single page for one product or campaign, with lead forms and analytics" },
   "website-redesign": { name: "Website redesign", short: "New design and build that keeps your page addresses and search positions" },
-  "business-website": { name: "Business website", short: "Up to 5 pages: services, about and contacts, in up to three languages" },
-  "corporate-website": { name: "Corporate website", short: "Service pages, news and careers, with an admin panel your team can edit" },
+  "business-website": { name: "Business website", short: "A page per service, about and contacts, an admin panel and up to three languages" },
   "online-store": { name: "Online store", short: "Catalogue, cart, card and wallet payments, delivery and customer accounts" },
   "web-portal": { name: "Web service or portal", short: "Accounts, roles, payments and integrations, built around how you work" },
   logo: { name: "Logo", short: "Three directions, refinement of the chosen one, files for print and screen" },
@@ -26,9 +25,6 @@ export const serviceCopy: Record<ServiceId, { name: string; short: string }> = {
   smm: { name: "SMM & paid social", short: "Instagram, Facebook and Telegram: content plan, posts and ads" },
   "ai-search-visibility": { name: "AI search visibility", short: "Helping AI assistants such as ChatGPT, Gemini and Perplexity find and cite your company" },
   "website-audit": { name: "Website audit", short: "Speed, SEO, errors and conversion, with a plan of fixes" },
-  "business-analytics": { name: "Business analytics & dashboards", short: "Sales, marketing and stock on one screen, refreshed automatically" },
-  "financial-model": { name: "Financial model", short: "Unit economics, forecast and break-even for a decision or an investor" },
-  "gamification-loyalty": { name: "Gamification & loyalty", short: "Rewards, levels and mechanics that bring customers back" },
   "website-maintenance": { name: "Website maintenance", short: "Updates, backups, monitoring and small edits" },
 };
 
@@ -38,6 +34,5 @@ export const categoryCopy: Record<CategoryId, { title: string; lead: string }> =
   apps: { title: "Apps & bots", lead: "Mobile apps, Telegram bots and the internal systems behind them." },
   ai: { title: "Artificial intelligence", lead: "AI that works from your data and says so when it doesn't know." },
   marketing: { title: "Marketing & promotion", lead: "Monthly work measured in enquiries. Advertising budgets are paid separately." },
-  growth: { title: "Analytics & growth", lead: "Numbers that show what works, and mechanics that bring customers back." },
   support: { title: "Support", lead: "After launch, someone keeps the site healthy." },
 };

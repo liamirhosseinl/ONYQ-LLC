@@ -20,7 +20,7 @@ export const faqPage: FaqPageContent = {
       },
       {
         q: "На каких языках может быть мой сайт?",
-        a: "На английском, русском и армянском — на одном, двух или всех трёх, в зависимости от вашей аудитории.",
+        a: "На английском и на любом другом языке, который вам может понадобиться.",
       },
     ],
   },
@@ -95,7 +95,7 @@ export const portfolioPage: PortfolioPageContent = {
         "Оповещения о товарах до того, как они закончатся",
         "Юнит-экономика по каждому товару",
       ],
-      services: ["business-analytics", "financial-model", "search-ads"],
+      services: ["crm-internal-systems", "integrations-payments", "search-ads"],
     },
   ],
 };

@@ -66,6 +66,14 @@ export default async function ContactsPage({ params }: Props) {
                     <a href={telHref(ph)}>{ph}</a>
                   </li>
                 ))}
+                {c.social.map((s) => (
+                  <li key={s.url}>
+                    <span className="mono">{s.label}</span>
+                    <a href={s.url} target="_blank" rel="noopener noreferrer">
+                      {s.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
+                    </a>
+                  </li>
+                ))}
                 {siteConfig.taxId ? (
                   <li>
                     <span className="mono">{tf("tin")}</span>

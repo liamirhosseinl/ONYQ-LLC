@@ -30,6 +30,7 @@ The search box at the top finds clients, briefs, invoices and deals.
 - **Analytics:** the site's own beacon (no Google Analytics, no cookies) records each page view: page, referrer, UTM tags, device, language, and country from the CDN or the browser language. When the visitor leaves, it adds the time spent and how far they scrolled.
 - **Goals:** opening the brief form and sending it are tracked as events.
 - **Briefs:** each sent brief goes into the Inbox with the page and visitor path.
-- **Site contacts:** Settings → Site contacts changes the email, phone and messenger links shown in the site header, footer and contacts page.
+- **Site contacts:** Settings → Site contacts changes the email, phone and messenger links shown in the site header, footer and contacts page. A field left empty shows the default from `data/site-config.ts`.
+- **VIP requests:** requests from the VIP lounge (`/vip`) land in the Inbox with a gold "VIP · business name" chip. The request page shows the chosen services with public and VIP (−60%) prices. Invitation codes have the form `business/963`: give the client the business name followed by `/963`. To change the secret part, set `ONYQ_VIP_SUFFIX` on the server; codes with the old suffix stop working immediately.
 
 Admin pages, bots, automated browsers and visitors who send a Global Privacy Control ("do not track") signal are not counted.

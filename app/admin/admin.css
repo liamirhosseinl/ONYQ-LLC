@@ -1931,3 +1931,11 @@ a.a-list__row:hover {
   text-align: center;
   font-size: 13px;
 }
+
+/* VIP requests from /vip */
+.a-chip--vip {
+  border-color: #b38c45;
+  background: linear-gradient(100deg, rgb(211 173 99 / 0.22), rgb(241 223 180 / 0.12));
+  color: inherit;
+  font-weight: 600;
+}

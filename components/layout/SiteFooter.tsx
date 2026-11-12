@@ -21,7 +21,7 @@ import { BackToTop } from "./BackToTop.tsx";
 
 const POPULAR_TO_SERVICE = {
   "landing-page": "landing-page",
-  "corporate-website": "corporate-website",
+  "business-website": "business-website",
   "online-store": "online-store",
   seo: "seo",
   "telegram-bot": "telegram-bot",

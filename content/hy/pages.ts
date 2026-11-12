@@ -20,7 +20,7 @@ export const faqPage: FaqPageContent = {
       },
       {
         q: "Ի՞նչ լեզուներով կարող է լինել իմ կայքը",
-        a: "Անգլերեն, ռուսերեն և հայերեն՝ մեկ, երկու կամ բոլոր երեքով, կախված ձեր լսարանից։",
+        a: "Անգլերեն և ցանկացած այլ լեզվով, որը կարող է ձեզ պետք լինել։",
       },
     ],
   },
@@ -95,7 +95,7 @@ export const portfolioPage: PortfolioPageContent = {
         "Ծանուցումներ ապրանքների մասին՝ մինչև դրանց սպառվելը",
         "Միավորի տնտեսագիտություն յուրաքանչյուր ապրանքի համար",
       ],
-      services: ["business-analytics", "financial-model", "search-ads"],
+      services: ["crm-internal-systems", "integrations-payments", "search-ads"],
     },
   ],
 };

@@ -1309,3 +1309,137 @@
     transition: none !important;
   }
 }
+
+/* ───────── Journey scenes inside the /how-we-work explore card ─────────
+   The same scenes as the home story, driven by .explore[data-active] instead of
+   .story[data-stage]: Discovery → research, Design → design, Build → develop,
+   Launch & support → product. */
+.explore--scenes .explore__card {
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  min-height: 560px;
+}
+
+.explore--scenes .explore__art {
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--radius-l);
+}
+
+.journey--explore {
+  width: 100%;
+  min-height: 400px;
+  font-size: 12px;
+}
+
+.journey--explore .jx-window {
+  width: min(100%, 600px);
+}
+
+/* The scenes are drawn for the taller home stage; scale them to the card. */
+.journey--explore .journey__scene > * {
+  zoom: 0.78;
+}
+
+.explore[data-active="0"] .journey__scene--research,
+.explore[data-active="1"] .journey__scene--design,
+.explore[data-active="2"] .journey__scene--develop,
+.explore[data-active="3"] .journey__scene--product {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  filter: none;
+  transition:
+    opacity 620ms var(--ease-out) 140ms,
+    transform 1000ms var(--ease-expo) 100ms,
+    filter 600ms var(--ease-out) 100ms,
+    visibility 0s;
+  --on: 1;
+}
+
+/* Step rail: numbered pills with a progress bar that fills while autoplay runs. */
+.explore__steps {
+  display: grid;
+  grid-template-columns: repeat(var(--steps, 4), minmax(0, 1fr));
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.explore__steps li {
+  position: relative;
+  overflow: hidden;
+  padding: 8px 10px 10px;
+  border-radius: var(--radius-m, 12px);
+  border: 1px solid var(--c-line);
+  font-size: var(--fs-xs);
+  color: var(--c-muted);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition:
+    color var(--dur),
+    border-color var(--dur),
+    background-color var(--dur);
+}
+
+.explore__steps li[data-on] {
+  border-color: var(--c-accent);
+  color: var(--c-ink);
+  background: var(--c-accent-soft);
+}
+
+.explore__steps li i {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--c-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.explore__steps li[data-done] i,
+.explore:not([data-auto]) .explore__steps li[data-on] i {
+  transform: scaleX(1);
+}
+
+.explore[data-auto] .explore__steps li[data-on] i {
+  animation: explore-step 4800ms linear both;
+}
+
+@keyframes explore-step {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 760px) {
+  .explore--scenes .explore__card {
+    min-height: 0;
+    padding: 16px;
+  }
+
+  .journey--explore {
+    min-height: 330px;
+    font-size: 11px;
+  }
+
+  .journey--explore .journey__scene > * {
+    zoom: 0.66;
+  }
+
+  .explore__steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .explore[data-auto] .explore__steps li[data-on] i {
+    animation: none;
+    transform: scaleX(1);
+  }
+}

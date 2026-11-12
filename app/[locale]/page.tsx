@@ -8,9 +8,9 @@ import { ScrollStory } from "@/components/motion/ScrollStory.tsx";
 import { Hero } from "@/components/home/Hero.tsx";
 import { Journey } from "@/components/home/Journey.tsx";
 import { Showcase } from "@/components/home/Showcase.tsx";
-import { ProcessBoard, StoreTransformation } from "@/components/home/StoryVisuals.tsx";
+import { ProcessBoard } from "@/components/home/StoryVisuals.tsx";
 import { ValueComparison } from "@/components/home/ValueComparison.tsx";
-import { Origin, Principles, LetterSection, PromiseSection, Stats } from "@/components/home/HomeSections.tsx";
+import { Origin, Principles, LetterSection, Stats } from "@/components/home/HomeSections.tsx";
 import { OpenBriefButton } from "@/components/brief/OpenBriefButton.tsx";
 import { WorkAccordion } from "@/components/work/WorkAccordion.tsx";
 import { formatNumber } from "@/lib/format.ts";
@@ -45,7 +45,6 @@ export default async function HomePage({ params }: Props) {
   const w = home.work;
   const cap = home.capabilities;
   const pr = home.process;
-  const tr = home.transformation;
 
   return (
     <>
@@ -190,53 +189,9 @@ export default async function HomePage({ params }: Props) {
 
       <ValueComparison copy={home.value} />
 
-      <ScrollStory
-        id="transformation"
-        label={tr.label}
-        className="story--transformation"
-        head={
-          <div className="story__topline story__topline--stack">
-            <div className="story__topline-row">
-              <p className="eyebrow">
-                <Spark className="eyebrow__spark" />
-                {tr.label}
-              </p>
-              <p className="mono">{tr.note}</p>
-            </div>
-          </div>
-        }
-        panels={tr.stages.map((st, i) => (
-          <div key={st.key} className="story-text">
-            <p className="story-text__step">
-              <span className="story-text__stepnum">{String(i + 1).padStart(2, "0")}</span>
-              <span className="mono">/ 03 — {st.tab}</span>
-            </p>
-            <TwoLine lines={st.title} className="t-h2" as="h3" />
-            <p className="t-body">{st.body}</p>
-            <ul role="list" className="story-text__points">
-              {st.points.map((p) => (
-                <li key={p}>
-                  <Spark className="story-text__spark" />
-                  {p}
-                </li>
-              ))}
-            </ul>
-            {i === 2 ? (
-              <OpenBriefButton className="link-arrow">
-                {tr.cta} <ArrowUpRight />
-              </OpenBriefButton>
-            ) : null}
-          </div>
-        ))}
-        visual={<StoreTransformation />}
-        tabs={tr.stages.map((st) => ({ key: st.key, label: st.tab }))}
-        scrollHint={t("scrollHint")}
-      />
-
       <Origin copy={home.origin} />
       <Principles copy={home.principles} />
       <LetterSection />
-      <PromiseSection copy={home.promise} />
     </>
   );
 }

@@ -4,7 +4,7 @@ export const pricingPage = {
   meta: {
     title: "Prices for websites, design, apps, AI and marketing",
     description:
-      "ONYQ starting prices: landing pages from $790, corporate websites from $1,990, online stores from $4,900, Telegram bots from $590, AI assistants from $990, SEO from $350/month.",
+      "ONYQ starting prices: landing pages from $790, business websites from $1,190, online stores from $2,900, Telegram bots from $590, AI assistants from $990, SEO from $350/month.",
   },
   hero: {
     title: ["Pricing for websites,", "design and AI."] as [string, string],
@@ -56,7 +56,7 @@ export const pricingPage = {
     },
     {
       q: "Do you work with clients outside Armenia?",
-      a: "Yes. Work runs online, with sites delivered in English, Russian and Armenian as needed.",
+      a: "Yes. Work runs online and worldwide.",
     },
     {
       q: "Are advertising budgets included in marketing prices?",

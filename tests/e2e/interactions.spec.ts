@@ -20,7 +20,7 @@ test.describe("navigation", () => {
     await trigger.click();
     await page.mouse.click(700, 700);
     await expect(trigger).toHaveAttribute("aria-expanded", "false");
-    await page.getByRole("button", { name: "Studio" }).click();
+    await page.getByRole("button", { name: "About" }).click();
     await page.locator(".menu-panel:not([hidden])").getByRole("link", { name: "How we work" }).click();
     await expect(page).toHaveURL(/\/how-we-work$/);
   });
@@ -59,11 +59,14 @@ test.describe("pricing", () => {
     await expect(landing).toContainText("$790");
   });
 
-  test("all 25 catalogue entries are listed with approved starting prices", async ({ page }) => {
+  test("all 21 catalogue entries are listed with approved starting prices", async ({ page }) => {
     await gotoReady(page, "/price");
-    await expect(page.locator(".price-row")).toHaveCount(25);
+    await expect(page.locator(".price-row")).toHaveCount(21);
     const expectations: [string, string][] = [
-      ["web-portal", "$9,900"],
+      ["web-portal", "$4,900"],
+      ["online-store", "$2,900"],
+      ["brand-identity", "$890"],
+      ["crm-internal-systems", "$3,900"],
       ["mobile-app", "$6,900"],
       ["seo", "$350/mo"],
       ["website-maintenance", "$99/mo"],
@@ -271,5 +274,44 @@ test.describe("language switch", () => {
       await expect(html).toHaveAttribute("data-theme", /light|dark/);
       await expect(html).not.toHaveAttribute("data-reveal-all", "true");
     }
+  });
+});
+
+test.describe("v5: phone, VIP lounge", () => {
+  test("API rejects a bogus phone number in a brief", async ({ request }) => {
+    const origin = new URL(test.info().project.use.baseURL ?? "http://localhost:3200").origin;
+    const base = { challengeType: "website", challenge: "A new website for our clinic", stage: "new-idea", name: "Ani", email: "ani@example.com", locale: "en" };
+    const bad = await request.post("/api/enquiry", { data: { ...base, phone: "+374 55 555555" }, headers: { origin } });
+    expect(bad.status()).toBe(400);
+    expect((await bad.json()).fields).toContain("phone");
+  });
+
+  test("VIP: a wrong code is refused, a valid one opens the lounge with −60% prices and sends a flagged request", async ({ page, request }) => {
+    const origin = new URL(test.info().project.use.baseURL ?? "http://localhost:3200").origin;
+    expect((await request.post("/api/vip?step=check", { data: { code: "onyq/962" }, headers: { origin } })).status()).toBe(404);
+    expect((await request.post("/api/vip?step=check", { data: { code: "onyq/963" } })).status()).toBe(403);
+
+    await gotoReady(page, "/vip");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("By invitation");
+    const input = page.getByLabel("Invitation code");
+    await input.fill("acme/000");
+    await page.getByRole("button", { name: /Open the lounge/ }).click();
+    await expect(page.locator(".vip-code__error")).toContainText("isn’t recognised");
+    await input.fill("Acme Studio/963");
+    await page.getByRole("button", { name: /Open the lounge/ }).click();
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Welcome, Acme Studio", { timeout: 8000 });
+
+    const card = page.locator(".vip-card", { hasText: "Landing page" });
+    await expect(card).toContainText("$790");
+    await expect(card).toContainText("$316");
+    await card.click();
+    await page.locator(".vip-card", { hasText: "SEO" }).first().click();
+    await expect(page.locator(".vip-summary")).toContainText("$316");
+
+    await page.getByRole("textbox", { name: "What should we build or improve?" }).fill("A booking website and a Telegram bot");
+    await page.getByLabel("Name").fill("Ani Hakobyan");
+    await page.locator(".phone-field__input").fill("94 809 506");
+    await page.getByRole("button", { name: /Send to my manager/ }).click();
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Thank you, Ani");
   });
 });

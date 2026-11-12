@@ -3,8 +3,9 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { track } from "@/components/analytics/Tracker.tsx";
 import type { ServiceId, CategoryId } from "@/data/services.ts";
+import type { CountryCode } from "@/lib/phone.ts";
 import { getService } from "@/data/services.ts";
-import type { BUDGETS, CHALLENGE_TYPES, SERVICE_AREAS, STAGES, TIMINGS } from "@/lib/enquiry-schema.ts";
+import { SERVICE_AREAS, type BUDGETS, type CHALLENGE_TYPES, type STAGES, type TIMINGS } from "@/lib/enquiry-schema.ts";
 import { BriefDialog } from "./BriefDialog.tsx";
 
 export type ChallengeType = (typeof CHALLENGE_TYPES)[number];
@@ -24,6 +25,8 @@ export interface BriefDraft {
   email: string;
   company: string;
   phone: string;
+  /** Country chosen in the phone picker (ISO 3166 alpha-2). */
+  phoneCountry?: CountryCode;
   serviceId?: ServiceId;
 }
 
@@ -64,7 +67,6 @@ const CATEGORY_TO_CHALLENGE: Record<CategoryId, ChallengeType> = {
   apps: "app",
   ai: "ai",
   marketing: "marketing",
-  growth: "other",
   support: "website",
 };
 
@@ -73,7 +75,9 @@ function readStored(): BriefDraft | null {
     const raw = window.sessionStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as Partial<BriefDraft>;
-    return { ...EMPTY_DRAFT, ...parsed, areas: Array.isArray(parsed.areas) ? parsed.areas : [] };
+    return { ...EMPTY_DRAFT, ...parsed, areas: Array.isArray(parsed.areas)
+        ? parsed.areas.filter((a) => (SERVICE_AREAS as readonly string[]).includes(a))
+        : [] };
   } catch {
     return null;
   }

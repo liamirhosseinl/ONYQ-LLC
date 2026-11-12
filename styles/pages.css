@@ -558,10 +558,25 @@
   transform: scaleY(1);
 }
 
+.directions__row:hover .t-h3,
 .directions__row:hover .t-body,
 .directions__row:hover .directions__open,
-.directions__row:hover .directions__num {
+.directions__row:hover .directions__num,
+.directions__row:focus-visible .t-h3,
+.directions__row:focus-visible .t-body,
+.directions__row:focus-visible .directions__open,
+.directions__row:focus-visible .directions__num {
   color: var(--c-accent-ink);
+}
+
+.directions__row:focus-visible {
+  outline: none;
+  color: var(--c-accent-ink);
+  padding-inline: 18px;
+}
+
+.directions__row:focus-visible::before {
+  transform: scaleY(1);
 }
 
 .directions__num {

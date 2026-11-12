@@ -8,12 +8,9 @@ const ROUTES = [
   "/ai",
   "/mobile-apps",
   "/marketing",
-  "/gamification",
-  "/business-analytics",
-  "/financial-consulting",
   "/services/landing-page",
   "/services/website-redesign",
-  "/services/corporate-website",
+  "/services/business-website",
   "/services/online-store",
   "/services/integrations-payments",
   "/services/website-maintenance",
@@ -31,6 +28,9 @@ const ROUTES = [
   "/how-we-work",
   "/faq",
   "/contacts",
+  "/vip",
+  "/ru/vip",
+  "/hy/vip",
   "/portfolio/vihan-school",
   "/portfolio/eagle-vpn",
   "/portfolio/english-institute",
@@ -46,6 +46,19 @@ const ROUTES = [
   "/hy/portfolio/eagle-vpn",
   "/hy/services/smm",
 ];
+
+test("retired pages redirect permanently", async ({ request }) => {
+  for (const [from, to] of [
+    ["/gamification", "/services"],
+    ["/ru/business-analytics", "/ru/services"],
+    ["/hy/financial-consulting", "/hy/services"],
+    ["/services/corporate-website", "/services/business-website"],
+  ]) {
+    const res = await request.get(from, { maxRedirects: 0 });
+    expect(res.status(), from).toBe(308);
+    expect(res.headers()["location"], from).toBe(to);
+  }
+});
 
 test.describe("routes", () => {
   for (const route of ROUTES) {

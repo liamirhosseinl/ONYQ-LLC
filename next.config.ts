@@ -16,6 +16,19 @@ const nextConfig: NextConfig = {
     qualities: [75],
     minimumCacheTTL: 2678400,
   },
+  // v5: retired pages point to their closest live page.
+  async redirects() {
+    const moved: [string, string][] = [
+      ["/gamification", "/services"],
+      ["/business-analytics", "/services"],
+      ["/financial-consulting", "/services"],
+      ["/services/corporate-website", "/services/business-website"],
+    ];
+    return moved.flatMap(([from, to]) => [
+      { source: from, destination: to, permanent: true },
+      { source: `/:locale(ru|hy)${from}`, destination: `/:locale${to}`, permanent: true },
+    ]);
+  },
   async headers() {
     const security = [
       // HTTPS only for two years, subdomains included, eligible for browser preload lists.

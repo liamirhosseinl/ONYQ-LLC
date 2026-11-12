@@ -36,13 +36,14 @@ export const siteConfig = {
   contact: {
     salesEmail: "onyq.llc@gmail.com" as string | null,
     telegram: null as string | null, // e.g. "onyq" (without @)
-    whatsapp: null as string | null, // E.164 number
+    /** WhatsApp, supplied by ONYQ 12 Nov 2026 (same line as the first phone). */
+    whatsapp: "+374 94 809506" as string | null,
     /** Several numbers are comma-separated (see lib/contact.ts). */
     phone: "+374 94 809506, +374 94 406207" as string | null,
   },
 
-  /** [ONYQ INPUT REQUIRED] official social profiles: { label, url } */
-  social: [] as { label: string; url: string }[],
+  /** Official social profiles, supplied by ONYQ 12 Nov 2026. */
+  social: [{ label: "Instagram", url: "https://www.instagram.com/onyqllc" }] as { label: string; url: string }[],
 
   /** [ONYQ INPUT REQUIRED] company-approved legal documents. A null entry = no route, no link. */
   legal: {

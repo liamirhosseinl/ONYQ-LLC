@@ -18,16 +18,15 @@ const APPROVED: Record<ServiceId, { regular: number; promo: number; billing: "on
   "landing-page": { regular: 790, promo: 323.9, billing: "one_time" },
   "website-redesign": { regular: 890, promo: 364.9, billing: "one_time" },
   "business-website": { regular: 1190, promo: 487.9, billing: "one_time" },
-  "corporate-website": { regular: 1990, promo: 815.9, billing: "one_time" },
-  "online-store": { regular: 4900, promo: 2009.0, billing: "one_time" },
-  "web-portal": { regular: 9900, promo: 4059.0, billing: "one_time" },
+  "online-store": { regular: 2900, promo: 1189.0, billing: "one_time" },
+  "web-portal": { regular: 4900, promo: 2009.0, billing: "one_time" },
   logo: { regular: 390, promo: 159.9, billing: "one_time" },
-  "brand-identity": { regular: 1490, promo: 610.9, billing: "one_time" },
+  "brand-identity": { regular: 890, promo: 364.9, billing: "one_time" },
   "ui-ux-design": { regular: 490, promo: 200.9, billing: "one_time" },
   "ux-audit": { regular: 290, promo: 118.9, billing: "one_time" },
   "telegram-bot": { regular: 590, promo: 241.9, billing: "one_time" },
   "integrations-payments": { regular: 290, promo: 118.9, billing: "one_time" },
-  "crm-internal-systems": { regular: 5900, promo: 2419.0, billing: "one_time" },
+  "crm-internal-systems": { regular: 3900, promo: 1599.0, billing: "one_time" },
   "mobile-app": { regular: 6900, promo: 2829.0, billing: "one_time" },
   "ai-assistant": { regular: 990, promo: 405.9, billing: "one_time" },
   "ai-automation": { regular: 1990, promo: 815.9, billing: "one_time" },
@@ -36,9 +35,6 @@ const APPROVED: Record<ServiceId, { regular: number; promo: number; billing: "on
   smm: { regular: 450, promo: 184.5, billing: "monthly" },
   "ai-search-visibility": { regular: 590, promo: 241.9, billing: "monthly" },
   "website-audit": { regular: 250, promo: 102.5, billing: "one_time" },
-  "business-analytics": { regular: 990, promo: 405.9, billing: "one_time" },
-  "financial-model": { regular: 790, promo: 323.9, billing: "one_time" },
-  "gamification-loyalty": { regular: 1490, promo: 610.9, billing: "one_time" },
   "website-maintenance": { regular: 99, promo: 40.59, billing: "monthly" },
 };
 
@@ -51,8 +47,8 @@ const campaign: PromotionConfig = {
 const START = new Date("2026-10-31T20:00:00.000Z"); // 00:00 Yerevan (UTC+4)
 const END = new Date("2026-11-30T19:59:00.000Z"); // 23:59 Yerevan
 
-test("catalogue has exactly the 25 approved services with approved prices and billing", () => {
-  assert.equal(services.length, 25);
+test("catalogue has exactly the 21 approved services with approved prices and billing", () => {
+  assert.equal(services.length, 21);
   assert.deepEqual(new Set(services.map((s) => s.id)), new Set(Object.keys(APPROVED)));
   for (const s of services) {
     assert.equal(s.regularPriceUsd, APPROVED[s.id].regular, s.id);

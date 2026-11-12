@@ -147,7 +147,8 @@ export async function convertLead(form: FormData) {
   if (l.client_id) redirect(`/admin/clients/${l.client_id}`);
   const clientId = tx(() => {
     const now = Date.now();
-    const existing = get<{ id: number }>("SELECT id FROM clients WHERE email = ? COLLATE NOCASE", l.email);
+    // VIP requests may come without an email; never merge those into another client.
+    const existing = l.email ? get<{ id: number }>("SELECT id FROM clients WHERE email = ? COLLATE NOCASE", l.email) : undefined;
     const cid =
       existing?.id ??
       Number(
@@ -157,7 +158,7 @@ export async function convertLead(form: FormData) {
           now,
           l.name,
           l.company,
-          l.email,
+          l.email || null,
           l.contact,
           l.locale,
         ).lastInsertRowid,

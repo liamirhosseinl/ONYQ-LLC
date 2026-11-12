@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { services, type ServiceId } from "../data/services.ts";
+import { formatPhone } from "./phone.ts";
 
 const SERVICE_IDS = services.map((s) => s.id) as [ServiceId, ...ServiceId[]];
 
@@ -21,7 +22,6 @@ export const SERVICE_AREAS = [
   "apps",
   "ai",
   "marketing",
-  "growth",
   "support",
 ] as const;
 
@@ -42,7 +42,14 @@ export const enquirySchema = z.object({
   name: z.string().trim().min(2, "name_required").max(120, "name_long"),
   email: z.string().trim().max(200, "email_invalid").pipe(z.email("email_invalid")),
   company: z.string().trim().max(160).optional().or(z.literal("")),
-  phone: z.string().trim().max(60).optional().or(z.literal("")),
+  /** Optional, but when given it must be a real-looking number for its country; stored as "+374 94 809506". */
+  phone: z
+    .string()
+    .trim()
+    .max(60, "phone_invalid")
+    .optional()
+    .refine((v) => !v || formatPhone(v) !== null, "phone_invalid")
+    .transform((v) => (v ? (formatPhone(v) ?? v) : v)),
   /** Set when the brief was opened from a specific price entry. */
   serviceId: z.enum(SERVICE_IDS).optional(),
   locale: z.enum(["en", "ru", "hy"]).default("en").catch("en"),

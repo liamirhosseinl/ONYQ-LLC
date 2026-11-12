@@ -19,6 +19,7 @@ import { getCatalogueCopy } from "@/content/catalogue.ts";
 import { formatMoney } from "@/lib/pricing.ts";
 import { Link } from "@/i18n/navigation.ts";
 import { ArrowLeft, ArrowRight, Check, Copy } from "@/components/ui/icons.tsx";
+import { PhoneField } from "./PhoneField.tsx";
 import { STEP_ORDER, useBrief, type Area, type BriefDraft, type StepId, EMPTY_DRAFT } from "./BriefProvider.tsx";
 
 type Status =
@@ -84,7 +85,7 @@ export function BriefFlow({ variant = "page" }: { variant?: "page" | "dialog" })
     for (const issue of result.error.issues) {
       const field = String(issue.path[0]);
       if (!fields.includes(field) || out[field]) continue;
-      const known = ["challenge_short", "challenge_long", "name_required", "name_long", "email_invalid"];
+      const known = ["challenge_short", "challenge_long", "name_required", "name_long", "email_invalid", "phone_invalid"];
       out[field] = known.includes(issue.message) ? issue.message : field;
     }
     return out;
@@ -375,6 +376,16 @@ export function BriefFlow({ variant = "page" }: { variant?: "page" | "dialog" })
                     {t(`fields.${field}`)}
                     {!required && <span className="field__optional"> ({t("fields.optional")})</span>}
                   </label>
+                  {field === "phone" ? (
+                    <PhoneField
+                      id={`${formId}-phone`}
+                      value={draft.phone}
+                      country={draft.phoneCountry}
+                      onChange={(phone, phoneCountry) => update({ phone, phoneCountry })}
+                      invalid={!!errors.phone}
+                      describedBy={errors.phone ? `${formId}-phone-err` : undefined}
+                    />
+                  ) : (
                   <input
                     id={`${formId}-${field}`}
                     className="field__input"
@@ -387,6 +398,7 @@ export function BriefFlow({ variant = "page" }: { variant?: "page" | "dialog" })
                     aria-describedby={errors[field] ? `${formId}-${field}-err` : undefined}
                     onChange={(e) => update({ [field]: e.target.value } as Partial<BriefDraft>)}
                   />
+                  )}
                   {errorText(field) && <p className="field__error" id={`${formId}-${field}-err`}>{errorText(field)}</p>}
                 </div>
               ))}

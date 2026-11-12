@@ -399,6 +399,92 @@ html:not([data-motion="full"]) .story__hint {
   }
 }
 
+/* Laptops with short screens (1366×657, 1280×600, 125% zoom…): the pinned stage keeps
+   the text clear of the tab bar and the picture inside its column. Titles follow the
+   viewport height as well as its width; each language keeps its own type scale because
+   min() only ever lowers it. The pictures shrink in steps with the height. */
+@media (min-width: 901px) {
+  html[data-motion="full"] .story__body {
+    align-items: stretch;
+  }
+
+  html[data-motion="full"] .story__panels {
+    align-content: center;
+    min-height: 0;
+  }
+
+  html[data-motion="full"] .story-text .t-display {
+    font-size: min(var(--fs-display), 9.4svh);
+  }
+
+  html[data-motion="full"] .story-text .t-h2 {
+    font-size: min(var(--fs-h2), 6.6svh);
+  }
+
+  html[data-motion="full"] .story-text .t-lead {
+    font-size: max(1rem, min(var(--fs-lead), 2.8svh));
+  }
+
+  html[data-motion="full"] .story-text {
+    gap: clamp(10px, 2.4svh, 22px);
+  }
+
+  html[data-motion="full"] .story-text .num {
+    width: clamp(34px, 5.6svh, 44px);
+    height: clamp(34px, 5.6svh, 44px);
+  }
+
+  html[data-motion="full"] .story-text__num {
+    font-size: min(clamp(3.4rem, 2rem + 4vw, 6rem), 10svh);
+  }
+
+  html[data-motion="full"] .story__visual {
+    height: 100%;
+    min-height: 0;
+    /* Last line of defence: the picture never paints over the tab bar. */
+    overflow: clip;
+    overflow-clip-margin: 28px;
+  }
+
+  html[data-motion="full"] .story__visual > * {
+    height: 100%;
+    min-height: 0;
+  }
+
+  html[data-motion="full"] .story__topline--split .t-h2 {
+    font-size: min(var(--fs-h2), 5.2svh);
+  }
+}
+
+@media (min-width: 901px) and (max-height: 860px) {
+  html[data-motion="full"] .story__visual :is(.journey__scene, .showcase__scene) > * {
+    zoom: 0.9;
+  }
+}
+
+@media (min-width: 901px) and (max-height: 780px) {
+  html[data-motion="full"] .story__visual :is(.journey__scene, .showcase__scene) > * {
+    zoom: 0.8;
+  }
+}
+
+@media (min-width: 901px) and (max-height: 700px) {
+  html[data-motion="full"] .story__visual :is(.journey__scene, .showcase__scene) > * {
+    zoom: 0.72;
+  }
+
+  html[data-motion="full"] .story__tab {
+    min-height: 36px;
+    padding-block: 6px;
+  }
+}
+
+@media (min-width: 901px) and (max-height: 620px) {
+  html[data-motion="full"] .story__visual :is(.journey__scene, .showcase__scene) > * {
+    zoom: 0.64;
+  }
+}
+
 /* ───────── Visual: idea → system → product plates ───────── */
 .plates {
   position: relative;

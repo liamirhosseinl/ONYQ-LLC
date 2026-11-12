@@ -21,14 +21,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function FaqPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const { faqPage, pricingPage, servicePages } = getContent(locale);
+  const { faqPage, pricingPage } = getContent(locale);
   const tp = await getTranslations("pages");
   const t = await getTranslations("common");
 
   const groups: { id: string; title: string; items: FaqItem[]; href?: string }[] = [
     { id: "working-with-onyq", title: faqPage.general.title, items: faqPage.general.items },
     { id: "pricing-and-payment", title: tp("faqPricingTitle"), items: pricingPage.faq, href: "/price" },
-    ...servicePages.map((p) => ({ id: p.slug, title: p.label, items: p.faq, href: `/services/${p.slug}` })),
   ]
     .map((g) => ({ ...g, items: g.items.filter(isVisible) }))
     .filter((g) => g.items.length > 0);
@@ -49,6 +48,7 @@ export default async function FaqPage({ params }: Props) {
         label={tp("questionsCount", { count })}
         title={faqPage.title}
         lead={faqPage.lead}
+        actions={false}
       />
       <section className="section section--tight">
         <div className="wrap faq-page">

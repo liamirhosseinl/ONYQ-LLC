@@ -18,14 +18,12 @@ export type CategoryId =
   | "apps"
   | "ai"
   | "marketing"
-  | "growth"
   | "support";
 
 export type ServiceId =
   | "landing-page"
   | "website-redesign"
   | "business-website"
-  | "corporate-website"
   | "online-store"
   | "web-portal"
   | "logo"
@@ -43,9 +41,6 @@ export type ServiceId =
   | "smm"
   | "ai-search-visibility"
   | "website-audit"
-  | "business-analytics"
-  | "financial-model"
-  | "gamification-loyalty"
   | "website-maintenance";
 
 /** Indicative timeline. "monthly" = recurring service with no fixed delivery date. */
@@ -83,7 +78,6 @@ export const categories: Category[] = [
   { id: "apps", anchor: "price-apps", directionPage: "/mobile-apps" },
   { id: "ai", anchor: "price-ai", directionPage: "/ai" },
   { id: "marketing", anchor: "price-marketing", directionPage: "/marketing" },
-  { id: "growth", anchor: "price-growth", directionPage: "/business-analytics" },
   { id: "support", anchor: "price-support", directionPage: "/services/website-maintenance" },
 ];
 
@@ -91,21 +85,20 @@ export const services: ServicePrice[] = [
   // 01 Websites
   { id: "landing-page", category: "websites", regularPriceUsd: 790, billingType: "one_time", timeline: { kind: "days", from: 7 }, detailPage: "/services/landing-page", promoEligible: true, featured: true },
   { id: "website-redesign", category: "websites", regularPriceUsd: 890, billingType: "one_time", timeline: { kind: "weeks", from: 3 }, detailPage: "/services/website-redesign", promoEligible: true },
-  { id: "business-website", category: "websites", regularPriceUsd: 1190, billingType: "one_time", timeline: { kind: "weeks", from: 2 }, detailPage: "/services/corporate-website", promoEligible: true },
-  { id: "corporate-website", category: "websites", regularPriceUsd: 1990, billingType: "one_time", timeline: { kind: "weeks", from: 4 }, detailPage: "/services/corporate-website", promoEligible: true, featured: true },
-  { id: "online-store", category: "websites", regularPriceUsd: 4900, billingType: "one_time", timeline: { kind: "weeks", from: 6 }, detailPage: "/services/online-store", promoEligible: true, featured: true },
-  { id: "web-portal", category: "websites", regularPriceUsd: 9900, billingType: "one_time", timeline: { kind: "months", from: 2 }, detailPage: "/development", promoEligible: true },
+  { id: "business-website", category: "websites", regularPriceUsd: 1190, billingType: "one_time", timeline: { kind: "weeks", from: 2 }, detailPage: "/services/business-website", promoEligible: true, featured: true },
+  { id: "online-store", category: "websites", regularPriceUsd: 2900, billingType: "one_time", timeline: { kind: "weeks", from: 6 }, detailPage: "/services/online-store", promoEligible: true, featured: true },
+  { id: "web-portal", category: "websites", regularPriceUsd: 4900, billingType: "one_time", timeline: { kind: "months", from: 2 }, detailPage: "/development", promoEligible: true },
 
   // 02 Design & brand
   { id: "logo", category: "design", regularPriceUsd: 390, billingType: "one_time", timeline: { kind: "days", from: 7 }, detailPage: "/services/branding", promoEligible: true },
-  { id: "brand-identity", category: "design", regularPriceUsd: 1490, billingType: "one_time", timeline: { kind: "weeks", from: 3 }, detailPage: "/services/branding", promoEligible: true },
+  { id: "brand-identity", category: "design", regularPriceUsd: 890, billingType: "one_time", timeline: { kind: "weeks", from: 3 }, detailPage: "/services/branding", promoEligible: true },
   { id: "ui-ux-design", category: "design", regularPriceUsd: 490, billingType: "one_time", timeline: { kind: "days", from: 10 }, detailPage: "/services/ux-ui-design", promoEligible: true },
   { id: "ux-audit", category: "design", regularPriceUsd: 290, billingType: "one_time", timeline: { kind: "days", from: 5 }, detailPage: "/services/ux-ui-design", promoEligible: true },
 
   // 03 Apps & bots
   { id: "telegram-bot", category: "apps", regularPriceUsd: 590, billingType: "one_time", timeline: { kind: "days", from: 10 }, detailPage: "/services/telegram-bot", promoEligible: true, featured: true },
   { id: "integrations-payments", category: "apps", regularPriceUsd: 290, billingType: "one_time", timeline: { kind: "days", from: 5 }, detailPage: "/services/integrations-payments", promoEligible: true },
-  { id: "crm-internal-systems", category: "apps", regularPriceUsd: 5900, billingType: "one_time", timeline: { kind: "weeks", from: 6 }, detailPage: "/development", promoEligible: true },
+  { id: "crm-internal-systems", category: "apps", regularPriceUsd: 3900, billingType: "one_time", timeline: { kind: "weeks", from: 6 }, detailPage: "/development", promoEligible: true },
   { id: "mobile-app", category: "apps", regularPriceUsd: 6900, billingType: "one_time", timeline: { kind: "months", from: 2 }, detailPage: "/mobile-apps", promoEligible: true },
 
   // 04 Artificial intelligence
@@ -119,12 +112,7 @@ export const services: ServicePrice[] = [
   { id: "ai-search-visibility", category: "marketing", regularPriceUsd: 590, billingType: "monthly", timeline: { kind: "monthly" }, detailPage: "/services/seo", promoEligible: true },
   { id: "website-audit", category: "marketing", regularPriceUsd: 250, billingType: "one_time", timeline: { kind: "days", from: 5 }, detailPage: "/services/website-audit", promoEligible: true },
 
-  // 06 Analytics & growth
-  { id: "business-analytics", category: "growth", regularPriceUsd: 990, billingType: "one_time", timeline: { kind: "weeks", from: 2 }, detailPage: "/business-analytics", promoEligible: true },
-  { id: "financial-model", category: "growth", regularPriceUsd: 790, billingType: "one_time", timeline: { kind: "days", from: 10 }, detailPage: "/financial-consulting", promoEligible: true },
-  { id: "gamification-loyalty", category: "growth", regularPriceUsd: 1490, billingType: "one_time", timeline: { kind: "weeks", from: 4 }, detailPage: "/gamification", promoEligible: true },
-
-  // 07 Support
+  // 06 Support
   { id: "website-maintenance", category: "support", regularPriceUsd: 99, billingType: "monthly", timeline: { kind: "monthly" }, detailPage: "/services/website-maintenance", promoEligible: true },
 ];
 

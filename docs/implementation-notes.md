@@ -156,3 +156,42 @@ See `docs/deployment.md` (Docker + Caddy, or Node + nginx). A persistent disk is
   2. remove `status` (or set it to `"live"`);
   3. add a metric if the client reports one.
 - **Gallery framing.** Website screens keep their 16:10 frame and phone screens their full height (`.case-shot--screen`, `.case-shot--phone`).
+
+## v5 notes (12 Nov 2026)
+
+- **Services and prices.**
+  - Removed: gamification, business analytics, financial consulting (the three direction pages, the "Analytics & growth" price category and its three services) and the separate corporate website.
+  - The business website now carries the former corporate scope; its page moved to `/services/business-website`.
+  - Old URLs redirect permanently (308): `/gamification`, `/business-analytics` and `/financial-consulting` go to `/services`; `/services/corporate-website` goes to `/services/business-website` (all languages).
+  - New prices: online store $2,900, web service or portal $4,900, brand identity $890, CRM & internal systems $3,900.
+  - The catalogue now has 21 services in six categories.
+- **Menu.**
+  - "Studio" is now "About", and "Work" is no longer repeated inside it.
+  - New top-level item **VIP clients** (`/vip`).
+- **Home page.**
+  - New Amir Khaldari hero image (`site26-hero2.webp`, new name because `/work/*` is immutable).
+  - The third stat is now the client's published "50M+ combined views" instead of the ONYQ price-list count.
+  - The showcase no longer names the client, and its retention chip reads +60%.
+  - Removed the "Before and after" story and the closing "A better product" section.
+  - The Armenia text now says "Working wherever you need" and "sites in multiple languages".
+- **Short laptop screens.** On desktop, the pinned story titles also follow the viewport height (`min()`, so each language's own type scale is kept). The pictures scale down in steps below 860/780/700/620 px of height and never paint over the tab bar (`styles/story.css`).
+- **Topic pages.** The "What's inside" list repeated the explore card on every direction page and on How we work, so it was removed. On /how-we-work the card now plays the home-page journey scenes per step (research, design, develop, product). It advances on its own while in view until the visitor picks a step, and reduced motion is respected.
+- **Pricing page.**
+  - Removed the "Popular starting points" card.
+  - Every category's link is now "How we work" → `/how-we-work`.
+- **FAQ.**
+  - Only "Working with ONYQ" and "Pricing and payment" remain.
+  - The hero button is gone.
+  - Two answers were updated (languages; clients outside Armenia).
+- **Contacts.**
+  - WhatsApp +374 94 809506 and Instagram @onyqllc.
+  - An empty field in Admin → Settings now falls back to these defaults instead of hiding them.
+- **Phone numbers.**
+  - The brief and the VIP form use a country picker with flags (`public/flags`, MIT, from country-flag-icons 1.6.20) and libphonenumber-js 1.13.15.
+  - The browser and the server both reject numbers with the wrong length or prefix for the country, and fillers such as 555555 or 123456.
+  - Numbers are stored as "+374 94 809506".
+- **VIP lounge (`/vip`, noindex).**
+  - A manager gives a client a code `<business>/963`. The suffix is checked on the server only (`ONYQ_VIP_SUFFIX`, default `963`), with rate limits.
+  - The client describes the need, picks services (all 60% off, computed on the server) and leaves a name and phone.
+  - The request appears in Admin → Inbox with a "VIP · business" chip and a quote card, and goes to the webhook or email if one is configured.
+  - DB migration 3 adds `leads.vip_business` and `leads.vip_quote`.
